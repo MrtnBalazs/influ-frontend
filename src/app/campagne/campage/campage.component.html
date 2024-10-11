@@ -1,0 +1,24 @@
+<div class="conteinr">
+    <div class="row">
+        <h3 class="text-center">{{campagne.title}}</h3>
+    </div>
+    <div class="row mt-1">
+        <div class="col-4">
+            <img src="https://via.placeholder.com/600x400" class="rounded img-fluid" alt="Campagne image">
+        </div>
+        <div class="col-8">
+            {{campagne.description}}
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-2">Minimum fee:</div>
+        <div class="col-2">{{campagne.minFee}}</div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-2">Maximum fee:</div>
+        <div class="col-2">{{campagne.maxFee}}</div>
+    </div>
+    <div class="row mt-3">
+        <button type="button" class="btn btn-danger mx-auto" style="width: 200px;">Delete</button>
+    </div>
+</div>
