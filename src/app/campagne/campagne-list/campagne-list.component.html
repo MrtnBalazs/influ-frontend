@@ -1,4 +1,12 @@
 <div class="list-group">
+  @for (campagne of campagnes; track campagne.id) {
+    <a [routerLink]="['/campagnes/', campagne.id]" class="list-group-item list-group-item-action flex-column align-items-start active">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{campagne.title}}</h5>
+      </div>
+      <p class="mb-1">{{campagne.description}}</p>
+    </a>
+  }
     <a href="/campagnes/1" class="list-group-item list-group-item-action flex-column align-items-start active">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">Campagne 1</h5>
