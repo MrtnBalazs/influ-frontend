@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "sandbox": {
+    "influ-frontend": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/sandbox",
+            "outputPath": "dist/influ-frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "sandbox:build:production"
+              "buildTarget": "influ-frontend:build:production"
             },
             "development": {
-              "buildTarget": "sandbox:build:development"
+              "buildTarget": "influ-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -11,5 +11,5 @@ import { CampagneService } from './service/campagne/campagne.service';
 })
 export class AppComponent {
   campagneService = inject(CampagneService);
-  title = 'sandbox';
+  title = 'influ-frontend';
 }
