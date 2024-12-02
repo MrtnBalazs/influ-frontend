@@ -12,7 +12,7 @@ import { OnInit } from '../../../../node_modules/@angular/core/index';
   templateUrl: './campage.component.html',
   styleUrl: './campage.component.css'
 })
-export class CampageComponent implements OnInit{
+export class CampageComponent implements OnInit {
   campagneService = inject(CampagneService);
   @Input() id!: string;
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CampagneService } from '../service/campagne/campagne.service';
 
 @Component({
   selector: 'app-homepage',
@@ -8,5 +9,4 @@ import { Component } from '@angular/core';
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
-
 }

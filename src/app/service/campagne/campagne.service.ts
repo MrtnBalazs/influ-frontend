@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Campagne } from './campagne';
+import { Subject } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,12 @@ import { Campagne } from './campagne';
 export class CampagneService {
   campagnes: Campagne[];
 
-  constructor() { 
+  public random = Math.random();
+
+  constructor() {
+    console.log("Service construcor");
+    console.log(this.random);
+    //this.campagnes = new Subject<Campagne[]>;
     this.campagnes = new Array();
     this.campagnes.push(new Campagne(
       "0",
@@ -39,10 +45,23 @@ export class CampagneService {
   }
 
   getCampages() {
+    console.log(JSON.stringify(this.campagnes));
     return this.campagnes;
   }
 
   getUserCampagnes() {
     return this.campagnes;
+  }
+
+  saveCampagne(campagne: Campagne) {
+    console.log(JSON.stringify(campagne));
+    this.campagnes.push(new Campagne(
+      "999",
+      campagne.title,
+      campagne.description,
+      campagne.minFee,
+      campagne.maxFee
+    ));
+    console.log(JSON.stringify(this.campagnes));
   }
 }

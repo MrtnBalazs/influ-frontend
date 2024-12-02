@@ -9,7 +9,7 @@ export class AuthenticationService {
 
   constructor() { }
 
-  register(username: string, password: string) {
+  register(username: string | undefined, password: string | undefined) {
     // Make http call, set loggedin
   }
 }
