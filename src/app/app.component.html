@@ -1,38 +1,6 @@
+<app-sidebar></app-sidebar>
 <div class="row">
-  @if(true) {
-    <div class="col-2">
-      <div class="nav flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-        <a class="nav-link disabled">Brand</a>
-        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="/homepage" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
-        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="/signup" role="tab" aria-controls="v-pills-profile" aria-selected="false">Login/Logout/Register</a>
-        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="/profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="/campagnes" role="tab" aria-controls="v-pills-profile" aria-selected="false">My campagnes</a>
-        <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="/create-campagne" role="tab" aria-controls="v-pills-messages" aria-selected="false">Create new campage</a>
-        <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="/saved-influencers" role="tab" aria-controls="v-pills-settings" aria-selected="false">Saved influencers</a>
-        <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="/messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-        <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="/settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
-      </div>
-    </div>
-    <div class="container col-10 p-5">
-      <router-outlet></router-outlet>
-    </div>
-  } @else {
-    <div class="col-2">
-      <div class="nav flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-        <a class="nav-link disabled">Influencer</a>
-        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="/homepage" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
-        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="/signup" role="tab" aria-controls="v-pills-profile" aria-selected="false">Login/Logout/Register</a>
-        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="/profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="/campagnes" role="tab" aria-controls="v-pills-profile" aria-selected="false">Campagnes</a>
-        <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="/my-pitches" role="tab" aria-controls="v-pills-messages" aria-selected="false">My pitches</a>
-        <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="/campagnes" role="tab" aria-controls="v-pills-settings" aria-selected="false">Saved campagnes</a>
-        <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="/saved-brands" role="tab" aria-controls="v-pills-settings" aria-selected="false">Saved brands</a>
-        <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="/messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-        <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="/settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
-      </div>
-    </div>
-    <div class="container col-10 p-5">
-      <router-outlet></router-outlet>
-    </div>
-  }
+  <div class="container col-10 p-5">
+    <router-outlet></router-outlet>
+  </div>
 </div>
