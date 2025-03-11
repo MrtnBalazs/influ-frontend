@@ -16,6 +16,6 @@ export class SignupComponent {
 
   onRegisterClick() {
     console.log("Register clicked!")
-    this.authService.register(this.username, this.password);
+    this.authService.register();
   }
 }

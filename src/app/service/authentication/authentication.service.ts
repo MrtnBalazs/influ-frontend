@@ -5,11 +5,19 @@ import { Injectable } from '@angular/core';
 })
 export class AuthenticationService {
 
-  isLoggedIn: boolean | undefined;
+  constructor() {}
 
-  constructor() { }
-
-  register(username: string | undefined, password: string | undefined) {
-    // Make http call, set loggedin
+  getIsLoggedIn() {
+    return localStorage.getItem("isLoggedIn") === "true";
   }
+
+  login() {
+    localStorage.setItem("isLoggedIn", "true");
+  }
+
+  logout() {
+    localStorage.setItem("isLoggedIn", "false");
+  }
+
+  register() {}
 }

@@ -11,9 +11,6 @@ export class CampagneService {
   public random = Math.random();
 
   constructor() {
-    console.log("Service construcor");
-    console.log(this.random);
-    //this.campagnes = new Subject<Campagne[]>;
     this.campagnes = new Array();
     this.campagnes.push(new Campagne(
       "0",
@@ -36,11 +33,9 @@ export class CampagneService {
       "11000 HUF",
       "22000 HUF",
     ));
-    console.log("Campagnes initialized, %s", this.campagnes);
   }
 
   getCampage(id: string): Campagne {
-    console.log("Get campagne: %d", id);
     return this.campagnes[Number(id)];
   }
 
@@ -54,7 +49,6 @@ export class CampagneService {
   }
 
   saveCampagne(campagne: Campagne) {
-    console.log(JSON.stringify(campagne));
     this.campagnes.push(new Campagne(
       "999",
       campagne.title,
@@ -62,6 +56,5 @@ export class CampagneService {
       campagne.minFee,
       campagne.maxFee
     ));
-    console.log(JSON.stringify(this.campagnes));
   }
 }
