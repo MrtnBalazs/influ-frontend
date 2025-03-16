@@ -69,7 +69,7 @@ export class SidebarComponent {
   }
 
   login() {
-    this.authenticationService.login();
+    //this.authenticationService.login();
   }
 
   logOut() {
