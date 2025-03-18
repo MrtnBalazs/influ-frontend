@@ -15,8 +15,8 @@ export class SidebarComponent {
 
   constructor(
     private isBrandService: IsBrandService,
-    private authenticationService: AuthenticationService,
-    private router: Router) {}
+    private authenticationService: AuthenticationService
+  ) {}
 
   isBrand() {
     return this.isBrandService.getIsBrand();
@@ -48,13 +48,13 @@ export class SidebarComponent {
   influMenuItems = [
     { name: 'Campagnes', route: '/campagnes' },
     { name: 'Saved campagnes', route: '/saved-campagnes' },
-    { name: 'My pitches', route: '/my-pithces' },
+    { name: 'My pitches', route: '/my-pitches' },
     { name: 'Saved Brands', route: '/saved-brands' },
     { name: 'Brands', route: '/brands' },
   ];
 
   brandMenuItems = [
-    { name: 'My campagnes', route: '/campagnes' },
+    { name: 'My campagnes', route: '/my-campagnes' },
     { name: 'Create campagne', route: '/create-campagne' },
     { name: 'Saved influencers', route: '/saved-influencers' },
     { name: 'Influencers', route: '/influencers' },
