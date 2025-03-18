@@ -21,16 +21,14 @@ export class LoginComponent {
 
     onLoginClick() {
       console.log("Login clicked!")
-      this.authenticationService.login(this.username, this.password);
-      /* this.authenticationService.login(this.username, this.password).subscribe({
+      this.authenticationService.login(this.username, this.password)
+      .subscribe({
         next: () => {
-          console.log('User logged in successfully!');
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/homepage'])
         },
         error: (error) => {
-          console.error('Login failed', error);
-          this.router.navigate(['/error', "Login failed!"]);
+          this.router.navigate(['/error', `Login failed: ${error}`]);
         }
-      }); */
+      });
     }
 }

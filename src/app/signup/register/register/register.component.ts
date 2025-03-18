@@ -21,6 +21,16 @@ export class RegisterComponent {
 
     onRegisterClick() {
       console.log("Register clicked!");
-      this.authenticationService.register(this.username, this.password);
+      this.authenticationService.register(this.username, this.password)
+      .subscribe({
+        next: () => {
+          console.log('User registered successfully!');
+          this.router.navigate(['/registration/success']);
+        },
+        error: (error) => {
+          console.error('Registration failed', error);
+          this.router.navigate(['/error', `Register failed: ${error}`]);
+        }
+      });;
     }
 }

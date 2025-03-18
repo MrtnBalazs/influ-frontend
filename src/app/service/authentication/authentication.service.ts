@@ -1,54 +1,53 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private apiLoginUrl = 'http://localhost:8081/auth/login';
-  private apiRegisterUrl = 'http://localhost:8081/auth/signup';
-  private authToken:string | null | undefined;
+  private apiUrl = 'http://localhost:8082/auth';
+  private tokenKey = 'jwt_token';
 
-  constructor(private http:HttpClient, private router:Router) {
+  // Observable authentication state
+  private authState = new BehaviorSubject<boolean>(this.hasToken());
+
+  constructor(private http:HttpClient, private router:Router) {}
+
+  /** Login: Sends credentials and stores JWT */
+  login(username: string, password: string): Observable<{ authToken: string }> {
+    return this.http.post<{ authToken: string }>(`${this.apiUrl}/login`, { username, password }).pipe(
+      tap(response => {
+        localStorage.setItem(this.tokenKey, response.authToken);
+        this.authState.next(true);  // Notify subscribers
+      })
+    );
   }
 
-  getIsLoggedIn() {
-    //return localStorage.getItem("isLoggedIn") === "true";
-    return this.authToken !== "";
+  /** Logout: Clears JWT and updates state */
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+    this.authState.next(false);
   }
 
-  login(username: string, password: string) {
-    //localStorage.setItem("isLoggedIn", "true");
-    const body = { username, password };
-    return this.http.post<any>(this.apiLoginUrl, body)
-    .subscribe({
-      next: ({authToken}) => {
-        this.authToken = authToken;
-        this.router.navigate(['/profile'])
-      },
-      error: (error) => {
-        this.router.navigate(['/error', "Login failed"]);
-      }
-    });
+  /** Register: Sends user data to backend */
+  register(username: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/signup`, {username, password});
   }
 
-  logout() {
-    //localStorage.setItem("isLoggedIn", "false");
-    this.authToken = "";
+  /** Check if user is authenticated */
+  isAuthenticated(): Observable<boolean> {
+    return this.authState.asObservable();
   }
 
-  register(username: string, password: string) {
-    const body = { username, password };
-    this.http.post<any>(this.apiRegisterUrl, body).subscribe({
-      next: () => {
-        console.log('User registered successfully!');
-        this.router.navigate(['/registration/success']);
-      },
-      error: (error) => {
-        console.error('Registration failed', error);
-        this.router.navigate(['/error', "Register failed"]);
-      }
-    });
+  /** Check if a JWT token exists */
+  private hasToken(): boolean {
+    return !!localStorage.getItem(this.tokenKey);
+  }
+
+  /** Get the stored JWT token */
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
   }
 }

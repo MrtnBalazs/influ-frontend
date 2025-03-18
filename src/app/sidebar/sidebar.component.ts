@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IsBrandService } from '../service/is-brand/is-brand.service';
 import { AuthenticationService } from '../service/authentication/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,15 +11,21 @@ import { AuthenticationService } from '../service/authentication/authentication.
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
+  isLoggedIn = false;
 
-  constructor(private isBrandService: IsBrandService, private authenticationService: AuthenticationService) {}
+  constructor(
+    private isBrandService: IsBrandService,
+    private authenticationService: AuthenticationService,
+    private router: Router) {}
 
   isBrand() {
     return this.isBrandService.getIsBrand();
   }
 
-  isLoggedIn() {
-    return this.authenticationService.getIsLoggedIn();
+  ngOnInit(): void {
+    this.authenticationService.isAuthenticated().subscribe(authStatus => {
+      this.isLoggedIn = authStatus;
+    });
   }
 
   loggedOutMenuItems = [
@@ -54,7 +61,7 @@ export class SidebarComponent {
   ];
 
   getRouteList() {
-    if(this.isLoggedIn()) {
+    if(this.isLoggedIn) {
       if(this.isBrand())
         return this.commonMenuItemsFront.concat(this.brandMenuItems).concat(this.commonMenuItemsBack);
       else
@@ -66,10 +73,6 @@ export class SidebarComponent {
 
   switchBrandCampagne() {
     this.isBrandService.setIsBrand(!this.isBrand());
-  }
-
-  login() {
-    //this.authenticationService.login();
   }
 
   logOut() {
