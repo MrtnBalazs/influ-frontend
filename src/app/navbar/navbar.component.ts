@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
 import { IsBrandService } from '../service/is-brand/is-brand.service';
 import { AuthenticationService } from '../service/authentication/authentication.service';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'app-navbar',
   standalone: true,
   imports: [],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.css'
 })
-export class SidebarComponent {
+export class NavbarComponent {
   isLoggedIn = false;
 
   constructor(

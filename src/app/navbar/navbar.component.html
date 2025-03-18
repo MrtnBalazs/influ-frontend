@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      @if(isBrand()){
+        <a class="navbar-brand" href="/homepage" (click)="switchBrandCampagne()">Brand</a>
+      } @else {
+        <a class="navbar-brand" href="/homepage" (click)="switchBrandCampagne()">Influ</a>
+      }
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          @for (item of getRouteList(); track item.name) {
+            <li class="nav-item">
+              <a class="nav-link active" [href]="item.route">{{item.name}}</a>
+            </li>
+          }
+          @if(isLoggedIn) {
+            <li class="nav-item">
+              <a class="nav-link active" (click)="logOut()" href="/homepage">Logout</a>
+            </li>
+          } @else {
+            <li class="nav-item">
+              <a class="nav-link active" href="/login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/register">Register</a>
+            </li>
+          }
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              ☰
+            </a>
+            <ul class="dropdown-menu">
+              @for (item of getRouteList(); track item.name) {
+                <li><a class="dropdown-item" [href]="item.route">{{item.name}}</a></li>
+              }
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
