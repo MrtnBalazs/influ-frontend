@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import {inject} from '@angular/core';
 import { CampagneService } from '../../service/campagne/campagne.service';
-import { Campagne } from '../../service/campagne/campagne';
 import { Input } from '@angular/core';
 import { OnInit } from '../../../../node_modules/@angular/core/index';
 
@@ -13,16 +11,15 @@ import { OnInit } from '../../../../node_modules/@angular/core/index';
   styleUrl: './campage.component.css'
 })
 export class CampageComponent implements OnInit {
-  campagneService = inject(CampagneService);
-  @Input() id!: string;
+  @Input() id: string = "";
+  campagne: any;
 
-  campagne!: Campagne;
-  constructor() {
-    console.log("Campagne initialized");
-  }
+  constructor(private campagneService: CampagneService) {}
 
   ngOnInit() {
-    console.log("Campagne getting campagne: %s", this.id);
-    this.campagne = this.campagneService.getCampage(this.id);
+    this.campagneService.getCampagneById(this.id).subscribe(campagne => {
+      console.log(campagne)
+      this.campagne = campagne;
+    });
   }
 }

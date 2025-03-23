@@ -1,60 +1,53 @@
 import { Injectable } from '@angular/core';
-import { Campagne } from './campagne';
-import { Subject } from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CampagneService {
-  campagnes: Campagne[];
+  private apiUrl = 'http://localhost:8083/api/v1/campagnes';
+  private dev = true;
+  private devCampagnes: Observable<any[]> = of([
+    {"id":"0", "title":"Porche new model", "description":"Porche new model beeing released we need...", "minFee":"2000", "maxFee":"3000"},
+    {"id":"1", "title":"Mol price drop", "description":"Mol lowered its prices and we need people to be aware...", "minFee":"2000", "maxFee":"3000"},
+    {"id":"2", "title":"Hell new product", "description":"Hell is releasing a new product called Hell Water...", "minFee":"2000", "maxFee":"3000"},
+  ]);
+  private devCampagne: Observable<any> = of(
+    {"id":"1", "title":"Porche new model", "description":"Porche new model beeing released we need...", "minFee":"2000", "maxFee":"3000"}
+  );
 
-  public random = Math.random();
+  constructor(private http: HttpClient) {}
 
-  constructor() {
-    this.campagnes = new Array();
-    this.campagnes.push(new Campagne(
-      "0",
-      "Brandy",
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a gall",
-      "1000 HUF",
-      "2000 HUF",
-    ));
-    this.campagnes.push(new Campagne(
-      "1",
-      "SAP",
-      "ble content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content h", 
-      "4000 HUF",
-      "5000 HUF",
-    ));
-    this.campagnes.push(new Campagne(
-      "2",
-      "Vodafon",
-      "re are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised w",
-      "11000 HUF",
-      "22000 HUF",
-    ));
+  getAllCampagnes(): Observable<any[]> {
+    if(this.dev) {
+      return this.devCampagnes;
+    }
+    return this.http.get<any[]>(this.apiUrl);
   }
 
-  getCampage(id: string): Campagne {
-    return this.campagnes[Number(id)];
+  getCampagneById(id: string): Observable<any> {
+    if(this.dev) {
+      var campagne;
+      this.devCampagnes.subscribe(campagnes => {
+        campagne = campagnes[Number(id)];
+      })
+      return of(campagne);
+    }
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
-  getCampages() {
-    console.log(JSON.stringify(this.campagnes));
-    return this.campagnes;
+  getMyCampagnes(): Observable<any[]> {
+    if(this.dev) {
+      return this.devCampagnes;
+    }
+    return this.http.get<any[]>(`${this.apiUrl}/my-campagnes`);
   }
 
-  getUserCampagnes() {
-    return this.campagnes;
-  }
-
-  saveCampagne(campagne: Campagne) {
-    this.campagnes.push(new Campagne(
-      "999",
-      campagne.title,
-      campagne.description,
-      campagne.minFee,
-      campagne.maxFee
-    ));
+  getSavedCampagnes(): Observable<any[]> {
+    if(this.dev) {
+      return this.devCampagnes;
+    }
+    return this.http.get<any[]>(`${this.apiUrl}/saved-campagnes`);
   }
 }

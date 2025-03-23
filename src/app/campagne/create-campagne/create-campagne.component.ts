@@ -19,6 +19,6 @@ export class CreateCampagneComponent {
 
   createCampagne() {
       console.log("Save new campagne.");
-      this.campagneService.saveCampagne(this.campagneToSave);
+      //this.campagneService.saveCampagne(this.campagneToSave);
   }
 }

@@ -23,7 +23,8 @@ export class NavbarComponent {
 
   ngOnInit(): void {
     this.authenticationService.isAuthenticated().subscribe(authStatus => {
-      this.isLoggedIn = authStatus;
+      //this.isLoggedIn = authStatus;
+      this.isLoggedIn = true; // set to always true for dev puroses
     });
   }
 

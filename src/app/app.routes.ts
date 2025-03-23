@@ -6,26 +6,30 @@ import { RegisterComponent } from './signup/register/register/register.component
 import { RegisterSuccessComponent } from './signup/register/register-success/register-success.component';
 import { ErrorComponent } from './error/error.component';
 import { LoginComponent } from './signup/login/login.component';
+import { AuthGuard } from './service/authentication/auth.guard';
+import { MyCampagnesComponent } from './campagne/my-campagnes/my-campagnes.component';
+import { AllCampagnesComponent } from './campagne/all-campagnes/all-campagnes.component';
+import { SavedCampagnesComponent } from './campagne/saved-campagnes/saved-campagnes.component';
 
 export const routes: Routes = [
     { path: 'homepage', component: HomepageComponent },
-    { path: 'profile', component: HomepageComponent },
-    { path: 'messages', component: HomepageComponent },
-    { path: 'settings', component: HomepageComponent },
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
-    { path: 'registration/success', component: RegisterSuccessComponent },
+    { path: 'profile', component: HomepageComponent, canActivate: [AuthGuard] },
+    { path: 'messages', component: HomepageComponent, canActivate: [AuthGuard] },
+    { path: 'settings', component: HomepageComponent, canActivate: [AuthGuard] },
+    { path: 'login', component: LoginComponent }, // TODO not logged in guard
+    { path: 'register', component: RegisterComponent }, // TODO not logged in guard
+    { path: 'registration/success', component: RegisterSuccessComponent }, // TODO not logged in guard
     { path: 'error/:errorMessage', component: ErrorComponent },
 
     // Campagnes
-    { path: 'campagnes', component: CampagneListComponent },
+    { path: 'campagnes', component: AllCampagnesComponent },
+    { path: 'my-campagnes', component: MyCampagnesComponent, canActivate: [AuthGuard] },
+    { path: 'saved-campagnes', component: SavedCampagnesComponent, canActivate: [AuthGuard],},
+    { path: 'create-campagne', component: CreateCampagneComponent, canActivate: [AuthGuard] },
     {
-        path: 'campagne/:id',
+        path: 'campagnes/:id',
         loadComponent: () => import('./campagne/campage/campage.component').then((m) => m.CampageComponent),
     },
-    { path: 'my-campagnes', component: CampagneListComponent },
-    { path: 'saved-campagnes', component: HomepageComponent },
-    { path: 'create-campagne', component: CreateCampagneComponent },
 
     // Brands
     { path: 'brands', component: HomepageComponent },
