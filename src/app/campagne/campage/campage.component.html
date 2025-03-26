@@ -1,4 +1,4 @@
-<div class="conteinr">
+<div class="container">
     <div class="row">
         <h3 class="text-center">{{campagne.title}}</h3>
     </div>
@@ -17,5 +17,16 @@
     <div class="row mt-1">
         <div class="col-2">Maximum fee:</div>
         <div class="col-2">{{campagne.maxFee}}</div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-6">
+            <app-pitch-list 
+                [pitches]="campagne.pitches" 
+                [campagneId]="campagne.id"
+                (pitchSelected)="onPitchSelected($event)"></app-pitch-list>
+        </div>
+        <div class="col-6">
+            <app-pitch [selectedPitch]="selectedPitchId()"></app-pitch>
+        </div>
     </div>
 </div>

@@ -1,0 +1,16 @@
+<h4>Pitches</h4>
+<div class="list-group">
+    <ul class="list-group">
+    @for (pitch of pitches; track pitch.id) {
+            <li class="list-group-item"
+                    [class.active]="hoveredId === pitch.id"
+                    (mouseover)="hoveredId = pitch.id"
+                    (mouseleave)="hoveredId = null"
+                    (click)="selectPitch(pitch)">
+                <h6 class="mb-1">{{pitch.owner.name}}</h6>
+                <div class="mb-1">{{pitch.owner.reach}}  {{pitch.owner.mainSocialMedia}}</div>
+                <p class="mb-4">{{pitch.description}}</p>
+            </li>
+    }
+    </ul>
+</div>
