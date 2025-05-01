@@ -1,28 +1,28 @@
 <div class="container">
     <div class="row">
-        <h3 class="text-center">{{campagne.title}}</h3>
+        <h3 class="text-center">{{campaign?.title}}</h3>
     </div>
     <div class="row mt-1">
         <div class="col-4">
-            <img src="https://picsum.photos/600/400" class="rounded img-fluid" alt="Campagne image">
+            <img src="https://picsum.photos/600/400" class="rounded img-fluid" alt="Campaign image">
         </div>
         <div class="col-8">
-            {{campagne.description}}
+            {{campaign?.description}}
         </div>
     </div>
     <div class="row mt-1">
         <div class="col-2">Minimum fee:</div>
-        <div class="col-2">{{campagne.minFee}}</div>
+        <div class="col-2">{{campaign?.minFee}}</div>
     </div>
     <div class="row mt-1">
         <div class="col-2">Maximum fee:</div>
-        <div class="col-2">{{campagne.maxFee}}</div>
+        <div class="col-2">{{campaign?.maxFee}}</div>
     </div>
     <div class="row mt-5">
         <div class="col-6">
             <app-pitch-list 
-                [pitches]="campagne.pitches" 
-                [campagneId]="campagne.id"
+                [pitches]="campaign?.pitches" 
+                [campagneId]="campaign?.id"
                 (pitchSelected)="onPitchSelected($event)"></app-pitch-list>
         </div>
         <div class="col-6">

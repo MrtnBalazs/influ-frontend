@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pitch-list',
@@ -15,7 +14,7 @@ export class PitchListComponent {
 
   hoveredId: number | null = null; // Store hovered campagne ID
 
-  constructor(private router:Router){}
+  constructor(){}
 
   selectPitch(pitch: any) {
     this.pitchSelected.emit(pitch);

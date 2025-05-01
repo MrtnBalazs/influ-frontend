@@ -8,24 +8,20 @@ import { CampagneService } from '../../service/campagne/campagne.service';
   templateUrl: './pitch.component.html',
   styleUrl: './pitch.component.css'
 })
-export class PitchComponent implements OnInit{
+export class PitchComponent{
   pitchId = signal<any | null>(null);
   pitch: any;
 
   @Input({ transform: (c: any) => c }) 
   set selectedPitch(value: any) {
-    this.pitchId.set(value);
-    this.campagneService.getPitchById(this.pitchId()).subscribe(pitch => {
-      this.pitch = pitch;
-    });
+    if (value) {
+      this.pitchId.set(value);
+      this.campagneService.getPitchById(this.pitchId()).subscribe((response: { pitch: any }) => {
+        this.pitch = response.pitch;
+      });
+    }
   }
 
   constructor(private campagneService:CampagneService){}
-
-  ngOnInit() {
-    this.campagneService.getPitchById(this.pitchId()).subscribe(pitch => {
-      this.pitch = pitch;
-    });
-  }
 
 }

@@ -15,7 +15,7 @@ import { signal } from '@angular/core';
 })
 export class CampageComponent implements OnInit {
   @Input() id: string = "";
-  campagne: any;
+  campaign: any = null;
   selectedPitchId = signal<any | null>(null);
 
   constructor(private campagneService: CampagneService) {}
@@ -25,8 +25,8 @@ export class CampageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.campagneService.getCampagneById(this.id).subscribe(campagne => {
-      this.campagne = campagne;
+    this.campagneService.getCampagneById(this.id).subscribe((response: { campaign: any }) => {
+      this.campaign = response.campaign;
     });
   }
 }

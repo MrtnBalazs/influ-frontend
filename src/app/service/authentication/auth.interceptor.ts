@@ -7,7 +7,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authToken = authService.getToken();
   const authReq = req.clone({
     setHeaders: {
-      Authorization: `Bearer ${authToken}`
+      Authorization: `Bearer ${authToken}`,
+      "X-User-Id": "username" // temporary so it work without gateway
     }
   });
   return next(authReq);
