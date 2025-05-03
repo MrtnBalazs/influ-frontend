@@ -19,14 +19,8 @@
         <div class="col-2">{{campaign?.maxFee}}</div>
     </div>
     <div class="row mt-5">
-        <div class="col-6">
-            <app-pitch-list 
-                [pitches]="campaign?.pitches" 
-                [campagneId]="campaign?.id"
-                (pitchSelected)="onPitchSelected($event)"></app-pitch-list>
-        </div>
-        <div class="col-6">
-            <app-pitch [selectedPitch]="selectedPitchId()"></app-pitch>
-        </div>
+            <app-pitch-list-detail
+                [pitches]="campaign?.pitches">
+            </app-pitch-list-detail>
     </div>
 </div>

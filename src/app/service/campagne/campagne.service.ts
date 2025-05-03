@@ -7,7 +7,7 @@ import { Observable, of, map } from 'rxjs';
 })
 export class CampagneService {
   private baseUrl = 'http://localhost:8083';
-  private dev = false;
+  private dev = true; // TODO temporary for developing
   private devPitchResponse: Observable<any> = of({
     "pitch": {
         "id": 1,
@@ -35,6 +35,23 @@ export class CampagneService {
         ]
     }
   });
+  private devPitchListResponse: Observable<any> = of(
+    {
+      "pitches": [
+          {
+              "id": 1,
+              "creatorId": "username",
+              "title": "Test pitch title",
+              "text": "Test pitch text"
+          },
+          {
+            "id": 2,
+            "creatorId": "username",
+            "title": "Test pitch title2",
+            "text": "Test pitch text2"
+        }
+      ]
+    });
   private devCampagneListResponse: Observable<any> = of(
     {
       "campaigns": [{
@@ -70,6 +87,7 @@ export class CampagneService {
       }]
     }
   );
+  
 
   constructor(private http: HttpClient) {}
 
@@ -106,5 +124,12 @@ export class CampagneService {
       return this.devPitchResponse;
     }
     return this.http.get<{ pitch: any }>(`${this.baseUrl}/api/v1/campaigns/pitches/${id}`);
+  }
+
+  getMyPitches() {
+    if(this.dev) {
+      return this.devPitchListResponse;
+    }
+    return this.http.get<{ pitches: any }>(`${this.baseUrl}/api/v1/campaigns/pitches/user`);
   }
 }

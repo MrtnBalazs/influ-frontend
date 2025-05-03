@@ -1,0 +1,10 @@
+<div class="row">
+    <div class="col-6">
+        <app-pitch-list 
+            [pitches]="pitches" 
+            (pitchSelected)="onPitchSelected($event)"></app-pitch-list>
+    </div>
+    <div class="col-6">
+        <app-pitch [selectedPitch]="selectedPitchId()"></app-pitch>
+    </div>
+</div>

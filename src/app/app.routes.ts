@@ -10,12 +10,15 @@ import { AuthGuard } from './service/authentication/auth.guard';
 import { MyCampagnesComponent } from './campagne/my-campagnes/my-campagnes.component';
 import { AllCampagnesComponent } from './campagne/all-campagnes/all-campagnes.component';
 import { SavedCampagnesComponent } from './campagne/saved-campagnes/saved-campagnes.component';
+import { ProfileComponent } from './profile/profile.component';
+import { SettingsComponent } from './settings/settings.component';
+import { MyPitchesComponent } from './pitch/my-pitches/my-pitches.component';
 
 export const routes: Routes = [
     { path: 'homepage', component: HomepageComponent },
-    { path: 'profile', component: HomepageComponent, canActivate: [AuthGuard] },
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'messages', component: HomepageComponent, canActivate: [AuthGuard] },
-    { path: 'settings', component: HomepageComponent, canActivate: [AuthGuard] },
+    { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent }, // TODO not logged in guard
     { path: 'register', component: RegisterComponent }, // TODO not logged in guard
     { path: 'registration/success', component: RegisterSuccessComponent }, // TODO not logged in guard
@@ -48,5 +51,5 @@ export const routes: Routes = [
     { path: 'saved-influencers', component: HomepageComponent },
 
     // Pitches /my-pitches
-    { path: 'my-pitches', component: HomepageComponent },
+    { path: 'my-pitches', component: MyPitchesComponent },
 ];
