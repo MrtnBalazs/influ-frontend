@@ -1,17 +1,22 @@
 import { Component } from '@angular/core';
 import { IsBrandService } from '../service/is-brand/is-brand.service';
 import { AuthenticationService } from '../service/authentication/authentication.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
   isLoggedIn = false;
+  menuOpen = false;
 
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
   constructor(
     private isBrandService: IsBrandService,
     private authenticationService: AuthenticationService
