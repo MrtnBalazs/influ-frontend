@@ -1,3 +1,18 @@
-<h1>Profile</h1>
-<div>Username</div>
-<div>Social media accounts:</div>
+<div class="row">
+    <h1>Profile</h1>
+</div>
+<div class="row">
+    <div class="col-1">Username:</div>
+    <div class="col-2">{{user?.username}}</div>
+</div>
+<div class="row">
+    <div class="col-1">User type:</div>
+    <div class="col-2">{{user?.userType}}</div>
+</div>
+<div class="row mt-5">
+    <h3>Settings</h3>
+</div>
+<div class="row">
+    <div class="col-2">Email notification</div>
+    <div class="col-2">{{user?.settings.emailNotifications}}</div>
+</div>

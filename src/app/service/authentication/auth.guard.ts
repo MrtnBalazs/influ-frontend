@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
   canActivate(): Observable<boolean> {
     return this.authService.isAuthenticated().pipe(
       map(isAuth => {
-          return true; // set to true for dev purposes
+          return false; // set to true for dev purposes
         if (!isAuth) {
           this.router.navigate(['/error', 'Not authenticated! Login to reach this page']); // Redirect if not logged in
           //return false;

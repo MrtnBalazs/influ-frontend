@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +38,8 @@ export class AuthenticationService {
 
   /** Check if user is authenticated */
   isAuthenticated(): Observable<boolean> {
-    return this.authState.asObservable();
+    //return this.authState.asObservable();
+    return of(false)
   }
 
   /** Check if a JWT token exists */

@@ -2,15 +2,13 @@ import { Component } from '@angular/core';
 import { CampagneService } from '../../service/campagne/campagne.service';
 import { Input } from '@angular/core';
 import { OnInit } from '../../../../node_modules/@angular/core/index';
-import { PitchListComponent } from "../../pitch/pitch-list/pitch-list.component";
-import { PitchComponent } from "../../pitch/pitch/pitch.component";
 import { signal } from '@angular/core';
 import { PitchListDetailComponent } from "../../pitch/pitch-list-detail/pitch-list-detail.component";
 
 @Component({
   selector: 'app-campage',
   standalone: true,
-  imports: [PitchListComponent, PitchComponent, PitchListDetailComponent],
+  imports: [PitchListDetailComponent],
   templateUrl: './campage.component.html',
   styleUrl: './campage.component.css'
 })
