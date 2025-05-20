@@ -7,7 +7,7 @@ import { Observable, of, map } from 'rxjs';
 })
 export class CampagneService {
   private baseUrl = 'http://localhost:8081';
-  private dev = false;
+  private dev = true;
   private devPitchResponse: Observable<any> = of({
     "pitch": {
         "id": 1,
