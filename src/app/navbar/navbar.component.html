@@ -1,11 +1,7 @@
 <nav class="navbar-container">
-  <div class="navbar-left">
-    <button class="navbar-button brand-button">CASHFLUENCE</button>
-  </div>
-
+  <button class="brand-button">CASHFLUENCE</button>
   <div class="menu-toggle" (click)="toggleMenu()">☰</div>
-
-  <div class="navbar-right" [ngClass]="{ 'open': menuOpen }">
+  <div class="navbar-buttons-container" [ngClass]="{ 'open': menuOpen }">
     <button class="navbar-button">HOME</button>
     <button class="navbar-button">CAMPAIGNS</button>
     <button class="navbar-button">BRANDS</button>
@@ -14,6 +10,7 @@
     <button class="navbar-button">REGISTER</button>
   </div>
 </nav>
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       @if(isBrand()){
