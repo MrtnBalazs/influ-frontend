@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CampagneService } from '../../service/campagne/campagne.service';
 import { CampagneListComponent } from '../campagne-list/campagne-list.component';
+import { CampageComponent } from "../campage/campage.component";
 
 @Component({
   selector: 'app-all-campagnes',
   standalone: true,
-  imports: [CampagneListComponent],
+  imports: [CampagneListComponent, CampageComponent],
   templateUrl: './all-campagnes.component.html',
   styleUrl: './all-campagnes.component.css'
 })

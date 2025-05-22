@@ -1,22 +1,28 @@
-<div class="container">
-    <div class="row">
-        <h3 class="text-center">{{campaign?.title}}</h3>
+<div class="campaign-container">
+    <div class="campaign-title">
+        {{campaign?.title}}
     </div>
-    <div class="row mt-1">
-        <div class="col-4">
-            <img src="https://picsum.photos/600/400" class="rounded img-fluid" alt="Campaign image">
-        </div>
-        <div class="col-8">
-            {{campaign?.description}}
-        </div>
+    <div class="campaign-text">
+        {{campaign?.description}}
     </div>
-    <div class="row mt-1">
-        <div class="col-2">Minimum fee:</div>
-        <div class="col-2">{{campaign?.minFee}}</div>
+    <div class="campaign-text">
+        {{campaign?.contentGuideline}}
     </div>
-    <div class="row mt-1">
-        <div class="col-2">Maximum fee:</div>
-        <div class="col-2">{{campaign?.maxFee}}</div>
+    <div class="campaign-data-container">
+        <div class="campaign-text" style="font-size: 20px;">Type: paid post</div>
+        <div class="campaign-text" style="font-size: 20px;">Compensation: 100 dollar per post</div>
+        <div class="campaign-text" style="font-size: 20px;">Content format: instagram post</div>
+        <div class="campaign-text" style="font-size: 20px;">Deliverable: 3 posts</div>
+        <div class="campaign-text" style="font-size: 20px;">Target platform: instagram</div>
+        <div class="campaign-text" style="font-size: 20px;">Target audience: young adoults</div>
+        <div class="campaign-text" style="font-size: 20px;">Application deadline: 2025.02.02</div>
+        <div class="campaign-text" style="font-size: 20px;">Timeline: post on 2025.08.21</div>
+        <div class="campaign-text" style="font-size: 20px;">Review beforehand: true</div>
+        <div class="campaign-text" style="font-size: 20px;">Usage rights: fair user</div>
+        <div class="campaign-text" style="font-size: 20px;">Relevant nieche: cars</div>
+        <div class="campaign-text" style="font-size: 20px;">Follower count / reach: 50k</div>
+        <div class="campaign-text" style="font-size: 20px;">Min fee: {{campaign?.minFee}}</div>
+        <div class="campaign-text" style="font-size: 20px;">Max fee: {{campaign?.maxFee}}</div>
     </div>
     <div class="row mt-5">
             <app-pitch-list-detail

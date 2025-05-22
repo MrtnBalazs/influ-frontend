@@ -21,7 +21,11 @@ export class CampagneService {
         "id": 1,
         "userId": "username",
         "title": "Test Campaign",
-        "description": "Test description",
+        "description": "Lorem Ipsumis simply dummy text of the printing" + 
+                        "and typesetting industry. Lorem Ipsum has been the industrys sived not only five centuries, but also the leap into electronic typesetting." +
+                        "details about the required content information about payment and how long the campaign lasts" +
+                        "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.",
+        "contentGuideline": "Content guideline: Say in the video i love the product, make it 60 seconds, add hashtag loveit, integrate it seamlessly into yout  content",
         "maxFee": 5,
         "minFee": 1,
         "favorited": null,
@@ -84,7 +88,53 @@ export class CampagneService {
         "minFee":"2000",
         "maxFee":"3000",
         "favorited": true
-      }]
+      },
+      {
+        "id":"3",
+        "userId": "username",
+        "title":"Hell new product",
+        "description":"Hell is releasing a new product called Hell Water...",
+        "minFee":"2000",
+        "maxFee":"3000",
+        "favorited": true
+      },
+      {
+        "id":"4",
+        "userId": "username",
+        "title":"Hell new product",
+        "description":"Hell is releasing a new product called Hell Water...",
+        "minFee":"2000",
+        "maxFee":"3000",
+        "favorited": true
+      },
+      {
+        "id":"5",
+        "userId": "username",
+        "title":"Hell new product",
+        "description":"Hell is releasing a new product called Hell Water...",
+        "minFee":"2000",
+        "maxFee":"3000",
+        "favorited": true
+      },
+      {
+        "id":"6",
+        "userId": "username",
+        "title":"Hell new product",
+        "description":"Hell is releasing a new product called Hell Water...",
+        "minFee":"2000",
+        "maxFee":"3000",
+        "favorited": true
+      },
+      {
+        "id":"7",
+        "userId": "username",
+        "title":"Hell new product",
+        "description":"Hell is releasing a new product called Hell Water...",
+        "minFee":"2000",
+        "maxFee":"3000",
+        "favorited": true
+      }
+      ]
     }
   );
   
