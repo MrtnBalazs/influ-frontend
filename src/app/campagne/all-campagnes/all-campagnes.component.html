@@ -1,9 +1,9 @@
 <div class="split-screen-container">
-    <app-campagne-list [campagnes]="campagnes"></app-campagne-list>
+    <app-campagne-list (campaignSelected)="onCampaignSelected($event)" [campaigns]="campagnes"></app-campagne-list>
   
     <div class="vertical-divider-wrapper">
         <div class="vertical-divider"></div>
     </div>
    <!-- majd itt a campagne details compnens-->
-   <app-campage></app-campage>
+   <app-campage [selectedCampaign]="campaignSelected()"></app-campage>
 </div>

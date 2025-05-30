@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -9,5 +9,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './campagne-list.component.css'
 })
 export class CampagneListComponent {
-  @Input() campagnes: any[] = [];
+  @Input() campaigns: any[] = [];
+  @Output() campaignSelected = new EventEmitter<any>();
+  
+  constructor(){}
+  
+  selectCampaign(campaign: any) {
+    this.campaignSelected.emit(campaign);
+  }
 }

@@ -1,12 +1,12 @@
 <div class="list-container">
-  <div class="list-title">All campagnes</div>
+  <div class="list-title">All campaigns</div>
   <div class="list-item-container">
-    @for (campagne of campagnes; track campagne.id) {
-      <a [routerLink]="['/campagnes/', campagne.id]" class="list-item">
-        <div>
-          {{campagne.title}}
-        </div>
-      </a>
+    @for (campaign of campaigns; track campaign.id) {
+      <!-- <a [routerLink]="['/campagnes/', campaign.id]" class="list-item"> -->
+        <a class="list-item" (click)="selectCampaign(campaign)">
+          {{campaign.title}}
+        </a>
+      <!-- </a> -->
     }
   </div>
 </div>

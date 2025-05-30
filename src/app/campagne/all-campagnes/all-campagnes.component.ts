@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CampagneService } from '../../service/campagne/campagne.service';
 import { CampagneListComponent } from '../campagne-list/campagne-list.component';
 import { CampageComponent } from "../campage/campage.component";
@@ -12,6 +12,7 @@ import { CampageComponent } from "../campage/campage.component";
 })
 export class AllCampagnesComponent {
   campagnes: any[] = [];
+  campaignSelected = signal<any | null>(null);
 
   constructor(private campagneService: CampagneService) {}
 
@@ -19,5 +20,10 @@ export class AllCampagnesComponent {
     this.campagneService.getAllCampagnes().subscribe((response: { campaigns: any[] }) => {
       this.campagnes = response.campaigns;
     });
+  }
+
+  onCampaignSelected(campaign: any) {
+    this.campaignSelected.set(campaign.id);
+    console.log("allcampaignss campaign selected")
   }
 }

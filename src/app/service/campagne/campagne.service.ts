@@ -137,7 +137,54 @@ export class CampagneService {
       ]
     }
   );
-  
+  private devCampagneListResponseForDetail = [
+    {
+      "campaign": {
+      "id": 1,
+      "userId": "username",
+      "title": "Test Campaign",
+      "description": "Lorem Ipsumis simply dummy text of the printing" + 
+                      "and typesetting industry. Lorem Ipsum has been the industrys sived not only five centuries, but also the leap into electronic typesetting." +
+                      "details about the required content information about payment and how long the campaign lasts" +
+                      "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.",
+      "contentGuideline": "Content guideline: Say in the video i love the product, make it 60 seconds, add hashtag loveit, integrate it seamlessly into yout  content",
+      "maxFee": 5,
+      "minFee": 1,
+      "favorited": null,
+      "pitches": [
+          {
+              "id": 1,
+              "creatorId": "username1",
+              "title": "Test pitch title",
+              "text": "Test pitch text"
+          }
+      ]
+      }
+    },
+    {
+      "campaign": {
+      "id": 1,
+      "userId": "username",
+      "title": "Mol price drop",
+      "description": "Lorem Ipsumis simply dummy text of the printing" + 
+                      "and typesetting industry. Lorem Ipsum has been the industrys sived not only five centuries, but also the leap into electronic typesetting." +
+                      "details about the required content information about payment and how long the campaign lasts" +
+                      "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.",
+      "contentGuideline": "Content guideline: Say in the video i love the product, make it 60 seconds, add hashtag loveit, integrate it seamlessly into yout  content",
+      "maxFee": 20,
+      "minFee": 20,
+      "favorited": null,
+      "pitches": [
+          {
+              "id": 1,
+              "creatorId": "username2",
+              "title": "Test pitch titledawdadwa",
+              "text": "Testdawdawdawd pitch text"
+          }
+      ]
+      }
+    }
+  ];
 
   constructor(private http: HttpClient) {}
 
@@ -150,7 +197,9 @@ export class CampagneService {
 
   getCampagneById(id: string): Observable<{ campaign: any }> {
     if(this.dev) {
-      return this.devCampagneResponse;
+      //return this.devCampagneResponse;
+      var response: Observable<any> = of(this.devCampagneListResponseForDetail[parseInt(id)]);
+      return response;
     }
     return this.http.get<{ campaign: any }>(`${this.baseUrl}/api/v1/campaigns/${id}`);
   }

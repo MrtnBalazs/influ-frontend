@@ -14,10 +14,25 @@ import { PitchListDetailComponent } from "../../pitch/pitch-list-detail/pitch-li
 })
 export class CampageComponent implements OnInit {
   @Input() id: string = "";
+  campaignId = signal<any | null>(null);
   campaign: any = null;
   selectedPitchId = signal<any | null>(null);
 
   constructor(private campagneService: CampagneService) {}
+
+  @Input({ transform: (c: any) => c }) 
+  set selectedCampaign(value: any) {
+    console.log("campagne componenet megjött a campaign")
+    console.log(value)
+    if (value) {
+      this.campaignId.set(value);
+      this.campagneService.getCampagneById(this.campaignId()).subscribe((response: { campaign: any }) => {
+        this.campaign = response.campaign;
+        console.log("campaign beállítva");
+        console.log(this.campaign);
+      });
+    }
+  }
 
   onPitchSelected(pitch: any) {
     this.selectedPitchId.set(pitch.id);
