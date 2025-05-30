@@ -1,12 +1,12 @@
 <nav class="navbar-container">
-  <a class="brand-button" href="/homepage" (click)="switchBrandCampagne()">CASHFLUENCE</a>
+  <a class="brand-button" (click)="switchBrandCampagne()" (click)="selectMenuItem('/homepage')">CASHFLUENCE</a>
   <div class="menu-toggle" (click)="toggleMenu()">☰</div>
   <div class="navbar-buttons-container" [ngClass]="{ 'open': menuOpen }">
     @for (item of getRouteList(); track item.name) {
       <a [class.selected]="item.route === selectedRoute" class="navbar-button" (click)="selectMenuItem(item.route)">{{item.name}}</a>
     }
     @if(isLoggedIn) {
-        <a class="navbar-button" (click)="logOut()" href="/homepage">Logout</a>
+        <a class="navbar-button" (click)="logOut()" (click)="selectMenuItem('/homepage')">Logout</a>
     } @else {
         <a [class.selected]="'/login' === selectedRoute" class="navbar-button" (click)="selectMenuItem('/login')">Login</a>
         <a [class.selected]="'/register' === selectedRoute" class="navbar-button" (click)="selectMenuItem('/register')">Register</a>

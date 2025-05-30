@@ -23,14 +23,15 @@ export class NavbarComponent {
     private router: Router,
     private isBrandService: IsBrandService,
     private authenticationService: AuthenticationService
-  ) {}
+  ) {
+    this.selectedRoute = '/homepage';
+  }
 
   isBrand() {
     return this.isBrandService.getIsBrand();
   }
 
   selectMenuItem(route: any) {
-    console.log(route)
     this.selectedRoute = route;
     this.router.navigate([route])
   }
@@ -38,15 +39,13 @@ export class NavbarComponent {
   ngOnInit(): void {
     this.authenticationService.isAuthenticated().subscribe(authStatus => {
       //this.isLoggedIn = authStatus;
-      this.isLoggedIn = false; // set to always true for dev puroses
+      this.isLoggedIn = false; // TODO dev puroses only, change it back for prod!
     });
   }
 
   loggedOutMenuItems = [
     { name: 'Home', route: '/homepage' },
-    { name: 'Campagnes', route: '/campagnes' },
-    { name: 'Brands', route: '/brands' },
-    { name: 'Influencers', route: '/influencers' },
+    { name: 'Campagnes', route: '/campagnes' }
   ]
 
   commonMenuItemsFront = [
@@ -76,10 +75,12 @@ export class NavbarComponent {
 
   getRouteList() {
     if(this.isLoggedIn) {
+      var menuItems = this.commonMenuItemsFront;
       if(this.isBrand())
-        return this.commonMenuItemsFront.concat(this.brandMenuItems).concat(this.commonMenuItemsBack);
+        menuItems = menuItems.concat(this.brandMenuItems);
       else
-        return this.commonMenuItemsFront.concat(this.influMenuItems).concat(this.commonMenuItemsBack);
+        menuItems = menuItems.concat(this.influMenuItems);
+      return menuItems.concat(this.commonMenuItemsBack);
     } else {
       return this.loggedOutMenuItems;
     }

@@ -32,7 +32,7 @@ export class CampageComponent implements OnInit {
   campaign: any = null;
   selectedPitchId = signal<any | null>(null);
   animationState = 'show';
-  withPitches = false;
+  @Input() withPitches = false;
 
   constructor(private campagneService: CampagneService) {}
 

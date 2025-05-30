@@ -6,7 +6,6 @@ import { Injectable } from '@angular/core';
 export class IsBrandService {
 
   constructor() { 
-    console.log("isBrand constructor")
   }
 
   public getIsBrand() {
@@ -14,6 +13,7 @@ export class IsBrandService {
   }
 
   public setIsBrand(isBrand:boolean) {
+    console.log("IsBrand: " + isBrand);
     return localStorage.setItem("isBrand", isBrand.toString());
   }
 }
