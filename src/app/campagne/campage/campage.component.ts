@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   imports: [PitchListDetailComponent, CommonModule ],
   templateUrl: './campage.component.html',
   styleUrl: './campage.component.css',
- animations: [
+  animations: [
     trigger('fadeSlide', [
       state('hide', style({ opacity: 0, transform: 'translateY(10px)' })),
       state('show', style({ opacity: 1, transform: 'translateY(0)' })),
@@ -32,13 +32,17 @@ export class CampageComponent implements OnInit {
   campaign: any = null;
   selectedPitchId = signal<any | null>(null);
   animationState = 'show';
-
-  rerunAnimation() {
-    this.animationState = 'hide';
-    setTimeout(() => this.animationState = 'show', 150); // quickly reset to rerun
-  }
+  withPitches = false;
 
   constructor(private campagneService: CampagneService) {}
+
+  ngOnInit() {
+    if(this.id) {
+      this.campagneService.getCampagneById(this.id).subscribe((response: { campaign: any }) => {
+      this.campaign = response.campaign;
+    });
+    }
+  }
 
   @Input({ transform: (c: any) => c }) 
   set selectedCampaign(value: any) {
@@ -55,11 +59,8 @@ export class CampageComponent implements OnInit {
     this.selectedPitchId.set(pitch.id);
   }
 
-  ngOnInit() {
-    if(this.id) {
-      this.campagneService.getCampagneById(this.id).subscribe((response: { campaign: any }) => {
-      this.campaign = response.campaign;
-    });
-    }
+  rerunAnimation() {
+    this.animationState = 'hide';
+    setTimeout(() => this.animationState = 'show', 150); // quickly reset to rerun
   }
 }

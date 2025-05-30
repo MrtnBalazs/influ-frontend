@@ -3,7 +3,7 @@
   <div class="list-item-container">
     @for (campaign of campaigns; track campaign.id) {
       <!-- <a [routerLink]="['/campagnes/', campaign.id]" class="list-item"> -->
-        <a class="list-item" (click)="selectCampaign(campaign)">
+        <a [class.selected]="campaign.id === selectedItemId" class="list-item" (click)="selectCampaign(campaign)">
           {{campaign.title}}
         </a>
       <!-- </a> -->

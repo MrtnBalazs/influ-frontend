@@ -46,6 +46,10 @@ a {
     padding-top: 2px;     
 }
 
+.navbar-button.selected {
+    background-color: #02542D;
+}
+
 .navbar-button:active {
     transform: scale(0.80);
 }
@@ -131,6 +135,10 @@ a {
 
 .list-item:active {
   transform: translateX(5px); /* move 5px to the right when clicked */
+}
+
+.list-item.selected {
+    background:  #02542D;
 }
 
 .list-title {

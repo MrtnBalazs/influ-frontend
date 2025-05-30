@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IsBrandService } from '../service/is-brand/is-brand.service';
 import { AuthenticationService } from '../service/authentication/authentication.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -13,17 +14,25 @@ import { CommonModule } from '@angular/common';
 export class NavbarComponent {
   isLoggedIn = false;
   menuOpen = false;
+  selectedRoute: string | null = null;
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }
   constructor(
+    private router: Router,
     private isBrandService: IsBrandService,
     private authenticationService: AuthenticationService
   ) {}
 
   isBrand() {
     return this.isBrandService.getIsBrand();
+  }
+
+  selectMenuItem(route: any) {
+    console.log(route)
+    this.selectedRoute = route;
+    this.router.navigate([route])
   }
 
   ngOnInit(): void {

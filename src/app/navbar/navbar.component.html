@@ -3,13 +3,13 @@
   <div class="menu-toggle" (click)="toggleMenu()">☰</div>
   <div class="navbar-buttons-container" [ngClass]="{ 'open': menuOpen }">
     @for (item of getRouteList(); track item.name) {
-      <a class="navbar-button" [href]="item.route">{{item.name}}</a>
+      <a [class.selected]="item.route === selectedRoute" class="navbar-button" (click)="selectMenuItem(item.route)">{{item.name}}</a>
     }
     @if(isLoggedIn) {
         <a class="navbar-button" (click)="logOut()" href="/homepage">Logout</a>
     } @else {
-        <a class="navbar-button" href="/login">Login</a>
-        <a class="navbar-button" href="/register">Register</a>
+        <a [class.selected]="'/login' === selectedRoute" class="navbar-button" (click)="selectMenuItem('/login')">Login</a>
+        <a [class.selected]="'/register' === selectedRoute" class="navbar-button" (click)="selectMenuItem('/register')">Register</a>
     }
   </div>
 </nav>

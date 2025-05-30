@@ -25,11 +25,13 @@
             <div class="campaign-text" style="font-size: 20px;">Min fee: {{campaign?.minFee}}</div>
             <div class="campaign-text" style="font-size: 20px;">Max fee: {{campaign?.maxFee}}</div>
         </div>
-        <div class="row mt-5">
-            <app-pitch-list-detail
-                [pitches]="campaign?.pitches">
-            </app-pitch-list-detail>
-        </div>
+        @if(withPitches) {
+            <div>
+                <app-pitch-list-detail
+                    [pitches]="campaign?.pitches">
+                </app-pitch-list-detail>
+            </div>    
+        }
     </div>
 } @else {
     <div [@fadeSlide]="animationState" class="campaign-not-selected-container">
