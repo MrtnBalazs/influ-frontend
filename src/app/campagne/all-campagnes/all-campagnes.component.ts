@@ -24,6 +24,5 @@ export class AllCampagnesComponent {
 
   onCampaignSelected(campaign: any) {
     this.campaignSelected.set(campaign.id);
-    console.log("allcampaignss campaign selected")
   }
 }

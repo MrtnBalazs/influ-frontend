@@ -197,7 +197,6 @@ export class CampagneService {
 
   getCampagneById(id: string): Observable<{ campaign: any }> {
     if(this.dev) {
-      //return this.devCampagneResponse;
       var response: Observable<any> = of(this.devCampagneListResponseForDetail[parseInt(id)]);
       return response;
     }
