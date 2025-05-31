@@ -1,22 +1,26 @@
-<h1 class="row">
-    Login
-</h1>
-<div class="row">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
-        </div>
-        <input [(ngModel)]="username" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+<form [formGroup]="loginForm" (ngSubmit)="formSubmitted()" class="green-container" style="gap: 10px;">
+    <div class="login-title">Login</div>
+    <div>
+        <span class="text">Email</span>
+        @if(loginForm.get('username')?.errors?.['required']) {
+            <div class="validation-fail-text">Email is required!</div>
+        }
+        @if(loginForm.get('username')?.errors?.['email']) {
+            <div class="validation-fail-text">Text is not an email!</div>
+        }
     </div>
-</div>
-<div class="row">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
-          </div>
-          <input [(ngModel)]="password" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+    <input style="width: 200px;" formControlName="username" type="text" placeholder="Username">
+    <div>
+        <span class="text">Password</span>
+        @if(loginForm.get('password')?.errors?.['required']) {
+            <div class="validation-fail-text">Password is required!</div>
+        }
     </div>
-</div>
-<div class="row">
-    <button type="button" (click)="onLoginClick()" class="btn btn-primary col-2">Login</button>
-</div>
+    <input style="width: 200px;" formControlName="password" type="password" placeholder="Password">
+    <button [disabled]="loginForm.invalid" style="margin-top: 13px; width: 200px" class="navbar-button" type="submit">Login</button>
+</form>
+@if(errorWhenLogin) {
+    <div class="red-container">
+        <div class="text" style="opacity: 0.5;">User does not exists, or email is not yet activated or password is wrong</div>
+    </div>
+}
