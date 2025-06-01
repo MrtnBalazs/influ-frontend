@@ -2,17 +2,31 @@ import { Component } from '@angular/core';
 import { AuthenticationService } from '../../service/authentication/authentication.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  animations: [
+      trigger('shake', [
+      transition(':enter', [
+        style({ scale: (1) }),
+        //animate('200ms ease', style({ scale: (1.005) })),
+        animate('100ms ease', style({ transform: 'rotate(0.6deg)' })),
+        animate('100ms ease', style({ transform: 'rotate(-0.6deg)' })),
+        animate('100ms ease', style({ transform: 'rotate(0deg)' })),
+        //animate('200ms ease', style({ scale: (1) }))
+      ])
+    ])
+    ]
 })
 export class LoginComponent {
   loginForm: any;
   errorWhenLogin: Boolean = false;
+  loginClicked = false;
 
   constructor(
     private fb: FormBuilder,
@@ -26,6 +40,7 @@ export class LoginComponent {
   }
 
   formSubmitted() {
+    this.loginClicked = true;
     if (this.loginForm.invalid) return;
     this.errorWhenLogin = false;
     const { username, password } = this.loginForm.value;
