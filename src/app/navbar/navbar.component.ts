@@ -75,6 +75,13 @@ export class NavbarComponent {
     } else {
       this.menuItems = loggedOutMenuItems;
     }
+
+    var currentRoute = window.location.href;
+    for(var menuItem of this.menuItems) {
+      if(menuItem instanceof RoutingMenuItem && currentRoute.includes(menuItem.route)) {
+        this.selectedMenuItemName = menuItem.name;
+      }
+    }
   }
 
   toggleMenu() {

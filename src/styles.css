@@ -73,7 +73,7 @@ button {
 }
 
 .navbar-button:active {
-    transform: scale(0.80);
+    transform: scale(0.90);
 }
 
 .brand-button {
@@ -95,7 +95,7 @@ button {
 }
 
 .brand-button:active {
-    transform: scale(0.80);
+    transform: scale(0.90);
 }
 
 .menu-toggle {
