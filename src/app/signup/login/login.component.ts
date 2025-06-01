@@ -14,11 +14,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
       trigger('shake', [
       transition(':enter', [
         style({ scale: (1) }),
-        //animate('200ms ease', style({ scale: (1.005) })),
         animate('100ms ease', style({ transform: 'rotate(0.6deg)' })),
         animate('100ms ease', style({ transform: 'rotate(-0.6deg)' })),
         animate('100ms ease', style({ transform: 'rotate(0deg)' })),
-        //animate('200ms ease', style({ scale: (1) }))
       ])
     ])
     ]
