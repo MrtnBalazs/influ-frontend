@@ -96,6 +96,7 @@ export class NavbarComponent {
 
   selectMenuItem(menuItem: MenuItem) {
     menuItem.menuClicked();
+    this.toggleMenu();
     this.selectedMenuItemName = menuItem.name;
   }
 }
