@@ -38,7 +38,7 @@ export class LoginComponent {
     private router:Router
   ) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.email], []],
+      email: ['', [Validators.required, Validators.email], []],
       password: ['', Validators.required],
     });
   }
@@ -47,8 +47,8 @@ export class LoginComponent {
     this.loginClicked = true;
     if (this.loginForm.invalid) return;
     this.errorWhenLogin = false;
-    const { username, password } = this.loginForm.value;
-    this.authenticationService.login(username, password)
+    const { email, password } = this.loginForm.value;
+    this.authenticationService.login(email, password)
     .subscribe({
       next: () => {
         this.router.navigate(['/homepage'])

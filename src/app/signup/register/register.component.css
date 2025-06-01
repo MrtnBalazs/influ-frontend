@@ -1,0 +1,28 @@
+.toggle-bar {
+    border: 3px solid var(--dark-green);
+    background-color: #ffffff;
+    z-index: 10;
+    height: 20px;
+    width: 50px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0px;
+    cursor: pointer;
+}
+
+.toggle-ball {
+    border: 1.9px solid var(--dark-green);
+    background-color: var(--green);
+    height: 18px;
+    width: 18px;
+    border-radius: 15px;
+}
+
+.influ-brand-toggle-container {
+    flex-direction: row; 
+    display: flex;
+    gap: 16px; 
+    align-items: center;
+}

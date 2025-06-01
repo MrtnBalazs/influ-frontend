@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { CampagneListComponent } from './campagne/campagne-list/campagne-list.component';
 import { CreateCampagneComponent } from './campagne/create-campagne/create-campagne.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { RegisterComponent } from './signup/register/register/register.component';
 import { RegisterSuccessComponent } from './signup/register/register-success/register-success.component';
 import { ErrorComponent } from './error/error.component';
 import { LoginComponent } from './signup/login/login.component';
@@ -13,6 +12,7 @@ import { SavedCampagnesComponent } from './campagne/saved-campagnes/saved-campag
 import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
 import { MyPitchesComponent } from './pitch/my-pitches/my-pitches.component';
+import { RegisterComponent } from './signup/register/register.component';
 
 export const routes: Routes = [
     { path: 'homepage', component: HomepageComponent },
