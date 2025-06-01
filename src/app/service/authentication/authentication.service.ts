@@ -27,6 +27,7 @@ export class AuthenticationService {
 
   /** Logout: Clears JWT and updates state */
   logout(): void {
+    console.log("AuthService logout");
     localStorage.removeItem(this.tokenKey);
     this.authState.next(false);
   }

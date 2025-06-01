@@ -12,8 +12,8 @@ export class IsBrandService {
     return localStorage.getItem("isBrand") === "true";
   }
 
-  public setIsBrand(isBrand:boolean) {
-    console.log("IsBrand: " + isBrand);
-    return localStorage.setItem("isBrand", isBrand.toString());
+  public switchIsBrand() {
+    console.log("IsBrand: " + !this.getIsBrand());
+    return localStorage.setItem("isBrand", (!this.getIsBrand()).toString());
   }
 }
