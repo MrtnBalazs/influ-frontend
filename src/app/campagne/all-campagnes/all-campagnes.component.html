@@ -1,5 +1,5 @@
 <div class="split-screen-container">
-    <app-campagne-list (campaignSelected)="onCampaignSelected($event)" [campaigns]="campagnes"></app-campagne-list>
+    <app-campagne-list @fadeSlideId (campaignSelected)="onCampaignSelected($event)" [campaigns]="campagnes"></app-campagne-list>
   
     <div class="vertical-divider-wrapper">
         <div class="vertical-divider"></div>
