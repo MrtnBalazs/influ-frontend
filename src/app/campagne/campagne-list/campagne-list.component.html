@@ -1,5 +1,10 @@
-<div class="list-container">
+<div class="list-container" [style.padding-right]="!campaigns[0] ? 0 : 6">
   <div class="list-title">All campaigns</div>
+  @if (!campaigns[0]) {
+    <div class="campaign-not-selected-container" style="padding: 0px; margin-right: 0px; margin-left: 0px;">
+      <div class="campaign-missing-text">No campaigns</div>
+    </div>
+  }
   <div class="list-item-container">
     @for (campaign of campaigns; track campaign.id) {
       <!-- <a [routerLink]="['/campagnes/', campaign.id]" class="list-item"> -->

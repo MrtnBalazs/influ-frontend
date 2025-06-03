@@ -11,7 +11,6 @@ export class CampagneListComponent {
   @Input() campaigns: any[] = [];
   @Output() campaignSelected = new EventEmitter<any>();
   selectedItemId: string | null = null;
-
   constructor(){}
   
   selectCampaign(campaign: any) {

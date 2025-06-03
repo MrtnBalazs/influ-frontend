@@ -1,41 +1,43 @@
-<div @fadeSlideId class="green-container">
-    <div class="login-title">Register as</div>
-    <div class="influ-brand-toggle-container" (click)="clickToggle()">
-        <div class="text" [style.opacity]="toggleState === 'influencer' ? 1 : 0.6">Influencer</div>
-        <div class="toggle-bar" [@toggle]="toggleState">
-            <div class="toggle-ball"></div>
+<div class="column-contaier" style="padding: 16px">
+    <div @fadeSlideId class="green-container">
+        <div class="login-title">Register as</div>
+        <div class="influ-brand-toggle-container" (click)="clickToggle()">
+            <div class="text" [style.opacity]="toggleState === 'influencer' ? 1 : 0.6">Influencer</div>
+            <div class="toggle-bar" [@toggle]="toggleState">
+                <div class="toggle-ball"></div>
+            </div>
+            <div class="text" [style.opacity]="toggleState === 'brand' ? 1 : 0.6">Brand</div>
         </div>
-        <div class="text" [style.opacity]="toggleState === 'brand' ? 1 : 0.6">Brand</div>
     </div>
+    @if(isInfluencerRegister()) {
+        <form @fadeSlideId [formGroup]="registerForm" (ngSubmit)="formSubmitted()" class="green-container" style="gap: 10px;">
+            <div class="text">Email</div>
+            <input style="width: 200px;" formControlName="email" type="text" placeholder="Email">
+            <div class="text">Password</div>
+            <input style="width: 200px;" formControlName="password" type="password" placeholder="Password">
+            <div class="text">Name</div>
+            <input style="width: 200px;" formControlName="name" type="text" placeholder="Name">
+            <div class="text">Content type</div>
+            <input style="width: 200px;" formControlName="contentType" type="text" placeholder="Content type">
+            <div class="text">Age</div>
+            <input style="width: 200px;" formControlName="age" type="text" placeholder="Age">
+            <div class="text">Instagram tag</div>
+            <input style="width: 200px;" formControlName="instagram" type="text" placeholder="Instagram tag">
+            <div class="text">Youtube channel</div>
+            <input style="width: 200px;" formControlName="youtube" type="text" placeholder="Youtube channel">
+            <div class="text">Tiktok account</div>
+            <input style="width: 200px;" formControlName="tiktok" type="text" placeholder="TikTok">
+            <button [disabled]="registerForm.invalid && registerClicked" style="margin-top: 13px; width: 200px" class="navbar-button" type="submit">Register</button>
+        </form>
+    } @else {
+        <form @fadeSlideId [formGroup]="registerForm" (ngSubmit)="formSubmitted()" class="green-container" style="gap: 10px;">
+            <div class="text">Email</div>
+            <input style="width: 200px;" formControlName="email" type="text" placeholder="Email">
+            <div class="text">Password</div>
+            <input style="width: 200px;" formControlName="password" type="password" placeholder="Password">
+            <div class="text">Name</div>
+            <input style="width: 200px;" formControlName="name" type="text" placeholder="Name">
+            <button [disabled]="registerForm.invalid && registerClicked" style="margin-top: 13px; width: 200px" class="navbar-button" type="submit">Register</button>
+        </form>
+    }
 </div>
-@if(isInfluencerRegister()) {
-    <form @fadeSlideId [formGroup]="registerForm" (ngSubmit)="formSubmitted()" class="green-container" style="gap: 10px;">
-        <div class="text">Email</div>
-        <input style="width: 200px;" formControlName="email" type="text" placeholder="Email">
-        <div class="text">Password</div>
-        <input style="width: 200px;" formControlName="password" type="password" placeholder="Password">
-        <div class="text">Name</div>
-        <input style="width: 200px;" formControlName="name" type="text" placeholder="Name">
-        <div class="text">Content type</div>
-        <input style="width: 200px;" formControlName="contentType" type="text" placeholder="Content type">
-        <div class="text">Age</div>
-        <input style="width: 200px;" formControlName="age" type="text" placeholder="Age">
-        <div class="text">Instagram tag</div>
-        <input style="width: 200px;" formControlName="instagram" type="text" placeholder="Instagram tag">
-        <div class="text">Youtube channel</div>
-        <input style="width: 200px;" formControlName="youtube" type="text" placeholder="Youtube channel">
-        <div class="text">Tiktok account</div>
-        <input style="width: 200px;" formControlName="tiktok" type="text" placeholder="TikTok">
-        <button [disabled]="registerForm.invalid && registerClicked" style="margin-top: 13px; width: 200px" class="navbar-button" type="submit">Register</button>
-    </form>
-} @else {
-    <form @fadeSlideId [formGroup]="registerForm" (ngSubmit)="formSubmitted()" class="green-container" style="gap: 10px;">
-        <div class="text">Email</div>
-        <input style="width: 200px;" formControlName="email" type="text" placeholder="Email">
-        <div class="text">Password</div>
-        <input style="width: 200px;" formControlName="password" type="password" placeholder="Password">
-        <div class="text">Name</div>
-        <input style="width: 200px;" formControlName="name" type="text" placeholder="Name">
-        <button [disabled]="registerForm.invalid && registerClicked" style="margin-top: 13px; width: 200px" class="navbar-button" type="submit">Register</button>
-    </form>
-}
