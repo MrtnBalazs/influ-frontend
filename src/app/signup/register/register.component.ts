@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../service/authentication/authentication.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -38,11 +38,14 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       name: ['', Validators.required],
-      age: ['', Validators.required],
+      birthDate: ['', Validators.required,],
       contentType: ['', Validators.required],
-      instagram: ['', Validators.required],
-      youtube: ['', Validators.required],
-      tiktok: ['', Validators.required],
+      instagram: [''],
+      youtube: [''],
+      tiktok: [''],
+    },
+    {
+      validators: this.atLeastOneRequiredValidator()
     });
   }
 
@@ -58,6 +61,8 @@ export class RegisterComponent {
   }
 
   formSubmitted() {
+    this.registerClicked = true;
+    if (this.registerForm.invalid) return;
     console.log("Register clicked!");
     /*
     this.authenticationService.register(this.email, this.password)
@@ -72,5 +77,17 @@ export class RegisterComponent {
       }
     });
     */
+  }
+
+  atLeastOneRequiredValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const instagram = control.get('instagram')?.value;
+      const youtube = control.get('youtube')?.value;
+      const tiktok = control.get('tiktok')?.value;
+
+      const hasAtLeastOne = !!(instagram || youtube || tiktok);
+
+      return hasAtLeastOne ? null : { atLeastOneRequired: true };
+    };
   }
 }

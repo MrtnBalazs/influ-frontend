@@ -52,3 +52,7 @@
     justify-content: flex-start;
     gap: 16px;
 }
+
+input {
+  border-radius: 3px; /* Adjust as needed (px, %, etc.) */
+}
