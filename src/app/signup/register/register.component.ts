@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, Validat
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../service/authentication/authentication.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { REGISTER_BRAND, REGISTER_INFLUENCER } from '../../consts';
 
 @Component({
   selector: 'app-register',
@@ -25,16 +26,22 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ]
 })
 export class RegisterComponent {
-  registerForm: any;
+  registerBrandForm: any;
+  registerInfluencerForm: any;
   registerClicked = false;
-  toggleState = "influencer";
+  toggleState = REGISTER_INFLUENCER;
 
   constructor(
     private fb: FormBuilder,
     private authenticationService: AuthenticationService,
     private router:Router
   ) {
-    this.registerForm = this.fb.group({
+    this.registerBrandForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      name: ['', Validators.required],
+    }),
+    this.registerInfluencerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       name: ['', Validators.required],
@@ -50,20 +57,24 @@ export class RegisterComponent {
   }
 
   isInfluencerRegister() {
-    return this.toggleState === "influencer";
+    return this.toggleState === REGISTER_INFLUENCER;
   }
 
   clickToggle() {
-    if(this.toggleState === "influencer")
-      this.toggleState = "brand";
+    if(this.toggleState === REGISTER_INFLUENCER)
+      this.toggleState = REGISTER_BRAND;
     else
-      this.toggleState = "influencer";
+      this.toggleState = REGISTER_INFLUENCER;
   }
 
   formSubmitted() {
     this.registerClicked = true;
-    if (this.registerForm.invalid) return;
-    console.log("Register clicked!");
+    if(this.isBrandRegistering()) {
+      if (this.registerBrandForm.invalid) return;
+    } else {
+      if (this.registerInfluencerForm.invalid) return;
+    }
+    console.log("Register process start!");
     /*
     this.authenticationService.register(this.email, this.password)
     .subscribe({
@@ -77,6 +88,10 @@ export class RegisterComponent {
       }
     });
     */
+  }
+
+  isBrandRegistering(): boolean {
+    return this.toggleState === REGISTER_BRAND;
   }
 
   atLeastOneRequiredValidator(): ValidatorFn {
