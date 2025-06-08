@@ -10,4 +10,5 @@ import { MultipleSelectorPopupComponent } from "../common/multiple-selector-popu
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
+  contentTypes = ["lifestyle", "car", "pet", "horse", "dog", "gaming", "gambling", "sport"]
 }

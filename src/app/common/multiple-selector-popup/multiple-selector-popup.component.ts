@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -8,29 +8,31 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './multiple-selector-popup.component.html',
   styleUrl: './multiple-selector-popup.component.css'
 })
-export class MultipleSelectorPopupComponent {
-  @Input() items: string[] = ["ok", "dad", "aaa", "ccc", "bbb", "bbddwa", "bjkbja"];
-  @Input() typeOfItems = "content type";
+export class MultipleSelectorPopupComponent implements OnInit{
+  @Input() inputItems: string[] = [];
+  @Input() typeOfItems = "";
   @Input() maxConstraint = 5;
   @Input() minConstraint = 1;
   searchText: string = "";
   selectedItems: string[] = [];
-
-  constructor() {
-    this.items.sort((a, b) => a < b ? -1 : 1);
+  items: {color: any, value: string}[] = [];
+    
+  ngOnInit(): void {
+    this.inputItems.forEach((item) => this.items.push({color: this.getRandomColor(), value: item}))
+    this.items.sort((a, b) => a.value < b.value ? -1 : 1);
   }
 
   getFilteredItems() {
     return this.items.filter(
-      (value, index, array) => 
-        value.startsWith(this.searchText) &&
-       !this.selectedItems.find(selectedValue => selectedValue === value)
+      (value) => 
+        value.value.startsWith(this.searchText) &&
+       !this.selectedItems.find(selectedValue => selectedValue === value.value)
     );
   }
 
-  selectItem(item: string) {
+  selectItem(itemValue: string) {
     if(this.selectedItems.length < this.maxConstraint) {
-      this.selectedItems.push(item);
+      this.selectedItems.push(itemValue);
     }
   }
 

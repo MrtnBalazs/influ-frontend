@@ -1,9 +1,10 @@
 <div class="green-container">
     <div class="title">Select {{typeOfItems}}</div>
+    <div class="text">Select min: {{minConstraint}} max: {{maxConstraint}}</div>
     <input placeholder="Search {{typeOfItems}}" (input)="getFilteredItems()" [(ngModel)]="searchText"/>
     <div style="display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap;">
         @for(item of getFilteredItems(); track item) {
-            <div class="button" [style.background-color]="getRandomColor()" (click)="selectItem(item)">{{item}}</div>
+            <div class="button" [style.background-color]="item.color" (click)="selectItem(item.value)">{{item.value}}</div>
         }
     </div>
     <div class="horizontal-divider"></div>
