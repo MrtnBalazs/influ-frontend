@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { CampagneListComponent } from './campagne/campagne-list/campagne-list.component';
 import { CreateCampagneComponent } from './campagne/create-campagne/create-campagne.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { ErrorComponent } from './error/error.component';
 import { LoginComponent } from './signup/login/login.component';
 import { AuthGuard } from './service/authentication/auth.guard';
 import { MyCampagnesComponent } from './campagne/my-campagnes/my-campagnes.component';
@@ -20,7 +19,6 @@ export const routes: Routes = [
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent }, // TODO not logged in guard
     { path: 'register', component: RegisterComponent }, // TODO not logged in guard
-    { path: 'error/:errorMessage', component: ErrorComponent },
 
     // Campagnes
     { path: 'campagnes', component: AllCampagnesComponent },

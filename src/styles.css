@@ -208,17 +208,6 @@ app-campagne-list {
     width: 100%;
 }
   
-.vertical-divider-wrapper {
-    display: flex;
-    align-items: center;
-}
-  
-.vertical-divider {
-    width: 1px;
-    height: 85%;
-    background-color: #1c1a1a;
-}
-
   /* border: 1px solid #fe0000; */
 
 /* CAMPAIGN DETAIL -----------------------------------------------------------------------*/  

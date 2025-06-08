@@ -1,0 +1,25 @@
+<div class="green-container">
+    <div class="title">Select {{typeOfItems}}</div>
+    <input placeholder="Search {{typeOfItems}}" (input)="getFilteredItems()" [(ngModel)]="searchText"/>
+    <div style="display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap;">
+        @for(item of getFilteredItems(); track item) {
+            <div class="button" [style.background-color]="getRandomColor()" (click)="selectItem(item)">{{item}}</div>
+        }
+    </div>
+    <div class="horizontal-divider"></div>
+    <div style="display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap;">
+        @for(item of selectedItems; track item) {
+            <div (click)="unselectItem(item)">
+                <div class="button">
+                    <div class="x-icon"></div>
+                    <div>{{item}}</div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="horizontal-divider"></div>
+    <div style="display: flex; flex-direction: row; gap: 10px; justify-content: space-around;">
+        <div (click)="save()"><div class="button" style="background-color: rgb(1, 192, 45); width: 100px;">save</div></div>
+        <div (click)="cancel()"><div class="button" style="background-color: red; width: 100px;">cancel</div></div>
+    </div>
+</div>
