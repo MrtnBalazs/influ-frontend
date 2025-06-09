@@ -1,6 +1,6 @@
 @if(modalOpen) {
-    <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
-        <div class="green-container">
+    <div class="modal-backdrop" style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+        <div class="modal-green-container">
             <div class="title">Select {{typeOfItems}}</div>
             <div class="text">Select min: {{minConstraint}} max: {{maxConstraint}}</div>
             <input placeholder="Search {{typeOfItems}}" (input)="getFilteredItems()" [(ngModel)]="searchText"/>
@@ -42,15 +42,14 @@
             </div>
         }
     </div>
-} @else {
-    <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: start; align-items: center; gap: 16px">
-        <div (click)="openModal()"><div class="button">Select items</div></div>
-        @if(selectedItems.length != 0) {
-            @for(item of selectedItems; track item) {
-                <div class="text">{{item}}</div>
-            }
-        } @else {
-            <div class="text" style="opacity: 50%;">No item selected</div>
+} 
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: start; align-items: center; gap: 16px">
+    <div (click)="openModal()"><div class="button">Select items</div></div>
+    @if(selectedItems.length != 0) {
+        @for(item of selectedItems; track item) {
+            <div class="text">{{item}}</div>
         }
-    </div>
-}
+    } @else {
+        <div class="text" style="opacity: 50%;">No item selected</div>
+    }
+</div>
