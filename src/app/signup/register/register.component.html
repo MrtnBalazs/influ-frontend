@@ -1,5 +1,5 @@
 <div class="column-contaier" style="padding: 16px">
-    <div @fadeSlideId class="green-container">
+    <div @fadeSlideId class="green-container" style="gap: 10px">
         <div class="login-title">Register as</div>
         <div class="influ-brand-toggle-container">
             <div class="text" [style.opacity]="toggleState === 'influencer' ? 1 : 0.6">Influencer</div>
@@ -10,51 +10,67 @@
         </div>
     </div>
     @if(isInfluencerRegister()) {
-        <form @fadeSlideId [formGroup]="registerInfluencerForm" (ngSubmit)="formSubmitted()" class="green-container" style="gap: 10px;">
-            <div class="text">Email</div>
-            @if(registerInfluencerForm.get('email')?.errors?.['required'] && registerClicked) {
-                <div class="validation-fail-text">Email is required!</div>
-            }
-            @if(registerInfluencerForm.get('email')?.errors?.['email'] && registerClicked) {
-                <div class="validation-fail-text">Text is not an email!</div>
-            }
-            <input style="width: 200px;" formControlName="email" type="text" placeholder="Email">
-            <div class="text">Password</div>
-            @if(registerInfluencerForm.get('password')?.errors?.['required'] && registerClicked) {
-                <div class="validation-fail-text">Password is required!</div>
-            }
-            <input style="width: 200px;" formControlName="password" type="password" placeholder="Password">
-            <div class="text">Name</div>
-            @if(registerInfluencerForm.get('name')?.errors?.['required'] && registerClicked) {
-                <div class="validation-fail-text">Name is required!</div>
-            }
-            <input style="width: 200px;" formControlName="name" type="text" placeholder="Name">
-            <div class="text">Content type</div>
-            @if(registerInfluencerForm.get('contentType')?.errors?.['required'] && registerClicked) {
-                <div class="validation-fail-text">Content type is required!</div>
-            }
-            <input style="width: 200px;" formControlName="contentType" type="text" placeholder="Content type">
-            <div class="text">Birth date</div>
-            @if(registerInfluencerForm.get('birthDate')?.errors?.['required'] && registerClicked) {
-                <div class="validation-fail-text">Birth date is required!</div>
-            }
-            <input style="width: 200px;" formControlName="birthDate" type="text" placeholder="Birth date">
-            <div class="text">Instagram tag</div>
-            @if(registerInfluencerForm.errors?.['atLeastOneRequired'] && registerClicked) {
-                <div class="validation-fail-text">At least one social media is required!</div>
-            }
-            <input style="width: 200px;" formControlName="instagram" type="text" placeholder="Instagram tag">
-            <div class="text">Youtube channel</div>
-            @if(registerInfluencerForm.errors?.['atLeastOneRequired'] && registerClicked) {
-                <div class="validation-fail-text">At least one social media is required!</div>
-            }
-            <input style="width: 200px;" formControlName="youtube" type="text" placeholder="Youtube channel">
-            <div class="text">Tiktok account</div>
-            @if(registerInfluencerForm.errors?.['atLeastOneRequired'] && registerClicked) {
-                <div class="validation-fail-text">At least one social media is required!</div>
-            }
-            <input style="width: 200px;" formControlName="tiktok" type="text" placeholder="TikTok">
-            <button [disabled]="registerInfluencerForm.invalid && registerClicked" style="margin-top: 13px; width: 200px" class="navbar-button" type="submit">Register</button>
+        <form @fadeSlideId [formGroup]="registerInfluencerForm" (ngSubmit)="formSubmitted()" class="green-container" style="gap: 16px;">
+            <div>
+                <div class="text">Email</div>
+                @if(registerInfluencerForm.get('email')?.errors?.['required'] && registerClicked) {
+                    <div class="validation-fail-text">Email is required!</div>
+                }
+                @if(registerInfluencerForm.get('email')?.errors?.['email'] && registerClicked) {
+                    <div class="validation-fail-text">Text is not an email!</div>
+                }
+                <input style="width: 200px;" formControlName="email" type="text" placeholder="Email">
+            </div>
+            <div>
+                <div class="text">Password</div>
+                @if(registerInfluencerForm.get('password')?.errors?.['required'] && registerClicked) {
+                    <div class="validation-fail-text">Password is required!</div>
+                }
+                <input style="width: 200px;" formControlName="password" type="password" placeholder="Password">
+            </div>
+            <div>
+                <div class="text">Name</div>
+                @if(registerInfluencerForm.get('name')?.errors?.['required'] && registerClicked) {
+                    <div class="validation-fail-text">Name is required!</div>
+                }
+                <input style="width: 200px;" formControlName="name" type="text" placeholder="Name">
+            </div>
+            <div>
+                <div class="text">Content type</div>
+                <app-multiple-selector-popup [inputItems]='["lifestyle", "car", "pet", "horse", "dog", "gaming", "gambling", "sport"]' [maxConstraint]="3" [minConstraint]="1" [typeOfItems]="'content types'"></app-multiple-selector-popup>
+                @if(registerInfluencerForm.get('contentType')?.errors?.['required'] && registerClicked) {
+                    <div class="validation-fail-text">Content type is required!</div>
+                }
+            </div>
+            <div>
+                <div class="text">Birth date</div>
+                @if(registerInfluencerForm.get('birthDate')?.errors?.['required'] && registerClicked) {
+                    <div class="validation-fail-text">Birth date is required!</div>
+                }
+                <input style="width: 200px;" formControlName="birthDate" type="text" placeholder="Birth date">
+            </div>
+            <div>
+                <div class="text">Instagram tag</div>
+                @if(registerInfluencerForm.errors?.['atLeastOneRequired'] && registerClicked) {
+                    <div class="validation-fail-text">At least one social media is required!</div>
+                }
+                <input style="width: 200px;" formControlName="instagram" type="text" placeholder="Instagram tag">
+            </div>
+            <div>
+                <div class="text">Youtube channel</div>
+                @if(registerInfluencerForm.errors?.['atLeastOneRequired'] && registerClicked) {
+                    <div class="validation-fail-text">At least one social media is required!</div>
+                }
+                <input style="width: 200px;" formControlName="youtube" type="text" placeholder="Youtube channel">
+            </div>
+            <div>
+                <div class="text">Tiktok account</div>
+                @if(registerInfluencerForm.errors?.['atLeastOneRequired'] && registerClicked) {
+                    <div class="validation-fail-text">At least one social media is required!</div>
+                }
+                <input style="width: 200px;" formControlName="tiktok" type="text" placeholder="TikTok">
+            </div>
+            <button [disabled]="registerInfluencerForm.invalid && registerClicked" style="margin-top: 10px; width: 200px" class="navbar-button" type="submit">Register</button>
         </form>
     } @else {
         <form @fadeSlideId [formGroup]="registerBrandForm" (ngSubmit)="formSubmitted()" class="green-container" style="gap: 10px;">

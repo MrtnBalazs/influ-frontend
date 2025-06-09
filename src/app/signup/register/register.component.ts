@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../../service/authentication/authentication.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { REGISTER_BRAND, REGISTER_INFLUENCER } from '../../consts';
+import { MultipleSelectorPopupComponent } from "../../common/multiple-selector-popup/multiple-selector-popup.component";
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, MultipleSelectorPopupComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
   animations: [

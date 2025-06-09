@@ -43,13 +43,16 @@
         }
     </div>
 } 
-<div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: start; align-items: center; gap: 16px">
-    <div (click)="openModal()"><div class="button">Select items</div></div>
+<div style="display: flex; flex-direction: column; flex-wrap: wrap; justify-content: start; align-items: left; gap: 5px">
+    
+    <div style="display: flex; flex-direction: row; gap: 16px;">
     @if(selectedItems.length != 0) {
         @for(item of selectedItems; track item) {
-            <div class="text">{{item}}</div>
+            <div class="text" style="opacity: 50%;">{{item}}</div>
         }
     } @else {
         <div class="text" style="opacity: 50%;">No item selected</div>
     }
+    </div>
+    <div (click)="openModal()"><div class="button" style="padding-top: 0px; padding-bottom: 0px">Select items</div></div>
 </div>
