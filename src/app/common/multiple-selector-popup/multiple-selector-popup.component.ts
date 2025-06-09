@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -20,9 +20,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class MultipleSelectorPopupComponent implements OnInit{
   @Input() inputItems: string[] = [];
+  @Input() inputSelectedItems: string[] = [];
   @Input() typeOfItems = "";
   @Input() maxConstraint = 5;
   @Input() minConstraint = 1;
+  @Output() itemsSelected = new EventEmitter<string[]>();
   searchText: string = "";
   selectedItems: string[] = [];
   items: {color: any, value: string}[] = [];
@@ -31,6 +33,9 @@ export class MultipleSelectorPopupComponent implements OnInit{
   ngOnInit(): void {
     this.inputItems.forEach((item) => this.items.push({color: this.getRandomColor(), value: item}))
     this.items.sort((a, b) => a.value < b.value ? -1 : 1);
+    this.selectedItems = this.inputSelectedItems;
+    console.log(this.items);
+    console.log(this.selectedItems);
   }
 
   getFilteredItems() {
@@ -43,6 +48,7 @@ export class MultipleSelectorPopupComponent implements OnInit{
 
   selectItem(itemValue: string) {
     if(this.selectedItems.length < this.maxConstraint) {
+      console.log(itemValue);
       this.selectedItems.push(itemValue);
     } else {
       this.triggerValidationAlert();
@@ -55,6 +61,7 @@ export class MultipleSelectorPopupComponent implements OnInit{
 
   save() {
     if(this.validate()){
+      this.itemsSelected.emit(this.selectedItems);
       console.log("save clicked");
     }
   }
