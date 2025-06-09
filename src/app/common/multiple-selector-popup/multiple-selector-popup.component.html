@@ -3,15 +3,20 @@
         <div class="title">Select {{typeOfItems}}</div>
         <div class="text">Select min: {{minConstraint}} max: {{maxConstraint}}</div>
         <input placeholder="Search {{typeOfItems}}" (input)="getFilteredItems()" [(ngModel)]="searchText"/>
-        <div style="display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap;">
+        @if(getFilteredItems().length !== 0) {
+            <div style="display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap;">
             @for(item of getFilteredItems(); track item) {
                 <div @bounceInOut (click)="selectItem(item.value)">
                     <div class="button" [style.background-color]="item.color">{{item.value}}</div>
                 </div>
             }
-        </div>
+            </div>
+        } @else {
+            <div class="text" style="opacity: 50%;">No items match the filter</div>
+        }
         <div class="horizontal-divider"></div>
-        <div style="display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap;">
+        @if(this.selectedItems.length != 0) {
+            <div style="display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap;">
             @for(item of selectedItems; track item) {
                 <div @bounceInOut (click)="unselectItem(item)">
                     <div class="button">
@@ -20,7 +25,10 @@
                     </div>
                 </div>
             }
-        </div>
+            </div>    
+        } @else {
+            <div class="text" style="opacity: 50%;">No item selected</div>
+        }
         <div class="horizontal-divider"></div>
         <div style="display: flex; flex-direction: row; gap: 10px; justify-content: space-around;">
             <div (click)="save()"><div class="button" style="background-color: rgb(1, 192, 45); width: 100px;">save</div></div>
