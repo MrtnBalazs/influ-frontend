@@ -68,6 +68,16 @@ export class RegisterComponent {
       this.toggleState = REGISTER_INFLUENCER;
   }
 
+  onContentTypeSelected(contentTypes2: string[]) {
+    console.log(this.registerInfluencerForm.value);
+    this.registerInfluencerForm.patchValue(
+      {
+        contentTypes: [...contentTypes2]
+      }
+    )
+    console.log(this.registerInfluencerForm.value);
+  }
+
   formSubmitted() {
     this.registerClicked = true;
     if(this.isBrandRegistering()) {

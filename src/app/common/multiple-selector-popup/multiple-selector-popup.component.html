@@ -1,6 +1,6 @@
 @if(modalOpen) {
-    <div class="modal-backdrop" style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
-        <div class="modal-green-container">
+    <div @fadeSlide class="modal-backdrop" style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+        <div  class="modal-green-container">
             <div class="title">Select {{typeOfItems}}</div>
             <div class="text">Select min: {{minConstraint}} max: {{maxConstraint}}</div>
             <input placeholder="Search {{typeOfItems}}" (input)="getFilteredItems()" [(ngModel)]="searchText"/>
@@ -35,12 +35,12 @@
                 <div (click)="save()"><div class="button" style="background-color: rgb(1, 192, 45); width: 100px;">save</div></div>
                 <div (click)="cancel()"><div class="button" style="background-color: red; width: 100px;">cancel</div></div>
             </div>
+            @if(validationAlertIsTriggered) {
+                <div @shake class="red-container">
+                    <div class="text" style="opacity: 0.5;">Select min: {{minConstraint}}, max: {{maxConstraint}}</div>
+                </div>
+            }
         </div>
-        @if(validationAlertIsTriggered) {
-            <div @shake class="red-container">
-                <div class="text" style="opacity: 0.5;">Select min: {{minConstraint}}, max: {{maxConstraint}}</div>
-            </div>
-        }
     </div>
 } 
 <div style="display: flex; flex-direction: column; flex-wrap: wrap; justify-content: start; align-items: left; gap: 5px">

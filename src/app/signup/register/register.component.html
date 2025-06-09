@@ -37,10 +37,10 @@
             </div>
             <div>
                 <div class="text">Content type</div>
-                <app-multiple-selector-popup [inputItems]='["lifestyle", "car", "pet", "horse", "dog", "gaming", "gambling", "sport"]' [maxConstraint]="3" [minConstraint]="1" [typeOfItems]="'content types'"></app-multiple-selector-popup>
                 @if(registerInfluencerForm.get('contentType')?.errors?.['required'] && registerClicked) {
                     <div class="validation-fail-text">Content type is required!</div>
                 }
+                <app-multiple-selector-popup (itemsSelected)="onContentTypeSelected($event)" [inputItems]='["lifestyle", "car", "pet", "horse", "dog", "gaming", "gambling", "sport"]' [maxConstraint]="3" [minConstraint]="1" [typeOfItems]="'content types'"></app-multiple-selector-popup>
             </div>
             <div>
                 <div class="text">Birth date</div>
