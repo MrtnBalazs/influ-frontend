@@ -30,54 +30,57 @@ import { FormsModule } from '@angular/forms';
 })
 export class MultipleSelectorPopupComponent implements OnInit{
   @Input() inputItems: string[] = [];
-  @Input() inputSelectedItems: string[] = [];
   @Input() typeOfItems = "";
   @Input() maxConstraint = 5;
   @Input() minConstraint = 1;
   @Output() itemsSelected = new EventEmitter<string[]>();
+  modalOpen = false;
   searchText: string = "";
   selectedItems: string[] = [];
+  tempSelectedItems: string[] = [];
   items: {color: any, value: string}[] = [];
   validationAlertIsTriggered = false;
     
+  openModal() {
+    this.modalOpen = true;
+  }
+
   ngOnInit(): void {
     this.inputItems.forEach((item) => this.items.push({color: this.getRandomColor(), value: item}))
     this.items.sort((a, b) => a.value < b.value ? -1 : 1);
-    this.selectedItems = this.inputSelectedItems;
-    console.log(this.items);
-    console.log(this.selectedItems);
   }
 
   getFilteredItems() {
     return this.items.filter(
       (value) => 
         value.value.startsWith(this.searchText) &&
-       !this.selectedItems.find(selectedValue => selectedValue === value.value)
+       !this.tempSelectedItems.find(selectedValue => selectedValue === value.value)
     );
   }
 
   selectItem(itemValue: string) {
-    if(this.selectedItems.length < this.maxConstraint) {
-      console.log(itemValue);
-      this.selectedItems.push(itemValue);
+    if(this.tempSelectedItems.length < this.maxConstraint) {
+      this.tempSelectedItems.push(itemValue);
     } else {
       this.triggerValidationAlert();
     }
   }
 
   unselectItem(item: string) {
-    this.selectedItems = this.selectedItems.filter((value) => value !== item);
+    this.tempSelectedItems = this.tempSelectedItems.filter((value) => value !== item);
   }
 
   save() {
-    if(this.validate()){
+    if(this.validate()) {
+      this.selectedItems = [...this.tempSelectedItems];
       this.itemsSelected.emit(this.selectedItems);
-      console.log("save clicked");
+      this.modalOpen = false;
     }
   }
 
   cancel() {
-    console.log("cancel clicked");
+    this.tempSelectedItems = [...this.selectedItems];
+    this.modalOpen = false;
   }
 
   getRandomColor() {
@@ -89,7 +92,7 @@ export class MultipleSelectorPopupComponent implements OnInit{
   }
 
   constraintMatched() {
-    return this.selectedItems.length <= this.maxConstraint && this.selectedItems.length >= this.minConstraint;
+    return this.tempSelectedItems.length <= this.maxConstraint && this.tempSelectedItems.length >= this.minConstraint;
   }
 
   validate() :boolean {
