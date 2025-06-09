@@ -16,7 +16,17 @@ import { FormsModule } from '@angular/forms';
           animate('100ms ease', style({ transform: 'rotate(0deg)' })),
         ])
         ]
-      )]
+      ),
+    trigger('bounceInOut', [
+      transition(':enter', [
+        style({ transform: 'scale(0%)' }),
+        animate('250ms ease-out', style({ transform: 'scale(100%)' }))
+      ]),
+      transition(':leave', [
+        style({ transform: 'scale(100%)' }),
+        animate('250ms ease-out', style({ transform: 'scale(0%)' }))
+      ])
+    ])]
 })
 export class MultipleSelectorPopupComponent implements OnInit{
   @Input() inputItems: string[] = [];

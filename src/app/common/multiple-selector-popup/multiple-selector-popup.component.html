@@ -5,13 +5,15 @@
         <input placeholder="Search {{typeOfItems}}" (input)="getFilteredItems()" [(ngModel)]="searchText"/>
         <div style="display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap;">
             @for(item of getFilteredItems(); track item) {
-                <div class="button" [style.background-color]="item.color" (click)="selectItem(item.value)">{{item.value}}</div>
+                <div @bounceInOut (click)="selectItem(item.value)">
+                    <div class="button" [style.background-color]="item.color">{{item.value}}</div>
+                </div>
             }
         </div>
         <div class="horizontal-divider"></div>
         <div style="display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap;">
             @for(item of selectedItems; track item) {
-                <div (click)="unselectItem(item)">
+                <div @bounceInOut (click)="unselectItem(item)">
                     <div class="button">
                         <div class="x-icon"></div>
                         <div>{{item}}</div>
