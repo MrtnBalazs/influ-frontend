@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -6,7 +7,16 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './multiple-selector-popup.component.html',
-  styleUrl: './multiple-selector-popup.component.css'
+  styleUrl: './multiple-selector-popup.component.css',
+  animations: [
+      trigger('shake', [
+        transition(':enter', [
+          animate('100ms ease', style({ transform: 'rotate(0.6deg)' })),
+          animate('100ms ease', style({ transform: 'rotate(-0.6deg)' })),
+          animate('100ms ease', style({ transform: 'rotate(0deg)' })),
+        ])
+        ]
+      )]
 })
 export class MultipleSelectorPopupComponent implements OnInit{
   @Input() inputItems: string[] = [];
@@ -16,6 +26,7 @@ export class MultipleSelectorPopupComponent implements OnInit{
   searchText: string = "";
   selectedItems: string[] = [];
   items: {color: any, value: string}[] = [];
+  validationAlertIsTriggered = false;
     
   ngOnInit(): void {
     this.inputItems.forEach((item) => this.items.push({color: this.getRandomColor(), value: item}))
@@ -33,6 +44,8 @@ export class MultipleSelectorPopupComponent implements OnInit{
   selectItem(itemValue: string) {
     if(this.selectedItems.length < this.maxConstraint) {
       this.selectedItems.push(itemValue);
+    } else {
+      this.triggerValidationAlert();
     }
   }
 
@@ -41,10 +54,8 @@ export class MultipleSelectorPopupComponent implements OnInit{
   }
 
   save() {
-    if(this.selectedItems.length <= this.maxConstraint && this.selectedItems.length >= this.minConstraint) {
+    if(this.validate()){
       console.log("save clicked");
-    } else {
-      console.log("save clicked, but constraints not matched");
     }
   }
 
@@ -58,5 +69,22 @@ export class MultipleSelectorPopupComponent implements OnInit{
 
   getRandomNumber(max: number) {
     return Math.floor(Math.random() * max);
+  }
+
+  constraintMatched() {
+    return this.selectedItems.length <= this.maxConstraint && this.selectedItems.length >= this.minConstraint;
+  }
+
+  validate() :boolean {
+    if(!this.constraintMatched()) {
+      this.triggerValidationAlert();
+      return false;
+    }
+    return true;
+  }
+
+  triggerValidationAlert() {
+    this.validationAlertIsTriggered = true;
+    setTimeout(() => this.validationAlertIsTriggered = false, 5000);
   }
 }
