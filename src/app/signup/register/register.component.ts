@@ -55,7 +55,7 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       name: ['', Validators.required],
-      birthDate: ['', Validators.required,],
+      birthDate: ['', [Validators.required, this.validDateValidator()]],
       contentTypes: [[], Validators.required],
       instagram: [''],
       youtube: [''],
@@ -134,6 +134,32 @@ export class RegisterComponent {
       const hasAtLeastOne = !!(instagram || youtube || tiktok);
 
       return hasAtLeastOne ? null : { atLeastOneRequired: true };
+    };
+  }
+
+  validDateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+
+      // If value is empty, don't validate (let required validator handle it)
+      if (!value) return null;
+
+      // Regex to match YYYY-MM-DD
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      if (!dateRegex.test(value)) {
+        return { invalidDateFormat: true };
+      }
+
+      // Parse and check for real date
+      const [year, month, day] = value.split('-').map(Number);
+      const date = new Date(year, month - 1, day);
+
+      const isValidDate =
+        date.getFullYear() === year &&
+        date.getMonth() === month - 1 &&
+        date.getDate() === day;
+
+      return isValidDate ? null : { invalidDateFormat: true };
     };
   }
 }

@@ -47,6 +47,9 @@
                 @if(registerInfluencerForm.get('birthDate')?.errors?.['required'] && registerClicked) {
                     <div class="validation-fail-text">Birth date is required!</div>
                 }
+                @if(registerInfluencerForm.get('birthDate')?.errors?.['invalidDateFormat'] && registerClicked) {
+                    <div class="validation-fail-text">Invalid date format! Format should be year-month-day (YYYY-MM-dd)</div>
+                }
                 <input style="width: 200px;" formControlName="birthDate" type="text" placeholder="Birth date">
             </div>
             <div>
