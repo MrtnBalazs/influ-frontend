@@ -47,7 +47,7 @@ export class RegisterComponent {
       password: ['', Validators.required],
       name: ['', Validators.required],
       birthDate: ['', Validators.required,],
-      contentType: ['', Validators.required],
+      contentTypes: [[], Validators.required],
       instagram: [''],
       youtube: [''],
       tiktok: [''],
@@ -68,13 +68,11 @@ export class RegisterComponent {
       this.toggleState = REGISTER_INFLUENCER;
   }
 
-  onContentTypeSelected(contentTypes2: string[]) {
+  onContentTypesSelected(contentTypes: string[]) {
     console.log(this.registerInfluencerForm.value);
-    this.registerInfluencerForm.patchValue(
-      {
-        contentTypes: [...contentTypes2]
-      }
-    )
+    this.registerInfluencerForm.patchValue({
+      contentTypes: contentTypes
+    });
     console.log(this.registerInfluencerForm.value);
   }
 
