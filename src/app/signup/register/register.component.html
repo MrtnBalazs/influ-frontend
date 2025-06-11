@@ -95,4 +95,9 @@
             <button [disabled]="registerBrandForm.invalid && registerClicked" style="margin-top: 13px; width: 200px" class="navbar-button" type="submit">Register</button>
         </form>
     }
+    @if(errorWhenRegister) {
+        <div @shake class="red-container">
+            <div class="text" style="opacity: 0.5;">Registration failed, user my already be registered</div>
+        </div>
+    }
 </div>

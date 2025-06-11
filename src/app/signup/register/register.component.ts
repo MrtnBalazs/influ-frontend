@@ -23,7 +23,15 @@ import { MultipleSelectorPopupComponent } from "../../common/multiple-selector-p
         style({ opacity: 0, transform: 'translateY(10px)' }),
         animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
       ])
-    ])
+    ]),
+    trigger('shake', [
+        transition(':enter', [
+          animate('100ms ease', style({ transform: 'rotate(0.6deg)' })),
+          animate('100ms ease', style({ transform: 'rotate(-0.6deg)' })),
+          animate('100ms ease', style({ transform: 'rotate(0deg)' })),
+        ])
+        ]
+    ),
   ]
 })
 export class RegisterComponent {
@@ -31,6 +39,7 @@ export class RegisterComponent {
   registerInfluencerForm: any;
   registerClicked = false;
   toggleState = REGISTER_INFLUENCER;
+  errorWhenRegister: Boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -79,24 +88,37 @@ export class RegisterComponent {
   formSubmitted() {
     this.registerClicked = true;
     if(this.isBrandRegistering()) {
-      if (this.registerBrandForm.invalid) return;
-    } else {
-      if (this.registerInfluencerForm.invalid) return;
-    }
-    console.log("Register process start!");
-    /*
-    this.authenticationService.register(this.email, this.password)
-    .subscribe({
-      next: () => {
-        console.log('User registered successfully!');
-        this.router.navigate(['/registration/success']);
-      },
-      error: (error) => {
-        console.error('Registration failed', error);
-        this.router.navigate(['/error', `Register failed: ${error}`]);
+      if (this.registerBrandForm.invalid) {
+        return;
+      } else {
+        const { email, password, name } = this.registerBrandForm.value;
+        this.authenticationService.registerAsBrand(email, password, name)
+          .subscribe({
+            next: () => {
+              this.router.navigate(['/registration/success']);
+            },
+            error: (error) => {
+              console.error('Registration failed', error);
+              this.router.navigate(['/error', `Register failed: ${error}`]);
+            }
+        });
       }
-    });
-    */
+    } else {
+      if (this.registerInfluencerForm.invalid) {
+        return;
+      } else {
+        const { email, password, name, birthDate, contentTypes, instagram, youtube, tiktok } = this.registerBrandForm.value;
+        this.authenticationService.registerAsInflu(email, password, name, birthDate, contentTypes, instagram, youtube, tiktok)
+          .subscribe({
+            next: () => {
+              this.router.navigate(['/homepage']);
+            },
+            error: (error) => {
+              this.errorWhenRegister = true;
+            }
+          });
+      }
+    }
   }
 
   isBrandRegistering(): boolean {

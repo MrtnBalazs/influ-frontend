@@ -33,8 +33,12 @@ export class AuthenticationService {
   }
 
   /** Register: Sends user data to backend */
-  register(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/signup`, {username, password});
+  registerAsInflu(email:string, password:string, name:string, birthDate:string, contentTypes:string[], instagram:string, youtube:string, tiktok:string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/signup`, {email, password, name, birthDate, contentTypes, instagram, youtube, tiktok});
+  }
+
+  registerAsBrand(email: string, password:string, name: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/signup`, {email, password, name});
   }
 
   /** Check if user is authenticated */
