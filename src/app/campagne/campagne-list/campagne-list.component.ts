@@ -9,6 +9,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class CampagneListComponent {
   @Input() campaigns: any[] = [];
+  @Input() withTitle: boolean = true;
+  @Input() clickable: boolean = true;
   @Output() campaignSelected = new EventEmitter<any>();
   selectedItemId: string | null = null;
   constructor(){}

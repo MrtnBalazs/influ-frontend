@@ -22,6 +22,15 @@
     container-name: campaign;
 }
 
+.white-container {
+    background: white;
+    border-radius: 15px;
+    width: 100%;
+    margin: 0px;
+    padding: 16px;
+    gap: 25px;
+}
+
 .modal-green-container {
     background: var(--light-green);
     display: flex;

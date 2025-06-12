@@ -1,5 +1,44 @@
-<div style="padding: 16px;">
-    <app-multiple-selector-popup [inputItems]="contentTypes" [maxConstraint]="3" [minConstraint]="2" [typeOfItems]="'content types'">
-    </app-multiple-selector-popup>
+<div style="background-color: var(--light-green); height: calc(100vh - 60px); width: 100vw; padding: 30px 50px 0px 50px;">
+    <div class="title" style="color: var(--dark-green);">Connect Brands and Influencers.</div>
+    <div class="title" style="color: var(--dark-green);">Grow Together.</div>
+    <div class="text" style="text-align: center;">Cashfluence helps brands launch impactful influencer campaigns,</div>
+    <div class="text" style="text-align: center;">and helps influencers find paid partnerships that match their style.</div>
+    <div style="display: flex; flex-direction: row; gap: 16px; justify-content: center; margin-top: 30px;">
+        <div @fadeSlideId class="white-container" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <div class="title" style="color: var(--dark-green); margin-bottom: 16px;">Ongoing campains</div>
+                <app-campagne-list [campaigns]="campaigns" [withTitle]="false" [clickable]="false"></app-campagne-list>
+            </div>
+            <div style="align-self: center;" (click)="onCampaignClicked()">
+                <div class="button" style="width: 200px;">Explore all campaigns!</div>
+            </div>
+        </div>
+        <div @fadeSlideId class="white-container" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+                <div class="title" style="color: var(--dark-green);">How it works</div>
+                    <div style="display: flex; justify-content: space-around;">
+                    <div style="margin-top: 16px; margin-bottom: 16px;">
+                        <div class="title">For influencers</div>
+                        <div class="text">
+                            <li>Search campaigns</li>
+                            <li>Collaborate</li>
+                            <li>Get paid</li>    
+                        </div>
+                    </div>
+                    <div style="margin-top: 16px; margin-bottom: 16px;">
+                        <div class="title">For brands</div>
+                        <div class="text">
+                            <li>Create a campaign</li>
+                            <li>Get quality pitches</li>
+                            <li>Grow the brand</li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="align-self: center;" (click)="onJoinClicked()">
+                <div class="button" style="width: 200px;">Join now!</div>
+            </div>
+        </div>
+    </div>
 </div>
     
