@@ -42,7 +42,6 @@ button {
     padding: 0 16px;
     height: 60px;
     width: 100%;
-    
 }
 
 .navbar-buttons-container {
@@ -51,6 +50,7 @@ button {
     gap: 16px;
     background-color: var(--light-green);
     z-index: 9999;
+    border: 0px solid rgba(0, 0, 0, 0);
 }
 
 .navbar-button {
@@ -139,6 +139,9 @@ button {
         max-height: 500px;
         transition: max-height 0.1s ease-in;
         padding: 10px;
+        border-left: 1px solid rgba(0, 0, 0, 0.1);
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 }
 
