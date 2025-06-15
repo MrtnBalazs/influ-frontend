@@ -47,6 +47,7 @@
 }
 
 .validation-fail-text {
+    width: 100%;
     color: #ff0000;
     opacity: 0.6;
     text-align: start;
@@ -77,7 +78,10 @@
 }
 
 input {
-  border-radius: 3px; /* Adjust as needed (px, %, etc.) */
+  border-radius: 6px; /* Adjust as needed (px, %, etc.) */
+  height: 33px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 5px;
 }
 
 .button {
