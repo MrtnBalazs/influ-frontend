@@ -49,7 +49,8 @@ button {
     display: flex;
     justify-content: flex-start;
     gap: 16px;
-    z-index: 600;
+    background-color: var(--light-green);
+    z-index: 9999;
 }
 
 .navbar-button {
