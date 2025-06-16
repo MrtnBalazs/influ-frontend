@@ -75,6 +75,8 @@ export class RegisterComponent {
       this.toggleState = REGISTER_BRAND;
     else
       this.toggleState = REGISTER_INFLUENCER;
+
+    this.registerClicked = false;
   }
 
   onContentTypesSelected(contentTypes: string[]) {

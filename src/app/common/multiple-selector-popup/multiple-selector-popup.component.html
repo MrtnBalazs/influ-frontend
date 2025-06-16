@@ -45,14 +45,14 @@
 } 
 <div style="display: flex; flex-direction: column; flex-wrap: wrap; justify-content: start; align-items: left; gap: 5px">
     
-    <div style="display: flex; flex-direction: row; gap: 16px;">
-    @if(selectedItems.length != 0) {
-        @for(item of selectedItems; track item) {
-            <div class="text" style="opacity: 50%;">{{item}}</div>
+    <div style="display: flex; flex-direction: row; gap: 16px; flex-wrap: wrap; width: 100%;">
+        @if(selectedItems.length != 0) {
+            @for(item of selectedItems; track item) {
+                <div class="text" style="opacity: 50%;">{{item}}</div>
+            }
+        } @else {
+            <div class="text" style="opacity: 50%;">No item selected</div>
         }
-    } @else {
-        <div class="text" style="opacity: 50%;">No item selected</div>
-    }
     </div>
-    <div (click)="openModal()"><div class="button" style="padding-top: 0px; padding-bottom: 0px">Select items</div></div>
+    <div (click)="openModal()"><div class="button" style="padding-top: 0px; padding-bottom: 0px; width: 100%;">Select items</div></div>
 </div>
