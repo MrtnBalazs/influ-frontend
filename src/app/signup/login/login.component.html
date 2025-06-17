@@ -1,30 +1,28 @@
-<div style="background-size: cover;   background-repeat: repeat; background-image: url('assets/rain-bg2.png'); display: flex; flex-direction: column; gap: 16px; padding: 16px; align-items: center; min-height: calc(100vh - 60px);">
-    <form @fadeSlideId [formGroup]="loginForm" (ngSubmit)="formSubmitted()" style="width: min-content; display: flex; flex-direction: column; gap: 10px; border-radius: 15px; padding: 16px;">
-        <div class="login-title" style="color: var(--dark-green); width: 250px;">Login</div>
-        <div style="display: flex; flex-direction: column; gap: 16px; width: min-content">
-            <div style="display: flex; flex-direction: column; width: 100px; gap: 6px;">
-                <div class="login-field-text" style="display: flex;">Email</div>
-                @if(loginForm.get('email')?.errors?.['required'] && loginClicked) {
-                    <div class="validation-fail-text" style="width: 250px;">*Email is required</div>
-                }
-                @if(loginForm.get('email')?.errors?.['email'] && loginClicked) {
-                    <div class="validation-fail-text" style="width: 250px;">*Text is not an email</div>
-                }
-                <input style="width: 250px; min-width: 250px; max-width: 250px;" formControlName="email" type="text" placeholder="Email">
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 6px;">
-                <div class="login-field-text">Password</div>
-                @if(loginForm.get('password')?.errors?.['required'] && loginClicked) {
-                    <div class="validation-fail-text">*Password is required</div>
-                }
-                <input style="width: 250px;" formControlName="password" type="password" placeholder="Password">
-            </div>
-            <button [disabled]="loginForm.invalid && loginClicked" class="login-button" type="submit">Login</button>
+<div class="green-bg-image">
+    <form class="flex-column" @fadeSlideId [formGroup]="loginForm" (ngSubmit)="formSubmitted()">
+        <div class="signup-title">Login</div>
+        <div>
+            <div class="signup-field-text">Email</div>
+            @if(loginForm.get('email')?.errors?.['required'] && loginClicked) {
+                <div class="validation-fail-text">*Email is required</div>
+            }
+            @if(loginForm.get('email')?.errors?.['email'] && loginClicked) {
+                <div class="validation-fail-text">*Text is not an email</div>
+            }
+            <input style="width: 250px;" formControlName="email" type="text" placeholder="Email">
         </div>
+        <div>
+            <div class="signup-field-text">Password</div>
+            @if(loginForm.get('password')?.errors?.['required'] && loginClicked) {
+                <div class="validation-fail-text">*Password is required</div>
+            }
+            <input style="width: 250px;" formControlName="password" type="password" placeholder="Password">
+        </div>
+        <button [disabled]="loginForm.invalid && loginClicked" class="login-button" type="submit">Login</button>
+        @if(errorWhenLogin) {
+            <div @shake class="red-container" style="width: fit-content;">
+                <div class="signup-field-text error" style="opacity: 0.5;">User does not exists, or email is not yet activated or password is wrong!</div>
+            </div>
+        }
     </form>
-    @if(errorWhenLogin) {
-        <div @shake style="background-color: var(--light-red); border-radius: 15px; padding: 16px; box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.3);">
-            <div class="login-field-text error" style="opacity: 0.5;">User does not exists, or email is not yet activated or password is wrong!</div>
-        </div>
-    }
 </div>

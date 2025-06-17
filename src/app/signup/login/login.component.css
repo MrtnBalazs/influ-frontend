@@ -1,21 +1,3 @@
-.login-title {
-    color: var(--dark-green);
-    text-align: center;
-    font-family: Koulen;
-    font-size: 60px;
-}
-
-.login-field-text {
-    color: #000;
-    font-family: Koulen;
-    font-size: 25px;
-    line-height: 100%;
-}
-
-.login-field-text.error {
-    font-size: 20px;
-}
-
 .login-button {
     text-align: center;
     font-family: Koulen;
