@@ -1,11 +1,42 @@
+.green-bg-image {
+  background-size: cover; 
+  background-repeat: repeat;
+  background-image: url('assets/rain-bg2.png');
+  width: 100%;
+  min-height: calc(100vh - 60px);
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
 .text {
     color: #000;
-    text-align: justify;
+    text-align: start;
     font-family: Koulen;
     font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%; /* 24px */
+    line-height: 130%;
+}
+
+.title {
+    color: #000;
+    text-align: center;
+    font-family: Koulen;
+    font-size: 32px;
+    line-height: 130%;
+    color: var(--dark-green);
 }
 
 .green-container {
@@ -26,9 +57,8 @@
     background: white;
     border-radius: 15px;
     width: 100%;
-    margin: 0px;
+    height: 100%;
     padding: 16px;
-    gap: 25px;
 }
 
 .modal-green-container {
