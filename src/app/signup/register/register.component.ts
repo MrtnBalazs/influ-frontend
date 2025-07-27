@@ -97,11 +97,10 @@ export class RegisterComponent {
         this.authenticationService.registerAsBrand(email, password, name)
           .subscribe({
             next: () => {
-              this.router.navigate(['/registration/success']);
+              console.log('Registration successful');
             },
             error: (error) => {
               console.error('Registration failed', error);
-              this.router.navigate(['/error', `Register failed: ${error}`]);
             }
         });
       }
