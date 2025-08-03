@@ -14,7 +14,9 @@ export class AuthenticationService {
   private authState = new BehaviorSubject<boolean>(this.hasToken());
   private user = new BehaviorSubject<{ authToken: any, email: any, userType: any } | null>(null);
 
-  constructor(private http:HttpClient, private router:Router) {}
+  constructor(private http:HttpClient, private router:Router) {
+    this.apiUrl = 'https://8vklq.wiremockapi.cloud/api/auth';
+  }
 
   /** Login: Sends credentials and stores JWT */
   login(username: string, password: string): Observable<{ authToken: string }> {
@@ -36,8 +38,13 @@ export class AuthenticationService {
   }
 
   /** Register: Sends user data to backend */
-  registerAsInflu(email:string, password:string, name:string, birthDate:string, contentTypes:string[], instagram:string, youtube:string, tiktok:string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/signup`, {email, password, name, birthDate, contentTypes, instagram, youtube, tiktok});
+  registerAsInflu(email:string, password:string, name:string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, {
+      "email": email,
+      "password": password, 
+      "username": name,
+      "userType": "INFLUENCER"
+    });
   }
 
   registerAsBrand(email: string, password:string, name: string): Observable<any> {

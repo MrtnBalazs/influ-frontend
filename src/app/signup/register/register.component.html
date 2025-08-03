@@ -33,6 +33,7 @@
                 }
                 <input class="register" formControlName="name" type="text" placeholder="Name">
             </div>
+            <!-- TODO
             <div>
                 <div class="register-field-text" style="width: 250px;">Content type</div>
                 @if(registerInfluencerForm.get('contentTypes')?.errors?.['required'] && registerClicked) {
@@ -73,6 +74,7 @@
                 }
                 <input class="register" formControlName="tiktok" type="text" placeholder="TikTok">
             </div>
+            -->
             <button [disabled]="registerInfluencerForm.invalid && registerClicked" class="register-button" type="submit">Register</button>
         </form>
     } @else {

@@ -51,19 +51,26 @@ export class RegisterComponent {
       password: ['', Validators.required],
       name: ['', Validators.required],
     }),
+    
     this.registerInfluencerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       name: ['', Validators.required],
+      /* TODO
       birthDate: ['', [Validators.required, this.validDateValidator()]],
       contentTypes: [[], Validators.required],
       instagram: [''],
       youtube: [''],
       tiktok: [''],
-    },
+      */
+    }
+    /* TODO
+    ,
     {
       validators: this.atLeastOneRequiredValidator()
-    });
+    }
+    */
+    );
   }
 
   isInfluencerRegister() {
@@ -98,9 +105,10 @@ export class RegisterComponent {
           .subscribe({
             next: () => {
               console.log('Registration successful');
+              this.router.navigate(['/homepage']);
             },
             error: (error) => {
-              console.error('Registration failed', error);
+              this.errorWhenRegister = true;
             }
         });
       }
@@ -108,8 +116,8 @@ export class RegisterComponent {
       if (this.registerInfluencerForm.invalid) {
         return;
       } else {
-        const { email, password, name, birthDate, contentTypes, instagram, youtube, tiktok } = this.registerBrandForm.value;
-        this.authenticationService.registerAsInflu(email, password, name, birthDate, contentTypes, instagram, youtube, tiktok)
+        const { email, password, name } = this.registerInfluencerForm.value;
+        this.authenticationService.registerAsInflu(email, password, name)
           .subscribe({
             next: () => {
               this.router.navigate(['/homepage']);
