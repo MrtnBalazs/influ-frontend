@@ -26,8 +26,8 @@ export class AllCampagnesComponent {
   constructor(private campagneService: CampagneService) {}
 
   ngOnInit(): void {
-    this.campagneService.getAllCampagnes().subscribe((response: { campaigns: any[] }) => {
-      this.campagnes = response.campaigns;
+    this.campagneService.getAllCampagnes().subscribe((response: { campaignList: any[] }) => {
+      this.campagnes = response.campaignList;
     });
   }
 

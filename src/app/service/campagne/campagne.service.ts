@@ -16,29 +16,6 @@ export class CampagneService {
         "text": "Test pitch text"
     }
   });
-  private devCampagneResponse: Observable<any> = of({
-    "campaign": {
-        "id": 1,
-        "userId": "username",
-        "title": "Test Campaign",
-        "description": "Lorem Ipsumis simply dummy text of the printing" + 
-                        "and typesetting industry. Lorem Ipsum has been the industrys sived not only five centuries, but also the leap into electronic typesetting." +
-                        "details about the required content information about payment and how long the campaign lasts" +
-                        "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.",
-        "contentGuideline": "Content guideline: Say in the video i love the product, make it 60 seconds, add hashtag loveit, integrate it seamlessly into yout  content",
-        "maxFee": 5,
-        "minFee": 1,
-        "favorited": null,
-        "pitches": [
-            {
-                "id": 1,
-                "creatorId": "username1",
-                "title": "Test pitch title",
-                "text": "Test pitch text"
-            }
-        ]
-    }
-  });
   private devPitchListResponse: Observable<any> = of(
     {
       "pitches": [
@@ -137,77 +114,21 @@ export class CampagneService {
       ]
     }
   );
-  private devCampagneListResponseForDetail = [
-    {
-      "campaign": {
-      "id": 1,
-      "userId": "username",
-      "title": "Test Campaign",
-      "description": "Lorem Ipsumis simply dummy text of the printing" + 
-                      "and typesetting industry. Lorem Ipsum has been the industrys sived not only five centuries, but also the leap into electronic typesetting." +
-                      "details about the required content information about payment and how long the campaign lasts" +
-                      "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.",
-      "contentGuideline": "Content guideline: Say in the video i love the product, make it 60 seconds, add hashtag loveit, integrate it seamlessly into yout  content",
-      "maxFee": 5,
-      "minFee": 1,
-      "favorited": null,
-      "pitches": [
-          {
-              "id": 1,
-              "creatorId": "username1",
-              "title": "Test pitch title",
-              "text": "Test pitch text"
-          }
-      ]
-      }
-    },
-    {
-      "campaign": {
-      "id": 1,
-      "userId": "username",
-      "title": "Mol price drop",
-      "description": "Lorem Ipsumis simply dummy text of the printing" + 
-                      "and typesetting industry. Lorem Ipsum has been the industrys sived not only five centuries, but also the leap into electronic typesetting." +
-                      "details about the required content information about payment and how long the campaign lasts" +
-                      "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.",
-      "contentGuideline": "Content guideline: Say in the video i love the product, make it 60 seconds, add hashtag loveit, integrate it seamlessly into yout  content",
-      "maxFee": 20,
-      "minFee": 20,
-      "favorited": null,
-      "pitches": [
-          {
-              "id": 1,
-              "creatorId": "username2",
-              "title": "Test pitch titledawdadwa",
-              "text": "Testdawdawdawd pitch text"
-          }
-      ]
-      }
-    }
-  ];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.baseUrl = 'https://8vklq.wiremockapi.cloud';
+  }
 
-  getAllCampagnes(): Observable<{ campaigns: any[] }> {
-    if(this.dev) {
-      return this.devCampagneListResponse;
-    }
-    return this.http.get<{ campaigns: any[] }>(this.baseUrl + "/api/v1/campaigns");
+  getAllCampagnes(): Observable<{ campaignList: any[] }> {
+    return this.http.get<{ campaignList: any[] }>(this.baseUrl + "/api/campaigns");
   }
 
   getCampagneById(id: string): Observable<{ campaign: any }> {
-    if(this.dev) {
-      var response: Observable<any> = of(this.devCampagneListResponseForDetail[parseInt(id)]);
-      return response;
-    }
-    return this.http.get<{ campaign: any }>(`${this.baseUrl}/api/v1/campaigns/${id}`);
+    return this.http.get<{ campaign: any }>(`${this.baseUrl}/api/campaigns/${id}`);
   }
 
-  getMyCampagnes(): Observable<{ campaigns: any[] }> {
-    if(this.dev) {
-      return this.devCampagneListResponse;
-    }
-    return this.http.get<{ campaigns: any[] }>(`${this.baseUrl}/api/v1/campaigns/user`);
+  getMyCampagnes(): Observable<{ campaignList: any[] }> {
+    return this.http.get<{ campaignList: any[] }>(`${this.baseUrl}/api/campaigns/user`);
   }
 
   getSavedCampagnes(): Observable<{ campaigns: any[] }> {

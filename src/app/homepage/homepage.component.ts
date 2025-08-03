@@ -26,8 +26,8 @@ export class HomepageComponent implements OnInit{
   constructor(private campaignservice: CampagneService, private router: Router) {}
 
   ngOnInit(): void {
-    this.campaignservice.getAllCampagnes().subscribe((response: { campaigns: any[] }) => {
-      this.campaigns = response.campaigns.slice(0, 3);
+    this.campaignservice.getAllCampagnes().subscribe((response: { campaignList: any[] }) => {
+      this.campaigns = response.campaignList.slice(0, 3);
     });
   }
 
