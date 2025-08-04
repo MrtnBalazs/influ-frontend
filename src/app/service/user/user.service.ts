@@ -6,17 +6,8 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:8081';
+  private baseUrl = 'https://8vklq.wiremockapi.cloud';
   private dev = false;
-  private devUserResponse: Observable<any> = of({
-    "user": {
-        "username": "username1",
-        "userType": "INFLUENCER",
-        "settings": {
-            "emailNotifications": false
-        }
-    }
-  });
   private devUserListResponse: Observable<any> = of({
     "users": [
         {
@@ -46,11 +37,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUser() {
-    if(this.dev) {
-      return this.devUserResponse;
-    } else {
-      return this.http.get<{ user: any[] }>(this.baseUrl + "/api/v1/users/user");
-    }
+      return this.http.get<{email: string, username: string, userType: string, settings: {emailNotification: string}}>(this.baseUrl + "/api/users/user");
   }
 
   getUsers(userType: string) {

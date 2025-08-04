@@ -1,18 +1,22 @@
-<div class="row">
-    <h1>Profile</h1>
-</div>
-<div class="row">
-    <div class="col-1">Username:</div>
-    <div class="col-2">{{user?.username}}</div>
-</div>
-<div class="row">
-    <div class="col-1">User type:</div>
-    <div class="col-2">{{user?.userType}}</div>
-</div>
-<div class="row mt-5">
-    <h3>Settings</h3>
-</div>
-<div class="row">
-    <div class="col-2">Email notification</div>
-    <div class="col-2">{{user?.settings.emailNotifications}}</div>
+<div class="green-bg-image flex-column" style="padding: 30px 50px 50px 50px; gap: 16px">
+    <div class="signup-title">Profile</div>
+    <div class="flex-row" style="margin-top: 30px; width: 100%; align-items: stretch;">
+        <div @fadeSlideId class="flex-column white-container" style="justify-content: space-between; gap: 16px; height: auto; align-items: flex-start; width: fit-content; padding: 40px 100px 40px 100px;">
+            <div class="signup-field-text">Username: {{user?.username}}</div>
+            <div class="signup-field-text">Email: {{user?.email}}</div>
+            <div class="signup-field-text">User type: {{user?.userType}}</div>
+            <div class="title">Settings</div>
+            <div class="influ-brand-toggle-container">
+                <div class="signup-field-text" [style.opacity]="user?.settings?.emailNotification === 'true' ? 1 : 0.6">Email notifications</div>
+                <div class="toggle-bar" (click)="clickToggle()" [@toggle]="user?.settings?.emailNotification">
+                    <div class="toggle-ball"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if(error) {
+        <div @shake class="red-container" style="width: fit-content;">
+            <div class="signup-field-text error" style="opacity: 0.5;">There might be some connection issue! Please try again later</div>
+        </div>
+    }
 </div>

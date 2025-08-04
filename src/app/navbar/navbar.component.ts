@@ -43,26 +43,20 @@ export class NavbarComponent {
         new RoutingMenuItem('Register', '/register', this.router),
       ];
       var commonMenuItemsFront = [
-        new RoutingMenuItem('Home', '/homepage', this.router)
+        new RoutingMenuItem('Home', '/homepage', this.router),
+        new RoutingMenuItem('Campagnes', '/campagnes', this.router),
       ];
       var commonMenuItemsBack = [
         new RoutingMenuItem('Profile', '/profile', this.router),
-        new RoutingMenuItem('Messages', '/messages', this.router),
-        new RoutingMenuItem('Settings', '/settings', this.router),
         new LogoutMenuItem("Logout", "/homepage", this.router, this.authenticationService)
       ];
       var influMenuItems = [
         new RoutingMenuItem('Campagnes', '/campagnes', this.router),
-        new RoutingMenuItem('Saved campagnes', '/saved-campagnes', this.router),
         new RoutingMenuItem('My pitches', '/my-pitches', this.router),
-        new RoutingMenuItem('Saved Brands', '/saved-brands', this.router),
-        new RoutingMenuItem('Brands', '/brands', this.router),
       ];
       var brandMenuItems = [
         new RoutingMenuItem('My campagnes', '/my-campagnes', this.router),
         new RoutingMenuItem('Create campagne', '/create-campagne', this.router),
-        new RoutingMenuItem('Saved influencers', '/saved-influencers', this.router),
-        new RoutingMenuItem('Influencers', '/influencers', this.router),
       ];
 
       if(isLoggedIn) {
