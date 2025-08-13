@@ -89,9 +89,7 @@ button {
     font-family: Koulen;
     background-color: var(--green);
     color: white;
-    cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     font-size: 23px;
     padding: 2px 20px;
     height: 40px;
@@ -100,10 +98,6 @@ button {
     letter-spacing: 1px;  
     pointer-events: auto;
     will-change: transform;  
-}
-
-.brand-button:active {
-    transform: scale(0.90);
 }
 
 .menu-toggle {

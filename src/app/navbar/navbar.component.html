@@ -1,7 +1,5 @@
 <nav class="navbar-container">
-  <div (click)="clickBrandLogo()">
-    <div class="brand-button">CASHFLUENCE</div>
-  </div>
+  <div class="brand-button">CASHFLUENCE</div>
   <div class="menu-toggle" (click)="toggleMenu()">☰</div>
   <div class="navbar-buttons-container" [ngClass]="{ 'open': menuOpen }">
     @for (menuItem of menuItems; track menuItem.name) {

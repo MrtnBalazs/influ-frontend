@@ -43,7 +43,6 @@ export class NavbarComponent {
         new RoutingMenuItem('Register', '/register', this.router),
       ];
       var commonMenuItemsFront = [
-        new RoutingMenuItem('Home', '/homepage', this.router),
         new RoutingMenuItem('Campagnes', '/campagnes', this.router),
       ];
       var commonMenuItemsBack = [
@@ -82,11 +81,6 @@ export class NavbarComponent {
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
-  }
-
-  clickBrandLogo() {
-    this.selectedMenuItemName = 'Home';
-    this.router.navigate(['/homepage']);
   }
 
   selectMenuItem(menuItem: MenuItem) {
