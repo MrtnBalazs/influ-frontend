@@ -151,4 +151,8 @@ export class CampagneService {
     }
     return this.http.get<{ pitches: any }>(`${this.baseUrl}/api/v1/campaigns/pitches/user`);
   }
+
+  saveCampaign(body: any) {
+    return this.http.post(`${this.baseUrl}/api/campaigns`, body);
+  }
 }

@@ -1,22 +1,51 @@
-<div class="row my-3">
-    <h1>Create campagne</h1>
+<div class="green-bg-image">
+    <form class="flex-column" @fadeSlideId [formGroup]="createCampaignForm" (ngSubmit)="createCampagne()">
+        <div class="signup-title">Create campagne</div>
+        <div>
+            <div class="signup-field-text">Title</div>
+              @if(createCampaignForm.get('title')?.errors?.['required'] && createClicked) {
+                  <div class="validation-fail-text">*Title is required</div>
+              }
+            <input style="width: 250px;" formControlName="title" type="text" placeholder="Title">
+        </div>
+        <div>
+            <div class="signup-field-text">Description</div>
+              @if(createCampaignForm.get('description')?.errors?.['required'] && createClicked) {
+                  <div class="validation-fail-text">*Description is required</div>
+              }
+            <textarea style="resize: none; width: 250px;" rows="5" formControlName="description" type="text" placeholder="Description"></textarea>
+        </div>
+        <div>
+            <div class="signup-field-text">Content guideline</div>
+              @if(createCampaignForm.get('contentGuideline')?.errors?.['required'] && createClicked) {
+                  <div class="validation-fail-text">*Content guideline is required</div>
+              }
+            <textarea style="resize: none; width: 250px;" rows="3" formControlName="contentGuideline" type="text" placeholder="Content guideline"></textarea>
+        </div>
+        <div>
+            <div class="signup-field-text">Fee</div>
+              @if(createCampaignForm.get('fee')?.errors?.['required'] && createClicked) {
+                  <div class="validation-fail-text">*Fee is required</div>
+              }
+              @if(createCampaignForm.get('fee')?.errors?.['pattern'] && createClicked) {
+                  <div class="validation-fail-text">*Fee must be a number</div>
+              }
+            <input style="width: 250px;" formControlName="fee" type="text" placeholder="Fee">
+        </div>
+        <div>
+            <div class="register-field-text" style="width: 250px;">Campaign type</div>
+            @if(createCampaignForm.get('campaignType')?.errors?.['required'] && createClicked) {
+                <div class="validation-fail-text">*Campaign type is required</div>
+            }
+            <div style="border-radius: 15px; width: 250px; background-color: white; padding: 8px;">
+            <app-multiple-selector-popup style="width: 250px; min-width: 250px;" (itemsSelected)="onCampaignTypeSelected($event)" [inputItems]='["AFFILIATE", "PRODUCT-FOR-POST", "PAID-POST"]' [maxConstraint]="1" [minConstraint]="0" [typeOfItems]="'Campaign type'"></app-multiple-selector-popup>
+          </div>
+        </div>        
+        <button [disabled]="createCampaignForm.invalid && createClicked" class="login-button" type="submit">Create</button>
+        @if(error) {
+            <div @shake class="red-container" style="width: fit-content;">
+                <div class="signup-field-text error" style="opacity: 0.5;">Error happened during campaign creation!</div>
+            </div>
+        }
+    </form>
 </div>
-<form>
-    <div class="form-group my-1">
-      <label>Title</label>
-      <input name="title" [(ngModel)]="campagneToSave.title" type="text" class="form-control">
-    </div>
-    <div class="form-group my-1">
-      <label>Description</label>
-      <textarea name="description" [(ngModel)]="campagneToSave.description" class="form-control" rows="4"></textarea>
-    </div>
-    <div class="form-group my-1">
-        <label>Minimum fee</label>
-        <input name="minFee" [(ngModel)]="campagneToSave.minFee" type="text" class="form-control">
-    </div>
-    <div class="form-group my-1">
-        <label>Maximum fee</label>
-        <input name="maxFee" [(ngModel)]="campagneToSave.maxFee" type="text" class="form-control">
-    </div>
-    <button (click)="createCampagne()" type="button" class="btn btn-primary">Create campagne</button>
-</form>

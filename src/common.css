@@ -127,6 +127,12 @@ input {
   padding-left: 5px;
 }
 
+textarea {
+  border-radius: 6px; /* Adjust as needed (px, %, etc.) */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 5px;
+}
+
 .button {
     display: flex;
     justify-content: center;
@@ -291,4 +297,30 @@ input.register {
     height: 33px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     padding-left: 5px;
+}
+
+.login-button {
+    text-align: center;
+    font-family: Koulen;
+    height: 33px;
+    font-size: 20px;
+    background-color: var(--green);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    letter-spacing: 1px;
+    width: 250px
+}
+
+.login-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none; /* ⬅️ Important */
+  opacity: 0.6;
+}
+
+.login-button:active {
+    transform: scale(0.90);
 }
