@@ -11,25 +11,15 @@
         </div>
         <div class="campaign-data-container">
             <div class="text" style="font-size: 20px;">Type: {{campaign?.campaignType}}</div>
-            <div class="text" style="font-size: 20px;">Compensation: 100 dollar per post</div>
-            <div class="text" style="font-size: 20px;">Content format: instagram post</div>
-            <div class="text" style="font-size: 20px;">Deliverable: 3 posts</div>
-            <div class="text" style="font-size: 20px;">Target platform: instagram</div>
-            <div class="text" style="font-size: 20px;">Target audience: young adoults</div>
-            <div class="text" style="font-size: 20px;">Application deadline: 2025.02.02</div>
-            <div class="text" style="font-size: 20px;">Timeline: post on 2025.08.21</div>
-            <div class="text" style="font-size: 20px;">Review beforehand: true</div>
-            <div class="text" style="font-size: 20px;">Usage rights: fair user</div>
-            <div class="text" style="font-size: 20px;">Relevant nieche: cars</div>
-            <div class="text" style="font-size: 20px;">Follower count / reach: 50k</div>
             <div class="text" style="font-size: 20px;">Fee: {{campaign?.fee}}</div>
         </div>
-        @if(withPitches) {
-            <div>
+        
+    </div>
+    <div [@fadeSlide]="animationState" class="green-container" style="margin-top: 16px;">
+    @if(withPitches) {
                 <app-pitch-list-detail
                     [pitches]="campaign?.pitches">
                 </app-pitch-list-detail>
-            </div>    
         }
     </div>
 } @else {

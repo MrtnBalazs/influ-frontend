@@ -1,6 +1,6 @@
 <div class="list-container" [style.padding-right]="!campaigns[0] ? 0 : 6">
   @if(withTitle) {
-    <div class="list-title">All campaigns</div>
+    <div class="list-title">{{title}}</div>
   }
   @if (!campaigns[0]) {
     <div class="campaign-not-selected-container" style="padding: 0px; margin-right: 0px; margin-left: 0px;">

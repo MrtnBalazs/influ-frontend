@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './campagne-list.component.css'
 })
 export class CampagneListComponent {
+  @Input() title: string = "";
   @Input() campaigns: any[] = [];
   @Input() withTitle: boolean = true;
   @Input() clickable: boolean = true;
