@@ -15,13 +15,14 @@
         </div>
         
     </div>
-    <div [@fadeSlide]="animationState" class="green-container" style="margin-top: 16px;">
     @if(withPitches) {
-                <app-pitch-list-detail
-                    [pitches]="campaign?.pitches">
-                </app-pitch-list-detail>
-        }
-    </div>
+        <div [@fadeSlide]="animationState" class="green-container" style="margin-top: 16px;">
+            <app-pitch-list-detail
+                [pitches]="campaign?.pitches">
+            </app-pitch-list-detail>
+        </div>
+    }
+
 } @else {
     <div [@fadeSlide]="animationState" class="campaign-not-selected-container">
         <div class="campaign-missing-text">
