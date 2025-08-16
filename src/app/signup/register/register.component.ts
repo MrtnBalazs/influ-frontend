@@ -87,11 +87,9 @@ export class RegisterComponent {
   }
 
   onContentTypesSelected(contentTypes: string[]) {
-    console.log(this.registerInfluencerForm.value);
     this.registerInfluencerForm.patchValue({
       contentTypes: contentTypes
     });
-    console.log(this.registerInfluencerForm.value);
   }
 
   formSubmitted() {

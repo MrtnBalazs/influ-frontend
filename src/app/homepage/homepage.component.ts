@@ -21,7 +21,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
       ]
 })
 export class HomepageComponent implements OnInit{
-  campaigns: any;
+  campaigns: any[] = [];
 
   constructor(private campaignservice: CampagneService, private router: Router) {}
 

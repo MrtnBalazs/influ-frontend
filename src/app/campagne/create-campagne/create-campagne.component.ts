@@ -49,18 +49,15 @@ export class CreateCampagneComponent {
   }
 
   onCampaignTypeSelected(campaignType: string[]) {
-    console.log(this.createCampaignForm.value);
     this.createCampaignForm.patchValue({
       campaignType: campaignType
     });
-    console.log(this.createCampaignForm.value);
   }
 
   createCampagne() {
       this.createClicked = true;
       if (this.createCampaignForm.invalid) return;
       this.createClicked = false;
-      console.log(this.createCampaignForm.value);
       this.campagneService.saveCampaign(this.createCampaignForm.value)
       .subscribe({
         next: () => {
