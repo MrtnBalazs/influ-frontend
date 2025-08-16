@@ -1,15 +1,19 @@
-<h4>Pitches</h4>
-<div class="list-group">
-    <ul class="list-group">
+<div class="title" style="text-align: left;">Pitches</div>
+@if(pitches) {
     @for (pitch of pitches; track pitch.id) {
-            <li class="list-group-item"
+        <div class="list-item" [class.not-clickable]="!clickablePitches" style="margin-top: 16px;">
+            <div
                     [class.active]="hoveredId === pitch.id"
                     (mouseover)="hoveredId = pitch.id"
                     (mouseleave)="hoveredId = null"
-                    (click)="selectPitch(pitch)">
-                <h6 class="mb-1">{{pitch.title}}</h6>
-                <p class="mb-4">{{pitch.creatorId}}</p>
-            </li>
+                    (click)="selectPitch(pitch)"
+            >
+                {{pitch.ownerId}}: {{pitch.title}}
+            </div>
+        </div>
     }
-    </ul>
-</div>
+} @else {
+    <div class="campaign-missing-text">
+            There are no pitches yet!
+    </div>
+}

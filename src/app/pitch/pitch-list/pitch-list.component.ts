@@ -9,6 +9,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class PitchListComponent {
   @Input() pitches: any[] = [];
+  @Input() clickablePitches = false;
   @Output() pitchSelected = new EventEmitter<any>();
 
   hoveredId: number | null = null; // Store hovered campagne ID

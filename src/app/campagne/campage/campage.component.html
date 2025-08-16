@@ -13,16 +13,18 @@
             <div class="text" style="font-size: 20px;">Type: {{campaign?.campaignType}}</div>
             <div class="text" style="font-size: 20px;">Fee: {{campaign?.fee}}</div>
         </div>
-        
+    
+        @if(withPitches) {
+            <div [@fadeSlide]="animationState" style="margin-top: 16px;">
+                <app-pitch-list
+                    [pitches]="campaign?.pitchList"
+                    [clickablePitches]="clickablePitches"
+                >
+                </app-pitch-list>
+            </div>
+        }
     </div>
-    @if(withPitches) {
-        <div [@fadeSlide]="animationState" class="green-container" style="margin-top: 16px;">
-            <app-pitch-list-detail
-                [pitches]="campaign?.pitches">
-            </app-pitch-list-detail>
-        </div>
-    }
-
+    
 } @else {
     <div [@fadeSlide]="animationState" class="campaign-not-selected-container">
         <div class="campaign-missing-text">

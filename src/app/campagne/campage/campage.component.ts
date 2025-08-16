@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { CampagneService } from '../../service/campagne/campagne.service';
 import { Input } from '@angular/core';
-import { OnInit } from '../../../../node_modules/@angular/core/index';
 import { signal } from '@angular/core';
-import { PitchListDetailComponent } from "../../pitch/pitch-list-detail/pitch-list-detail.component";
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { PitchListComponent } from '../../pitch/pitch-list/pitch-list.component';
+import { AuthenticationService } from '../../service/authentication/authentication.service';
 
 @Component({
   selector: 'app-campage',
   standalone: true,
-  imports: [PitchListDetailComponent, CommonModule ],
+  imports: [CommonModule, PitchListComponent ],
   templateUrl: './campage.component.html',
   styleUrl: './campage.component.css',
   animations: [
@@ -26,23 +26,16 @@ import { CommonModule } from '@angular/common';
     ])
   ]
 })
-export class CampageComponent implements OnInit {
+export class CampageComponent {
   @Input() id: any = null;
   campaignId = signal<any | null>(null);
   campaign: any = null;
   selectedPitchId = signal<any | null>(null);
   animationState = 'show';
   @Input() withPitches = false;
+  clickablePitches = false;
 
-  constructor(private campagneService: CampagneService) {}
-
-  ngOnInit() {
-    if(this.id) {
-      this.campagneService.getCampagneById(this.id).subscribe((response: { campaign: any }) => {
-      this.campaign = response.campaign;
-    });
-    }
-  }
+  constructor(private campagneService: CampagneService, private authenticationService: AuthenticationService) {}
 
   @Input({ transform: (c: any) => c }) 
   set selectedCampaign(value: any) {
@@ -51,6 +44,17 @@ export class CampageComponent implements OnInit {
       this.campaignId.set(value);
       this.campagneService.getCampagneById(this.campaignId()).subscribe((response: { campaign: any }) => {
         this.campaign = response.campaign;
+        this.authenticationService.getUser().subscribe(user => {
+          if(!user) {
+            this.clickablePitches = false;
+          } else {
+            if(user.email == this.campaign.ownerId){
+              this.clickablePitches = true;
+            } else {
+              this.clickablePitches = false;
+            }
+          }
+        })
       });
     }
   }
