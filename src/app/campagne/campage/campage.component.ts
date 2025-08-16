@@ -33,7 +33,7 @@ export class CampageComponent {
   selectedPitchId = signal<any | null>(null);
   animationState = 'show';
   @Input() withPitches = false;
-  clickablePitches = false;
+  isUserCampaignOwner = false;
 
   constructor(private campagneService: CampagneService, private authenticationService: AuthenticationService) {}
 
@@ -49,12 +49,12 @@ export class CampageComponent {
           this.authenticationService.getUser()
           .subscribe(user => {
               if(!user) {
-                this.clickablePitches = false;
+                this.isUserCampaignOwner = false;
               } else {
                 if(user.email == this.campaign.ownerId){
-                  this.clickablePitches = true;
+                  this.isUserCampaignOwner = true;
                 } else {
-                  this.clickablePitches = false;
+                  this.isUserCampaignOwner = false;
                 }
               }
             })

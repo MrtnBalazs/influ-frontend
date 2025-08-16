@@ -1,7 +1,7 @@
 <div class="title" style="text-align: left;">Pitches</div>
 @if(pitches) {
     @for (pitch of pitches; track pitch.id) {
-        <div class="list-item" [class.not-clickable]="!clickablePitches" style="margin-top: 16px;">
+        <div class="list-item" [class.not-clickable]="!(isUserPitchOwner(pitch) || isUserCampaignOwner)" style="margin-top: 16px;">
             <div
                     [class.active]="hoveredId === pitch.id"
                     (mouseover)="hoveredId = pitch.id"

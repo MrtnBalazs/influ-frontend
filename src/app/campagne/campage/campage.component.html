@@ -18,7 +18,7 @@
             <div [@fadeSlide]="animationState" style="margin-top: 16px;">
                 <app-pitch-list
                     [pitches]="campaign?.pitchList"
-                    [clickablePitches]="clickablePitches"
+                    [isUserCampaignOwner]="isUserCampaignOwner"
                 >
                 </app-pitch-list>
             </div>

@@ -50,7 +50,6 @@ export class NavbarComponent {
         new LogoutMenuItem("Logout", "/homepage", this.router, this.authenticationService)
       ];
       var influMenuItems = [
-        new RoutingMenuItem('Campagnes', '/campagnes', this.router),
         new RoutingMenuItem('My pitches', '/my-pitches', this.router),
       ];
       var brandMenuItems = [
