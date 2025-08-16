@@ -42,19 +42,28 @@ export class CampageComponent {
     this.rerunAnimation();
     if (value) {
       this.campaignId.set(value);
-      this.campagneService.getCampagneById(this.campaignId()).subscribe((response: { campaign: any }) => {
-        this.campaign = response.campaign;
-        this.authenticationService.getUser().subscribe(user => {
-          if(!user) {
-            this.clickablePitches = false;
-          } else {
-            if(user.email == this.campaign.ownerId){
-              this.clickablePitches = true;
-            } else {
-              this.clickablePitches = false;
-            }
-          }
-        })
+      this.campagneService.getCampagneById(this.campaignId())
+      .subscribe({
+        next: (response: { campaign: any }) => {
+          this.campaign = response.campaign;
+          this.authenticationService.getUser()
+          .subscribe(user => {
+              if(!user) {
+                this.clickablePitches = false;
+              } else {
+                if(user.email == this.campaign.ownerId){
+                  this.clickablePitches = true;
+                } else {
+                  this.clickablePitches = false;
+                }
+              }
+            })
+        },
+        error: (error) => {
+          console.error(error);
+          this.campaignId = signal<any | null>(null);
+          this.campaign = null;
+        }
       });
     }
   }
