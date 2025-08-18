@@ -1,6 +1,7 @@
-<h1>My pitches</h1>
-<div>
-    <app-pitch-list-detail 
-        [pitches]="myPitches">
-    </app-pitch-list-detail>
+<div class="split-screen-container">
+    <app-pitch-list style="padding: 16px;" [title]="'My pitches'" @fadeSlideId (pitchSelected)="onPitchSelected($event)" [pitches]="myPitches"></app-pitch-list>
+    <div class="vertical-divider-wrapper">
+        <div class="vertical-divider"></div>
+    </div>
+    <app-pitch style="padding: 16px;" [selectedPitch]="pitchSelected()"></app-pitch>
 </div>

@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
     <div class="col-6">
         <app-pitch-list 
             [pitches]="pitches" 
@@ -8,3 +8,18 @@
         <app-pitch [selectedPitch]="selectedPitchId()"></app-pitch>
     </div>
 </div>
+<div class="list-container" [style.padding-right]="!pitches[0] ? 0 : 6">
+  <div class="list-title">{{title}}</div>
+  @if (!pitches[0]) {
+    <div class="campaign-not-selected-container" style="padding: 0px; margin-right: 0px; margin-left: 0px;">
+      <div class="campaign-missing-text">Sorry, No campaigns today</div>
+    </div>
+  }
+  <div class="list-item-container">
+    @for (pitch of pitches; track pitch.id) {
+        <a [class.selected]="pitch.id === selectedItemId" class="list-item" [class.not-clickable]="!clickable" (click)="selectCampaign(campaign)">
+          {{campaign.title}}
+        </a>
+    }
+  </div>
+</div> -->

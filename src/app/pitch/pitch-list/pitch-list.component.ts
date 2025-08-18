@@ -10,6 +10,8 @@ import { AuthenticationService } from '../../service/authentication/authenticati
 })
 export class PitchListComponent implements OnInit{
   @Input() pitches: any[] = [];
+  @Input() title = "";
+  @Input() withTitle = true;
   @Input() isUserCampaignOwner = false;
   @Output() pitchSelected = new EventEmitter<any>();
   userEmail = "";

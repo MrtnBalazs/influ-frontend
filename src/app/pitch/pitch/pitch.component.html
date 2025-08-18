@@ -1,3 +1,16 @@
-<div>{{pitch?.creatorId}}</div>
-<div>{{pitch?.title}}</div>
-<div>{{pitch?.text}}</div>
+@if(pitch) {
+    <div class="green-container">
+        <div class="title">
+            {{pitch?.title}}
+        </div>
+        <div class="text">
+            {{pitch?.text}}
+        </div>
+    </div>
+} @else {
+    <div [@fadeSlide]="animationState" class="campaign-not-selected-container">
+        <div class="campaign-missing-text">
+            Select a pitch
+        </div>
+    </div>
+}

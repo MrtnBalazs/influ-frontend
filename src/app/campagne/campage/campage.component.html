@@ -19,12 +19,12 @@
                 <app-pitch-list
                     [pitches]="campaign?.pitchList"
                     [isUserCampaignOwner]="isUserCampaignOwner"
+                    [title]="'Pitches'"
                 >
                 </app-pitch-list>
             </div>
         }
     </div>
-    
 } @else {
     <div [@fadeSlide]="animationState" class="campaign-not-selected-container">
         <div class="campaign-missing-text">

@@ -234,6 +234,12 @@ app-campagne-list {
     overflow: auto;
     width: 100%;
 }
+
+app-pitch-list {
+    box-sizing: border-box;
+    overflow: auto;
+    width: 100%;
+}
   
   /* border: 1px solid #fe0000; */
 
@@ -293,6 +299,12 @@ app-campagne-list {
 }
 
 app-campage {
+    box-sizing: border-box;
+    overflow: auto;
+    width: 100%;
+}
+
+app-pitch {
     box-sizing: border-box;
     overflow: auto;
     width: 100%;
