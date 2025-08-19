@@ -17,6 +17,7 @@ export class CampagneService {
   }
 
   getCampagneById(id: string): Observable<{ campaign: any }> {
+    console.log("getcampagne")
     return this.http.get<{ campaign: any }>(`${this.baseUrl}/api/campaigns/${id}`);
   }
 
