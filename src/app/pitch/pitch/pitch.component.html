@@ -6,6 +6,7 @@
         <div class="text">
             {{pitch?.text}}
         </div>
+        <app-button-bar [buttons]="pitchButtons"></app-button-bar>
     </div>
 } @else {
     <div [@fadeSlide]="animationState" class="campaign-not-selected-container">

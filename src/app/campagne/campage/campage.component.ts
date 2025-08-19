@@ -66,9 +66,6 @@ export class CampageComponent {
                   this.isUserCampaignOwner = false;
                 }
               }
-              console.log(this.campaign)
-              console.log(this.userType)
-              console.log(this.hasPitchForCampaign(this.userEmail))
               if(this.isUserCampaignOwner) {
                 this.campaignButtons = [
                   new Button("Delete campaign", "red", () => {/* TODO delete campaign*/}),
