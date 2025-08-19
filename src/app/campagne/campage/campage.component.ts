@@ -6,11 +6,14 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { CommonModule } from '@angular/common';
 import { PitchListComponent } from '../../pitch/pitch-list/pitch-list.component';
 import { AuthenticationService } from '../../service/authentication/authentication.service';
+import { ButtonBarComponent } from "../../common/button-bar/button-bar.component";
+import { Button } from '../../common/button-bar/button';
+import { BRAND, INFLUENCER } from '../../consts';
 
 @Component({
   selector: 'app-campage',
   standalone: true,
-  imports: [CommonModule, PitchListComponent ],
+  imports: [CommonModule, PitchListComponent, ButtonBarComponent],
   templateUrl: './campage.component.html',
   styleUrl: './campage.component.css',
   animations: [
@@ -34,8 +37,12 @@ export class CampageComponent {
   animationState = 'show';
   @Input() withPitches = false;
   isUserCampaignOwner = false;
+  userType = "";
+  userEmail = "";
+  campaignButtons: Button[] = []
 
-  constructor(private campagneService: CampagneService, private authenticationService: AuthenticationService) {}
+  constructor(private campagneService: CampagneService, private authenticationService: AuthenticationService) {
+  }
 
   @Input({ transform: (c: any) => c }) 
   set selectedCampaign(value: any) {
@@ -51,11 +58,27 @@ export class CampageComponent {
               if(!user) {
                 this.isUserCampaignOwner = false;
               } else {
+                this.userType = user.userType;
+                this.userEmail = user.email;
                 if(user.email == this.campaign.ownerId){
                   this.isUserCampaignOwner = true;
                 } else {
                   this.isUserCampaignOwner = false;
                 }
+              }
+              console.log(this.campaign)
+              console.log(this.userType)
+              console.log(this.hasPitchForCampaign(this.userEmail))
+              if(this.isUserCampaignOwner) {
+                this.campaignButtons = [
+                  new Button("Delete campaign", "red", () => {/* TODO delete campaign*/}),
+                ]
+              } else if (this.userType === INFLUENCER && !this.hasPitchForCampaign(this.userEmail)) {
+                this.campaignButtons = [
+                  new Button("Create pitch", "green", () => {/* TODO create pitch*/}),
+                ]
+              } else {
+                this.campaignButtons = []
               }
             })
         },
@@ -66,6 +89,15 @@ export class CampageComponent {
         }
       });
     }
+  }
+
+  hasPitchForCampaign(userEmail: string): boolean {
+    for(const pitch of this.campaign.pitchList) {
+      if(pitch.ownerId === userEmail){
+        return true;
+      }
+    }
+    return false;
   }
 
   onPitchSelected(pitch: any) {

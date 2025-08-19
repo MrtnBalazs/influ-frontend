@@ -13,6 +13,7 @@
             <div class="text" style="font-size: 20px;">Type: {{campaign?.campaignType}}</div>
             <div class="text" style="font-size: 20px;">Fee: {{campaign?.fee}}</div>
         </div>
+        <app-button-bar [buttons]="campaignButtons"></app-button-bar>
     
         @if(withPitches) {
             <div [@fadeSlide]="animationState" style="margin-top: 16px;">
