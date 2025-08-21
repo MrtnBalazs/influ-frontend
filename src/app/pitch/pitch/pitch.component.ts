@@ -27,6 +27,8 @@ export class PitchComponent{
   pitch: any;
   animationState = 'show';
   pitchButtons: Button[] = [];
+  isModal = false;
+  onClose!: () => void;  // callback passed from service
 
   @Input() 
   set selectedPitch(value: string | null) {
@@ -75,5 +77,4 @@ export class PitchComponent{
   }
 
   constructor(private campagneService:CampagneService, private authenticationService: AuthenticationService){}
-
 }

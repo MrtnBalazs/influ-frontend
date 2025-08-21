@@ -21,6 +21,7 @@
                     [pitches]="campaign?.pitchList"
                     [isUserCampaignOwner]="isUserCampaignOwner"
                     [title]="'Pitches'"
+                    (pitchSelected)="onPitchSelected($event)"
                 >
                 </app-pitch-list>
             </div>

@@ -8,7 +8,8 @@ import { PitchListComponent } from '../../pitch/pitch-list/pitch-list.component'
 import { AuthenticationService } from '../../service/authentication/authentication.service';
 import { ButtonBarComponent } from "../../common/button-bar/button-bar.component";
 import { Button } from '../../common/button-bar/button';
-import { BRAND, INFLUENCER } from '../../consts';
+import { INFLUENCER } from '../../consts';
+import { ModalService } from '../../service/modal/modal.service';
 
 @Component({
   selector: 'app-campage',
@@ -41,7 +42,7 @@ export class CampageComponent {
   userEmail = "";
   campaignButtons: Button[] = []
 
-  constructor(private campagneService: CampagneService, private authenticationService: AuthenticationService) {
+  constructor(private modalService: ModalService, private campagneService: CampagneService, private authenticationService: AuthenticationService) {
   }
 
   @Input({ transform: (c: any) => c }) 
@@ -99,7 +100,9 @@ export class CampageComponent {
 
   onPitchSelected(pitch: any) {
     this.selectedPitchId.set(pitch.id);
+    this.modalService.openPitchModal(pitch.id);
   }
+
 
   rerunAnimation() {
     this.animationState = 'hide';

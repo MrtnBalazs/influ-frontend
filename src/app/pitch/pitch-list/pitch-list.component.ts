@@ -30,7 +30,9 @@ export class PitchListComponent implements OnInit{
   }
 
   selectPitch(pitch: any) {
-    this.pitchSelected.emit(pitch);
+    if((this.isUserPitchOwner(pitch) || this.isUserCampaignOwner)) {
+      this.pitchSelected.emit(pitch);
+    }
   }
 
   isUserPitchOwner(pitch: any): boolean {

@@ -1,4 +1,4 @@
-@if(pitch) {
+    @if(pitch) {
     <div class="green-container">
         <div class="title">
             {{pitch?.title}}
@@ -8,10 +8,10 @@
         </div>
         <app-button-bar [buttons]="pitchButtons"></app-button-bar>
     </div>
-} @else {
-    <div [@fadeSlide]="animationState" class="campaign-not-selected-container">
-        <div class="campaign-missing-text">
-            Select a pitch
+    } @else {
+        <div [@fadeSlide]="animationState" class="campaign-not-selected-container">
+            <div class="campaign-missing-text">
+                Select a pitch
+            </div>
         </div>
-    </div>
-}
+    }
