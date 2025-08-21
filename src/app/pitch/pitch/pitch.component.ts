@@ -57,11 +57,11 @@ export class PitchComponent{
     }
   }
 
-  private buildButtons(user: any, pitch: any, campaign: any): Button[] {
+  private buildButtons(user: any, pitch: any, campaignRp: any): Button[] {
     if (!user) return [];
     if (user.email === pitch.ownerId) {
       return [new Button("Delete pitch", "red", () => {/* TODO */})];
-    } else if (user.userType === BRAND && campaign.ownerId === user.email) {
+    } else if (user.userType === BRAND && campaignRp.campaign.ownerId === user.email) {
       return [
         new Button("Accept pitch", "green", () => {/* TODO */}),
         new Button("Delete pitch", "red", () => {/* TODO */})
