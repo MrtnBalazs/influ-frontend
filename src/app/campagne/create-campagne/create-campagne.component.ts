@@ -65,6 +65,7 @@ export class CreateCampagneComponent {
         },
         error: (error) => {
           this.error = true;
+          console.log(error);
         }
       });
   }
