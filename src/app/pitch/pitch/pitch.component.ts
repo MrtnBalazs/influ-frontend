@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { CampagneService } from '../../service/campagne/campagne.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ButtonBarComponent } from "../../common/button-bar/button-bar.component";
 import { Button } from '../../common/button-bar/button';
 import { AuthenticationService } from '../../service/authentication/authentication.service';
-import { BRAND, INFLUENCER } from '../../consts';
-import { combineLatest, forkJoin, map, switchMap, takeUntil } from 'rxjs';
+import { BRAND} from '../../consts';
+import { combineLatest, map, switchMap} from 'rxjs';
 
 @Component({
   selector: 'app-pitch',
@@ -60,14 +60,31 @@ export class PitchComponent{
   private buildButtons(user: any, pitch: any, campaignRp: any): Button[] {
     if (!user) return [];
     if (user.email === pitch.ownerId) {
-      return [new Button("Delete pitch", "red", () => {/* TODO */})];
+      return [new Button("Delete pitch", "red", () => {this.deletePitch(pitch.id)})];
     } else if (user.userType === BRAND && campaignRp.campaign.ownerId === user.email) {
       return [
         new Button("Accept pitch", "green", () => {/* TODO */}),
-        new Button("Delete pitch", "red", () => {/* TODO */})
+        new Button("Delete pitch", "red", () => {this.deletePitch(pitch.id)})
       ];
     }
     return [];
+  }
+
+  private deletePitch(pitchId: string) {
+    this.campagneService.deletePitchById(pitchId).subscribe({
+      next: () => {
+        if(this.isModal) {
+          this.onClose();
+        }
+        this.pitch = null;
+        this.selectedPitch = null;
+        // TODO feedback
+      },
+      error: (error) => {
+        console.error(error);
+        // TODO feedback
+      }
+    });
   }
 
   

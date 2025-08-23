@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, map } from 'rxjs';
+import { Observable, of, map, pipe } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,10 @@ export class CampagneService {
 
   getPitchById(id: string) {
     return this.http.get<{ pitch: any }>(`${this.baseUrl}/api/campaigns/pitches/${id}`);
+  }
+
+  deletePitchById(id: string) {
+    return this.http.delete(`${this.baseUrl}/api/campaigns/pitches/${id}`);
   }
 
   getMyPitches() {
