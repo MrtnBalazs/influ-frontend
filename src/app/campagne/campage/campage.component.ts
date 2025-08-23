@@ -73,7 +73,7 @@ export class CampageComponent {
                 ]
               } else if (this.userType === INFLUENCER && !this.hasPitchForCampaign(this.userEmail)) {
                 this.campaignButtons = [
-                  new Button("Create pitch", "green", () => {/* TODO create pitch*/}),
+                  new Button("Create pitch", "green", () => {this.modalService.openCreatePitchModal(this.campaignId())}),
                 ]
               } else {
                 this.campaignButtons = []

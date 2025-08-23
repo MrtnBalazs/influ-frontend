@@ -76,6 +76,10 @@
     color: var(--dark-green);
 }
 
+app-create-pitch {
+    width: 100%;
+}
+
 .green-container {
     background: var(--light-green);
     display: flex;

@@ -36,6 +36,11 @@ export class CampagneService {
     return this.http.get<{ pitchList: any[] }>(`${this.baseUrl}/api/campaigns/pitches/user`);
   }
 
+  savePitch(pitch: { title: string; text: string , campaignId: string}) {
+    console.log(pitch)
+    return this.http.post(`${this.baseUrl}/api/campaigns/pitches`, pitch);
+  }
+
   saveCampaign(body: any) {
     return this.http.post(`${this.baseUrl}/api/campaigns`, body);
   }
