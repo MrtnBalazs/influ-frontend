@@ -28,6 +28,10 @@ export class CampagneService {
     return this.http.get<{ pitch: any }>(`${this.baseUrl}/api/campaigns/pitches/${id}`);
   }
 
+  deleteCampaignById(id: string) {
+    return this.http.delete(`${this.baseUrl}/api/campaigns/${id}`);
+  }
+
   deletePitchById(id: string) {
     return this.http.delete(`${this.baseUrl}/api/campaigns/pitches/${id}`);
   }

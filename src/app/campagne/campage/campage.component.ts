@@ -69,7 +69,12 @@ export class CampageComponent {
               }
               if(this.isUserCampaignOwner) {
                 this.campaignButtons = [
-                  new Button("Delete campaign", "red", () => {/* TODO delete campaign*/}),
+                  new Button("Delete campaign", "red", () => {
+                    this.campagneService.deleteCampaignById(this.campaignId());
+                    this.campaign = null;
+                    this.campaignId.set(null);
+                    this.selectedPitchId.set(null);
+                  }),
                 ]
               } else if (this.userType === INFLUENCER && !this.hasPitchForCampaign(this.userEmail)) {
                 this.campaignButtons = [

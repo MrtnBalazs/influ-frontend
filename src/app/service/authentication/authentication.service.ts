@@ -57,8 +57,8 @@ export class AuthenticationService {
   }
 
   getUser() {
-    this.user.next({ authToken: "string", email: "influencer@test.com", userType: "INFLUENCER" }); // TODO only dev purposes
-    //this.user.next({ authToken: "string", email: "brand@test.com", userType: "BRAND" }); // TODO only dev purposes
+    //this.user.next({ authToken: "string", email: "influencer@test.com", userType: "INFLUENCER" }); // TODO only dev purposes
+    this.user.next({ authToken: "string", email: "brand@test.com", userType: "BRAND" }); // TODO only dev purposes
     return this.user.asObservable();  
   }
 
