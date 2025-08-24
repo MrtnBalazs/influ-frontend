@@ -6,49 +6,21 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'https://8vklq.wiremockapi.cloud';
-  private dev = false;
-  private devUserListResponse: Observable<any> = of({
-    "users": [
-        {
-            "username": "username",
-            "userType": "BRAND",
-            "settings": {
-                "emailNotifications": false
-            }
-        },
-        {
-            "username": "username2",
-            "userType": "INFLUENCER",
-            "settings": {
-                "emailNotifications": false
-            }
-        },
-        {
-            "username": "username3",
-            "userType": "BRAND",
-            "settings": {
-                "emailNotifications": false
-            }
-        }
-    ]
-  });
+  private baseUrl = 'http://localhost:8081';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    //this.baseUrl = 'https://8vklq.wiremockapi.cloud'; // TODO dev
+  }
 
   getUser() {
       return this.http.get<{email: string, username: string, userType: string, settings: {emailNotification: string}}>(this.baseUrl + "/api/users/user");
   }
 
   getUsers(userType: string) {
-    if(this.dev) {
-      return this.devUserListResponse;
+    if(userType) {
+      return this.http.get<{ users: any[] }>(this.baseUrl + "/api/v1/users?user_type" + userType);
     } else {
-      if(userType) {
-        return this.http.get<{ users: any[] }>(this.baseUrl + "/api/v1/users?user_type" + userType);
-      } else {
-        return this.http.get<{ users: any[] }>(this.baseUrl + "/api/v1/users");
-      }
+      return this.http.get<{ users: any[] }>(this.baseUrl + "/api/v1/users");
     }
   }
 }

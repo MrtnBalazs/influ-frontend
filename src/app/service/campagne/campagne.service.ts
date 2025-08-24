@@ -9,7 +9,7 @@ export class CampagneService {
   private baseUrl = 'http://localhost:8081';
 
   constructor(private http: HttpClient) {
-    this.baseUrl = 'https://8vklq.wiremockapi.cloud';
+    //this.baseUrl = 'https://8vklq.wiremockapi.cloud';
   }
 
   getAllCampagnes(): Observable<{ campaignList: any[] }> {

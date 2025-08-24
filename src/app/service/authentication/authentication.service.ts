@@ -15,8 +15,23 @@ export class AuthenticationService {
   private user = new BehaviorSubject<{ authToken: any, email: any, userType: any } | null>(null);
 
   constructor(private http:HttpClient, private router:Router) {
-    this.apiUrl = 'https://8vklq.wiremockapi.cloud/api/auth';
+    //this.apiUrl = 'https://8vklq.wiremockapi.cloud/api/auth'; //TODO DEV
+    if(this.hasToken()){
+      this.decodeAndStoreUser(this.getToken());
+    }
   }
+
+  private decodeAndStoreUser(token: string | null) {
+  // Option 1: Decode token locally (roles in JWT claims)
+  if(token != null) {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    this.user.next({
+      authToken: payload.sub,
+      email: payload.sub,
+      userType: payload.type,
+    });
+  }
+}
 
   /** Login: Sends credentials and stores JWT */
   login(username: string, password: string): Observable<{ authToken: string }> {
@@ -57,18 +72,13 @@ export class AuthenticationService {
   }
 
   getUser() {
-    //this.user.next({ authToken: "string", email: "influencer@test.com", userType: "INFLUENCER" }); // TODO only dev purposes
-    this.user.next({ authToken: "string", email: "brand@test.com", userType: "BRAND" }); // TODO only dev purposes
+    //this.user.next({ authToken: "string", email: "influencer@test.com", userType: "INFLUENCER" }); // TODO DEV
+    //this.user.next({ authToken: "string", email: "brand@test.com", userType: "BRAND" }); // TODO DEV
     return this.user.asObservable();  
   }
 
-  /** Check if user is authenticated */
-  isAuthenticated(): Observable<boolean> {
-    return this.authState.asObservable();
-  }
-
   /** Check if a JWT token exists */
-  private hasToken(): boolean {
+  hasToken(): boolean {
     return !!localStorage.getItem(this.tokenKey);
   }
 
