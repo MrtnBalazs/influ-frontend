@@ -5,11 +5,15 @@ import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { authInterceptor } from './service/authentication/auth.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { includeBearerTokenInterceptor } from 'keycloak-angular';
+import { provideKeycloakAngular } from './keycloak.config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideKeycloakAngular(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([includeBearerTokenInterceptor])),
+    //provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimations()],
 };

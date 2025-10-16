@@ -5,6 +5,7 @@ import { AuthenticationService } from '../../service/authentication/authenticati
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { REGISTER_BRAND, REGISTER_INFLUENCER } from '../../consts';
 import { MultipleSelectorPopupComponent } from "../../common/multiple-selector-popup/multiple-selector-popup.component";
+import { KeycloakAuthenticationService } from '../../service/authentication/keycloak.authentication.service';
 
 @Component({
   selector: 'app-register',
@@ -44,6 +45,7 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private authenticationService: AuthenticationService,
+    private keycloakAuthenticationService: KeycloakAuthenticationService,
     private router:Router
   ) {
     this.registerBrandForm = this.fb.group({
@@ -93,7 +95,8 @@ export class RegisterComponent {
   }
 
   formSubmitted() {
-    this.registerClicked = true;
+    this.keycloakAuthenticationService.login();
+    /* this.registerClicked = true;
     if(this.isBrandRegistering()) {
       if (this.registerBrandForm.invalid) {
         return;
@@ -125,7 +128,7 @@ export class RegisterComponent {
             }
           });
       }
-    }
+    } */
   }
 
   isBrandRegistering(): boolean {
