@@ -7,11 +7,11 @@ import { MenuItem } from '../navbar/menu-items/MenuItem';
 import { RoutingMenuItem } from './menu-items/RoutingMenuItem';
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+    selector: 'app-navbar',
+    imports: [CommonModule],
+    standalone: true,
+    templateUrl: './navbar.component.html',
+    styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
   menuItems: MenuItem[] = [];

@@ -12,23 +12,22 @@ import { INFLUENCER } from '../../consts';
 import { ModalService } from '../../service/modal/modal.service';
 
 @Component({
-  selector: 'app-campage',
-  standalone: true,
-  imports: [CommonModule, PitchListComponent, ButtonBarComponent],
-  templateUrl: './campage.component.html',
-  styleUrl: './campage.component.css',
-  animations: [
-    trigger('fadeSlide', [
-      state('hide', style({ opacity: 0, transform: 'translateY(10px)' })),
-      state('show', style({ opacity: 1, transform: 'translateY(0)' })),
-      transition('hide => show', [
-        animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
-      ]),
-      transition('show => hide', [
-        animate('150ms ease-in', style({ opacity: 0, transform: 'translateY(10px)' }))
-      ])
-    ])
-  ]
+    selector: 'app-campage',
+    imports: [CommonModule, PitchListComponent, ButtonBarComponent],
+    templateUrl: './campage.component.html',
+    styleUrl: './campage.component.css',
+    animations: [
+        trigger('fadeSlide', [
+            state('hide', style({ opacity: 0, transform: 'translateY(10px)' })),
+            state('show', style({ opacity: 1, transform: 'translateY(0)' })),
+            transition('hide => show', [
+                animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+            ]),
+            transition('show => hide', [
+                animate('150ms ease-in', style({ opacity: 0, transform: 'translateY(10px)' }))
+            ])
+        ])
+    ]
 })
 export class CampageComponent {
   @Input() id: any = null;

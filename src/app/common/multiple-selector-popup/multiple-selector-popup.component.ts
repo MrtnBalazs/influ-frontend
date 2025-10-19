@@ -3,39 +3,39 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-multiple-selector-popup',
-  standalone: true,
-  imports: [FormsModule],
-  templateUrl: './multiple-selector-popup.component.html',
-  styleUrl: './multiple-selector-popup.component.css',
-  animations: [
-      trigger('shake', [
-        transition(':enter', [
-          animate('100ms ease', style({ transform: 'rotate(0.6deg)' })),
-          animate('100ms ease', style({ transform: 'rotate(-0.6deg)' })),
-          animate('100ms ease', style({ transform: 'rotate(0deg)' })),
+    selector: 'app-multiple-selector-popup',
+    imports: [FormsModule],
+    standalone: true,
+    templateUrl: './multiple-selector-popup.component.html',
+    styleUrl: './multiple-selector-popup.component.css',
+    animations: [
+        trigger('shake', [
+            transition(':enter', [
+                animate('100ms ease', style({ transform: 'rotate(0.6deg)' })),
+                animate('100ms ease', style({ transform: 'rotate(-0.6deg)' })),
+                animate('100ms ease', style({ transform: 'rotate(0deg)' })),
+            ])
+        ]),
+        trigger('bounceInOut', [
+            transition(':enter', [
+                style({ transform: 'scale(0%)' }),
+                animate('250ms ease-out', style({ transform: 'scale(100%)' }))
+            ]),
+            transition(':leave', [
+                style({ transform: 'scale(100%)' }),
+                animate('250ms ease-out', style({ transform: 'scale(0%)' }))
+            ])
+        ]),
+        trigger('fadeSlide', [
+            transition(':enter', [
+                style({ opacity: 0, transform: 'translateY(10px)' }),
+                animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+            ]),
+            transition(':leave', [
+                animate('200ms ease-out', style({ opacity: 0, transform: 'translateY(10px)' }))
+            ]),
         ])
-        ]
-      ),
-    trigger('bounceInOut', [
-      transition(':enter', [
-        style({ transform: 'scale(0%)' }),
-        animate('250ms ease-out', style({ transform: 'scale(100%)' }))
-      ]),
-      transition(':leave', [
-        style({ transform: 'scale(100%)' }),
-        animate('250ms ease-out', style({ transform: 'scale(0%)' }))
-      ])
-    ]),
-    trigger('fadeSlide', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(10px)' }),
-        animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
-      ]),
-      transition(':leave', [
-        animate('200ms ease-out', style({ opacity: 0, transform: 'translateY(10px)' }))
-      ]),
-    ])]
+    ]
 })
 export class MultipleSelectorPopupComponent implements OnInit{
   @Input() inputItems: string[] = [];

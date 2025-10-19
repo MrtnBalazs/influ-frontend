@@ -5,18 +5,17 @@ import { CampageComponent } from "../campage/campage.component";
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
-  selector: 'app-all-campagnes',
-  standalone: true,
-  imports: [CampagneListComponent, CampageComponent],
-  templateUrl: './all-campagnes.component.html',
-  styleUrl: './all-campagnes.component.css',
-  animations: [
-      trigger('fadeSlideId', [
-        transition(':enter', [
-          style({ opacity: 0, transform: 'translateY(10px)' }),
-          animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+    selector: 'app-all-campagnes',
+    imports: [CampagneListComponent, CampageComponent],
+    templateUrl: './all-campagnes.component.html',
+    styleUrl: './all-campagnes.component.css',
+    animations: [
+        trigger('fadeSlideId', [
+            transition(':enter', [
+                style({ opacity: 0, transform: 'translateY(10px)' }),
+                animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+            ])
         ])
-      ])
     ]
 })
 export class AllCampagnesComponent {

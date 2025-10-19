@@ -2,11 +2,10 @@ import { Component, Input } from '@angular/core';
 import { Button } from './button';
 
 @Component({
-  selector: 'app-button-bar',
-  standalone: true,
-  imports: [],
-  templateUrl: './button-bar.component.html',
-  styleUrl: './button-bar.component.css'
+    selector: 'app-button-bar',
+    imports: [],
+    templateUrl: './button-bar.component.html',
+    styleUrl: './button-bar.component.css'
 })
 export class ButtonBarComponent {
   @Input() buttons: Button[] = [];

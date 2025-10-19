@@ -6,27 +6,25 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { KeycloakAuthenticationService } from '../../service/authentication/keycloak.authentication.service';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
-  animations: [
-    trigger('shake', [
-      transition(':enter', [
-        animate('100ms ease', style({ transform: 'rotate(0.6deg)' })),
-        animate('100ms ease', style({ transform: 'rotate(-0.6deg)' })),
-        animate('100ms ease', style({ transform: 'rotate(0deg)' })),
-      ])
-      ]
-    ),
-    trigger('fadeSlideId', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(10px)' }),
-        animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
-      ])
-    ])
-  ]
+    selector: 'app-login',
+    imports: [FormsModule, ReactiveFormsModule],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.css',
+    animations: [
+        trigger('shake', [
+            transition(':enter', [
+                animate('100ms ease', style({ transform: 'rotate(0.6deg)' })),
+                animate('100ms ease', style({ transform: 'rotate(-0.6deg)' })),
+                animate('100ms ease', style({ transform: 'rotate(0deg)' })),
+            ])
+        ]),
+        trigger('fadeSlideId', [
+            transition(':enter', [
+                style({ opacity: 0, transform: 'translateY(10px)' }),
+                animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+            ])
+        ])
+    ]
 })
 export class LoginComponent {
   loginForm: any;

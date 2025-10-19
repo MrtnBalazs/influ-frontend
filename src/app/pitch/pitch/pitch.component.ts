@@ -8,19 +8,18 @@ import { BRAND} from '../../consts';
 import { combineLatest, map, switchMap} from 'rxjs';
 
 @Component({
-  selector: 'app-pitch',
-  standalone: true,
-  imports: [ButtonBarComponent],
-  templateUrl: './pitch.component.html',
-  styleUrl: './pitch.component.css',
-  animations: [
-    trigger('fadeSlide', [
-      state('hide', style({ opacity: 0, transform: 'translateY(10px)' })),
-      state('show', style({ opacity: 1, transform: 'translateY(0)' })),
-      transition('hide => show', animate('200ms ease-out')),
-      transition('show => hide', animate('150ms ease-in'))
-    ])
-  ]
+    selector: 'app-pitch',
+    imports: [ButtonBarComponent],
+    templateUrl: './pitch.component.html',
+    styleUrl: './pitch.component.css',
+    animations: [
+        trigger('fadeSlide', [
+            state('hide', style({ opacity: 0, transform: 'translateY(10px)' })),
+            state('show', style({ opacity: 1, transform: 'translateY(0)' })),
+            transition('hide => show', animate('200ms ease-out')),
+            transition('show => hide', animate('150ms ease-in'))
+        ])
+    ]
 })
 export class PitchComponent{
   pitchId = signal<any | null>(null);

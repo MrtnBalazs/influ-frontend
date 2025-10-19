@@ -2,11 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuthenticationService } from '../../service/authentication/authentication.service';
 
 @Component({
-  selector: 'app-pitch-list',
-  standalone: true,
-  imports: [],
-  templateUrl: './pitch-list.component.html',
-  styleUrl: './pitch-list.component.css'
+    selector: 'app-pitch-list',
+    imports: [],
+    templateUrl: './pitch-list.component.html',
+    styleUrl: './pitch-list.component.css'
 })
 export class PitchListComponent implements OnInit{
   @Input() pitches: any[] = [];

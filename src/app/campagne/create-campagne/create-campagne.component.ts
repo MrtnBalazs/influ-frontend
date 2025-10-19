@@ -7,26 +7,24 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-create-campagne',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MultipleSelectorPopupComponent],
-  templateUrl: './create-campagne.component.html',
-  styleUrl: './create-campagne.component.css',
-  animations: [
-      trigger('shake', [
-        transition(':enter', [
-          animate('100ms ease', style({ transform: 'rotate(0.6deg)' })),
-          animate('100ms ease', style({ transform: 'rotate(-0.6deg)' })),
-          animate('100ms ease', style({ transform: 'rotate(0deg)' })),
+    selector: 'app-create-campagne',
+    imports: [FormsModule, ReactiveFormsModule, MultipleSelectorPopupComponent],
+    templateUrl: './create-campagne.component.html',
+    styleUrl: './create-campagne.component.css',
+    animations: [
+        trigger('shake', [
+            transition(':enter', [
+                animate('100ms ease', style({ transform: 'rotate(0.6deg)' })),
+                animate('100ms ease', style({ transform: 'rotate(-0.6deg)' })),
+                animate('100ms ease', style({ transform: 'rotate(0deg)' })),
+            ])
+        ]),
+        trigger('fadeSlideId', [
+            transition(':enter', [
+                style({ opacity: 0, transform: 'translateY(10px)' }),
+                animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+            ])
         ])
-        ]
-      ),
-      trigger('fadeSlideId', [
-        transition(':enter', [
-          style({ opacity: 0, transform: 'translateY(10px)' }),
-          animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
-        ])
-      ])
     ]
 })
 export class CreateCampagneComponent {

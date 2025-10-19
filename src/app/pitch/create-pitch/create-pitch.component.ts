@@ -5,27 +5,25 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-create-pitch',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
-  templateUrl: './create-pitch.component.html',
-  styleUrl: './create-pitch.component.css',
-  animations: [
+    selector: 'app-create-pitch',
+    imports: [FormsModule, ReactiveFormsModule],
+    templateUrl: './create-pitch.component.html',
+    styleUrl: './create-pitch.component.css',
+    animations: [
         trigger('shake', [
-          transition(':enter', [
-            animate('100ms ease', style({ transform: 'rotate(0.6deg)' })),
-            animate('100ms ease', style({ transform: 'rotate(-0.6deg)' })),
-            animate('100ms ease', style({ transform: 'rotate(0deg)' })),
-          ])
-          ]
-        ),
+            transition(':enter', [
+                animate('100ms ease', style({ transform: 'rotate(0.6deg)' })),
+                animate('100ms ease', style({ transform: 'rotate(-0.6deg)' })),
+                animate('100ms ease', style({ transform: 'rotate(0deg)' })),
+            ])
+        ]),
         trigger('fadeSlideId', [
-          transition(':enter', [
-            style({ opacity: 0, transform: 'translateY(10px)' }),
-            animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
-          ])
+            transition(':enter', [
+                style({ opacity: 0, transform: 'translateY(10px)' }),
+                animate('200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+            ])
         ])
-      ]
+    ]
 })
 export class CreatePitchComponent {
   @Input() campaignId = "";
