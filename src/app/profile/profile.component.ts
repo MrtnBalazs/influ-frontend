@@ -5,6 +5,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 @Component({
     selector: 'app-profile',
     imports: [],
+    standalone: true,
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.css',
     animations: [

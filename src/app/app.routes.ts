@@ -8,6 +8,7 @@ import { AllCampagnesComponent } from './campagne/all-campagnes/all-campagnes.co
 import { ProfileComponent } from './profile/profile.component';
 import { MyPitchesComponent } from './pitch/my-pitches/my-pitches.component';
 import { RegisterComponent } from './signup/register/register.component';
+import { canActivateAuthRole } from './service/authentication/keycloak.guard'
 
 export const routes: Routes = [
     { path: 'homepage', component: HomepageComponent },
@@ -15,7 +16,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     
-    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+    { path: 'profile', component: ProfileComponent, canActivate: [canActivateAuthRole], data: { role: 'user' } },
     { path: 'my-campagnes', component: MyCampagnesComponent, canActivate: [AuthGuard] },
     { path: 'create-campagne', component: CreateCampagneComponent, canActivate: [AuthGuard] },
     { path: 'my-pitches', component: MyPitchesComponent, canActivate: [AuthGuard] },

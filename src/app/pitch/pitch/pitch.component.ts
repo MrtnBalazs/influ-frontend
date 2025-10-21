@@ -10,6 +10,7 @@ import { combineLatest, map, switchMap} from 'rxjs';
 @Component({
     selector: 'app-pitch',
     imports: [ButtonBarComponent],
+    standalone: true,
     templateUrl: './pitch.component.html',
     styleUrl: './pitch.component.css',
     animations: [

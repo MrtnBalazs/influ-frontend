@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'app-create-campagne',
     imports: [FormsModule, ReactiveFormsModule, MultipleSelectorPopupComponent],
+    standalone: true,
     templateUrl: './create-campagne.component.html',
     styleUrl: './create-campagne.component.css',
     animations: [

@@ -4,6 +4,7 @@ import { AuthenticationService } from '../../service/authentication/authenticati
 @Component({
     selector: 'app-pitch-list',
     imports: [],
+    standalone: true,
     templateUrl: './pitch-list.component.html',
     styleUrl: './pitch-list.component.css'
 })

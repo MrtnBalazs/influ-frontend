@@ -7,6 +7,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 @Component({
     selector: 'app-all-campagnes',
     imports: [CampagneListComponent, CampageComponent],
+    standalone: true,
     templateUrl: './all-campagnes.component.html',
     styleUrl: './all-campagnes.component.css',
     animations: [

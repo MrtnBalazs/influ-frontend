@@ -7,6 +7,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 @Component({
     selector: 'app-my-pitches',
     imports: [PitchListComponent, PitchListComponent, PitchComponent],
+    standalone: true,
     templateUrl: './my-pitches.component.html',
     styleUrl: './my-pitches.component.css',
     animations: [

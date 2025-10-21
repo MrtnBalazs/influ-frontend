@@ -14,6 +14,7 @@ import { ModalService } from '../../service/modal/modal.service';
 @Component({
     selector: 'app-campage',
     imports: [CommonModule, PitchListComponent, ButtonBarComponent],
+    standalone: true,
     templateUrl: './campage.component.html',
     styleUrl: './campage.component.css',
     animations: [

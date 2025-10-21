@@ -5,6 +5,7 @@ import { PitchComponent } from '../pitch/pitch.component';
 @Component({
     selector: 'app-pitch-list-detail',
     imports: [PitchListComponent, PitchComponent],
+    standalone: true,
     templateUrl: './pitch-list-detail.component.html',
     styleUrl: './pitch-list-detail.component.css'
 })

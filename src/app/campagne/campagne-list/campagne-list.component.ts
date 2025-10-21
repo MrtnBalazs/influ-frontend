@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
     selector: 'app-campagne-list',
     imports: [],
+    standalone: true,
     templateUrl: './campagne-list.component.html',
     styleUrl: './campagne-list.component.css'
 })

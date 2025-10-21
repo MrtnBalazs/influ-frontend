@@ -9,6 +9,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
     selector: 'app-homepage',
     imports: [MultipleSelectorPopupComponent, CampagneListComponent],
     templateUrl: './homepage.component.html',
+    standalone: true,
     styleUrl: './homepage.component.css',
     animations: [
         trigger('fadeSlideId', [

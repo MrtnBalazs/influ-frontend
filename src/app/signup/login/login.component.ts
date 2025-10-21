@@ -8,6 +8,7 @@ import { KeycloakAuthenticationService } from '../../service/authentication/keyc
 @Component({
     selector: 'app-login',
     imports: [FormsModule, ReactiveFormsModule],
+    standalone: true,
     templateUrl: './login.component.html',
     styleUrl: './login.component.css',
     animations: [

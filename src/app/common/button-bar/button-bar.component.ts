@@ -3,6 +3,7 @@ import { Button } from './button';
 
 @Component({
     selector: 'app-button-bar',
+    standalone: true,
     imports: [],
     templateUrl: './button-bar.component.html',
     styleUrl: './button-bar.component.css'

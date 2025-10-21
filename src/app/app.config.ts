@@ -5,10 +5,20 @@ import { authInterceptor } from './service/authentication/auth.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { includeBearerTokenInterceptor } from 'keycloak-angular';
-import { provideKeycloak } from 'keycloak-angular'; // import provideKeycloak
 import { environment } from '../environments/environment'; // import environment
 import { KeycloakOnLoad } from 'keycloak-js'; // import KeycloakOnLoad
+import {
+  provideKeycloak,
+  createInterceptorCondition,
+  IncludeBearerTokenCondition,
+  includeBearerTokenInterceptor,
+  INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG
+} from 'keycloak-angular';
+
+const urlCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
+  urlPattern: /^(http:\/\/localhost:8081)(\/.*)?$/i,
+  bearerPrefix: 'Bearer'
+});
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,9 +33,13 @@ export const appConfig: ApplicationConfig = {
         checkLoginIframe: environment.keycloak.initOptions.checkLoginIframe
       }
     }),
+    {
+      provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
+      useValue: [urlCondition] // <-- Note that multiple conditions might be added.
+    },
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
-    //provideHttpClient(withInterceptors([includeBearerTokenInterceptor])),
+    provideHttpClient(withInterceptors([includeBearerTokenInterceptor])),
     //provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimations()],
 };

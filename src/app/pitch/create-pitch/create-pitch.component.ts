@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'app-create-pitch',
     imports: [FormsModule, ReactiveFormsModule],
+    standalone: true,
     templateUrl: './create-pitch.component.html',
     styleUrl: './create-pitch.component.css',
     animations: [
