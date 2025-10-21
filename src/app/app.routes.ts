@@ -17,7 +17,7 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     
     { path: 'profile', component: ProfileComponent, canActivate: [canActivateAuthRole], data: { role: 'user' } },
-    { path: 'my-campagnes', component: MyCampagnesComponent, canActivate: [AuthGuard] },
+    { path: 'my-campagnes', component: MyCampagnesComponent, canActivate: [canActivateAuthRole], data: { role: 'macska' } },
     { path: 'create-campagne', component: CreateCampagneComponent, canActivate: [AuthGuard] },
     { path: 'my-pitches', component: MyPitchesComponent, canActivate: [AuthGuard] },
 

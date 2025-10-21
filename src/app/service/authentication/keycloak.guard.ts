@@ -22,7 +22,7 @@ const isAccessAllowed = async (
   }
 
   const router = inject(Router);
-  return router.parseUrl('/forbidden');
+  return router.parseUrl('/homepage');
 };
 
 export const canActivateAuthRole = createAuthGuard<CanActivateFn>(isAccessAllowed);

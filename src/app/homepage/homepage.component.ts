@@ -4,6 +4,7 @@ import { MultipleSelectorPopupComponent } from "../common/multiple-selector-popu
 import { CampagneListComponent } from "../campagne/campagne-list/campagne-list.component";
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { KeycloakAuthenticationService } from '../service/authentication/keycloak.authentication.service';
 
 @Component({
     selector: 'app-homepage',
@@ -23,7 +24,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 export class HomepageComponent implements OnInit{
   campaigns: any[] = [];
 
-  constructor(private campaignservice: CampagneService, private router: Router) {}
+  constructor(private campaignservice: CampagneService, private router: Router, private auth:KeycloakAuthenticationService) {}
 
   ngOnInit(): void {
     this.campaignservice.getAllCampagnes().subscribe((response: { campaignList: any[] }) => {
@@ -36,7 +37,8 @@ export class HomepageComponent implements OnInit{
   }
 
   onJoinClicked() {
-     this.router.navigate(['/register']);
+    this.auth.logout();
+     //this.router.navigate(['/register']);
   }
 
 }

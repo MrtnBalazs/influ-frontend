@@ -1,6 +1,7 @@
 import { effect, inject, Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { KEYCLOAK_EVENT_SIGNAL, KeycloakEventType, ReadyArgs, typeEventArgs} from "keycloak-angular";
+import Keycloak from 'keycloak-js';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,10 @@ export class KeycloakAuthenticationService {
 
   authenticated = false;
   keycloakStatus: string | undefined;
-  //private readonly keycloak = inject(Keycloak);
+  private readonly keycloak = inject(Keycloak);
   private readonly keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
 
-  constructor(private router: Router) {
+  constructor() {
     effect(() => {
       const keycloakEvent = this.keycloakSignal();
 
@@ -29,6 +30,15 @@ export class KeycloakAuthenticationService {
   }
 
   login() {
-    //this.keycloak.login();
+    this.keycloak.login();
+  }
+
+  logout() {
+    this.keycloak.logout();
+    this.keycloak.clearToken();
+  }
+
+  register() {
+    this.keycloak.register();
   }
 }
