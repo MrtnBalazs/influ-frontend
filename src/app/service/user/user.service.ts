@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +12,10 @@ export class UserService {
   }
 
   getUser() {
-      console.log("getuser")
       return this.http.get<{email: string, username: string, userType: string, settings: {emailNotification: string}}>(this.baseUrl + "/api/users/user");
   }
 
   getUsers(userType: string) {
-    console.log(userType)
     if(userType) {
       return this.http.get<{ users: any[] }>(this.baseUrl + "/api/users?user_type" + userType);
     } else {

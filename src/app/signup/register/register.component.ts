@@ -1,5 +1,4 @@
 import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { AuthenticationService } from '../../service/authentication/authentication.service';
 import { REGISTER_BRAND, REGISTER_INFLUENCER } from '../../consts';
 import { MultipleSelectorPopupComponent } from "../../common/multiple-selector-popup/multiple-selector-popup.component";
 import { Component, ResourceStreamingLoader } from '@angular/core';
@@ -43,7 +42,6 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authenticationService: AuthenticationService,
     private keycloakAuthenticationService: KeycloakAuthenticationService,
     private router:Router
   ) {

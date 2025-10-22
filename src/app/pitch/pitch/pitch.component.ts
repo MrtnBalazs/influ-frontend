@@ -1,11 +1,10 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, signal, inject } from '@angular/core';
 import { CampagneService } from '../../service/campagne/campagne.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ButtonBarComponent } from "../../common/button-bar/button-bar.component";
 import { Button } from '../../common/button-bar/button';
-import { AuthenticationService } from '../../service/authentication/authentication.service';
-import { BRAND} from '../../consts';
 import { combineLatest, map, switchMap} from 'rxjs';
+import Keycloak from 'keycloak-js';
 
 @Component({
     selector: 'app-pitch',
@@ -29,6 +28,7 @@ export class PitchComponent{
   pitchButtons: Button[] = [];
   isModal = false;
   onClose!: () => void;  // callback passed from service
+  private readonly keycloak = inject(Keycloak);
 
   @Input() 
   set selectedPitch(value: string | null) {
@@ -38,7 +38,7 @@ export class PitchComponent{
         switchMap(pitchResponse => {
           const pitch = pitchResponse.pitch;
           return combineLatest({
-            user: this.authenticationService.getUser(),
+            user: this.keycloak.loadUserProfile(),
             campaign: this.campagneService.getCampagneById(pitch.campaignId)
           }).pipe(
             map(({ user, campaign }) => {
@@ -61,7 +61,7 @@ export class PitchComponent{
     if (!user) return [];
     if (user.email === pitch.ownerId) {
       return [new Button("Delete pitch", "red", () => {this.deletePitch(pitch.id)})];
-    } else if (user.userType === BRAND && campaignRp.campaign.ownerId === user.email) {
+    } else if (user.attributes['userType'] == 'BRAND' && campaignRp.campaign.ownerId === user.email) {
       return [
         new Button("Accept pitch", "green", () => {/* TODO */}),
         new Button("Delete pitch", "red", () => {this.deletePitch(pitch.id)})
@@ -93,5 +93,5 @@ export class PitchComponent{
     setTimeout(() => this.animationState = 'show', 150); // quickly reset to rerun
   }
 
-  constructor(private campagneService:CampagneService, private authenticationService: AuthenticationService){}
+  constructor(private campagneService:CampagneService){}
 }

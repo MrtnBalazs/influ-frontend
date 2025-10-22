@@ -38,11 +38,6 @@ export class KeycloakAuthenticationService {
     this.keycloak.clearToken();
   }
 
-  test() {
-    console.log(this.keycloak.loadUserProfile().then(result => console.log(result)))
-    console.log(this.keycloak.authenticated)
-  }
-
   register() {
     this.keycloak.register();
   }

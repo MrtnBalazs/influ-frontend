@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CampagneService } from '../../service/campagne/campagne.service';
 import { Input } from '@angular/core';
 import { signal } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { PitchListComponent } from '../../pitch/pitch-list/pitch-list.component';
-import { AuthenticationService } from '../../service/authentication/authentication.service';
 import { ButtonBarComponent } from "../../common/button-bar/button-bar.component";
 import { Button } from '../../common/button-bar/button';
 import { INFLUENCER } from '../../consts';
 import { ModalService } from '../../service/modal/modal.service';
+import Keycloak from 'keycloak-js';
 
 @Component({
     selector: 'app-campage',
@@ -38,11 +38,12 @@ export class CampageComponent {
   animationState = 'show';
   @Input() withPitches = false;
   isUserCampaignOwner = false;
-  userType = "";
-  userEmail = "";
+  userType: any = "";
+  userEmail: any = "";
   campaignButtons: Button[] = []
+  private readonly keycloak = inject(Keycloak);
 
-  constructor(private modalService: ModalService, private campagneService: CampagneService, private authenticationService: AuthenticationService) {
+  constructor(private modalService: ModalService, private campagneService: CampagneService) {
   }
 
   @Input({ transform: (c: any) => c }) 
@@ -54,12 +55,11 @@ export class CampageComponent {
       .subscribe({
         next: (response: { campaign: any }) => {
           this.campaign = response.campaign;
-          this.authenticationService.getUser()
-          .subscribe(user => {
-              if(!user) {
+          this.keycloak.loadUserProfile().then(user => {
+              if(!user || !user.attributes) {
                 this.isUserCampaignOwner = false;
               } else {
-                this.userType = user.userType;
+                this.userType = user.attributes['userType'];
                 this.userEmail = user.email;
                 if(user.email == this.campaign.ownerId){
                   this.isUserCampaignOwner = true;
@@ -83,7 +83,7 @@ export class CampageComponent {
               } else {
                 this.campaignButtons = []
               }
-            })
+          })
         },
         error: (error) => {
           console.error(error);

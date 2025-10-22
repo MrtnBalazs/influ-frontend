@@ -33,7 +33,7 @@ export class HomepageComponent implements OnInit{
   }
 
   onCampaignClicked() {
-     this.router.navigate(['/campagnes']);
+    this.router.navigate(['/campagnes']);
   }
 
   onJoinClicked() {

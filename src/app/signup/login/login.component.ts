@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from '../../service/authentication/authentication.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -34,7 +33,6 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authenticationService: AuthenticationService,
     private router:Router,
     private keycloakAuthService:KeycloakAuthenticationService
   ) {

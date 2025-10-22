@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AuthenticationService } from '../../service/authentication/authentication.service';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import Keycloak from 'keycloak-js';
 
 @Component({
     selector: 'app-pitch-list',
@@ -18,15 +18,14 @@ export class PitchListComponent implements OnInit{
 
   hoveredId: number | null = null; // Store hovered campagne ID
 
-  constructor(private authenticationService: AuthenticationService){}
+  private readonly keycloak = inject(Keycloak);
 
   ngOnInit(): void {
-    this.authenticationService.getUser()
-      .subscribe(user => {
-          if(user) {
-            this.userEmail = user.email;
-          }
-      })
+    this.keycloak.loadUserProfile().then(user => {
+      if(user && user.email) {
+        this.userEmail = user.email
+      }
+    })
   }
 
   selectPitch(pitch: any) {

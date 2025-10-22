@@ -9,7 +9,7 @@ export class CampagneService {
   private baseUrl = 'http://localhost:8081';
 
   constructor(private http: HttpClient) {
-    //this.baseUrl = 'https://8vklq.wiremockapi.cloud';
+    this.baseUrl = 'https://8vklq.wiremockapi.cloud';
   }
 
   getAllCampagnes(): Observable<{ campaignList: any[] }> {
@@ -41,7 +41,6 @@ export class CampagneService {
   }
 
   savePitch(pitch: { title: string; text: string , campaignId: string}) {
-    console.log(pitch)
     return this.http.post(`${this.baseUrl}/api/campaigns/pitches`, pitch);
   }
 
