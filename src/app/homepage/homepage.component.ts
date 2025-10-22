@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CampagneService } from '../service/campagne/campagne.service';
 import { MultipleSelectorPopupComponent } from "../common/multiple-selector-popup/multiple-selector-popup.component";
 import { CampagneListComponent } from "../campagne/campagne-list/campagne-list.component";
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { KeycloakAuthenticationService } from '../service/authentication/keycloak.authentication.service';
+import Keycloak from 'keycloak-js';
 
 @Component({
     selector: 'app-homepage',
@@ -23,8 +23,8 @@ import { KeycloakAuthenticationService } from '../service/authentication/keycloa
 })
 export class HomepageComponent implements OnInit{
   campaigns: any[] = [];
-
-  constructor(private campaignservice: CampagneService, private router: Router, private auth:KeycloakAuthenticationService) {}
+  private readonly keycloak = inject(Keycloak);
+  constructor(private campaignservice: CampagneService, private router: Router) {}
 
   ngOnInit(): void {
     this.campaignservice.getAllCampagnes().subscribe((response: { campaignList: any[] }) => {
@@ -33,13 +33,11 @@ export class HomepageComponent implements OnInit{
   }
 
   onCampaignClicked() {
-    this.auth.test()
-     //this.router.navigate(['/campagnes']);
+     this.router.navigate(['/campagnes']);
   }
 
   onJoinClicked() {
-    this.auth.logout();
-     //this.router.navigate(['/register']);
+    this.keycloak.register();
   }
 
 }
