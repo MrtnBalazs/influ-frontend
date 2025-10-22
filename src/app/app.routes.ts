@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { CreateCampagneComponent } from './campagne/create-campagne/create-campagne.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { LoginComponent } from './signup/login/login.component';
-import { AuthGuard } from './service/authentication/auth.guard';
 import { MyCampagnesComponent } from './campagne/my-campagnes/my-campagnes.component';
 import { AllCampagnesComponent } from './campagne/all-campagnes/all-campagnes.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -17,8 +16,8 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     
     { path: 'profile', component: ProfileComponent, canActivate: [canActivateAuthRole], data: { role: 'user' } },
-    { path: 'my-campagnes', component: MyCampagnesComponent, canActivate: [canActivateAuthRole], data: { role: 'macska' } },
-    { path: 'create-campagne', component: CreateCampagneComponent, canActivate: [AuthGuard] },
-    { path: 'my-pitches', component: MyPitchesComponent, canActivate: [AuthGuard] },
+    { path: 'my-campagnes', component: MyCampagnesComponent, canActivate: [canActivateAuthRole], data: { role: 'user' } },
+    { path: 'create-campagne', component: CreateCampagneComponent, canActivate: [canActivateAuthRole], data: { role: 'user' } },
+    { path: 'my-pitches', component: MyPitchesComponent, canActivate: [canActivateAuthRole], data: { role: 'user' } },
 
 ];

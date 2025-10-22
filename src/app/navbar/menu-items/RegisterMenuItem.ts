@@ -1,7 +1,8 @@
+import { RoutingMenuItem } from "./RoutingMenuItem";
 import Keycloak from 'keycloak-js';
 import { MenuItem } from "./MenuItem";
 
-export class LogoutMenuItem extends MenuItem {
+export class RegisterMenuItem extends MenuItem {
     keycloak: Keycloak;
 
     constructor(name: string, keycloak: Keycloak) {
@@ -10,6 +11,6 @@ export class LogoutMenuItem extends MenuItem {
     }
 
     override menuClicked(): void {
-        this.keycloak.logout();
+        this.keycloak.register();
     }
 }

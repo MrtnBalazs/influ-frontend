@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
-import { AuthenticationService } from '../service/authentication/authentication.service';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { LogoutMenuItem } from '../navbar/menu-items/LogoutMenuItem';
+import { RegisterMenuItem } from '../navbar/menu-items/RegisterMenuItem';
+import { LoginMenuItem } from '../navbar/menu-items/LoginMenuItem';
 import { MenuItem } from '../navbar/menu-items/MenuItem';
 import { RoutingMenuItem } from './menu-items/RoutingMenuItem';
+import Keycloak from 'keycloak-js';
 
 @Component({
     selector: 'app-navbar',
@@ -18,64 +20,57 @@ export class NavbarComponent {
   menuOpen = false;
   selectedMenuItemName: string | null = null;
 
-  constructor (
-    private router: Router,
-    private authenticationService: AuthenticationService
-  ) {
+  private readonly keycloak = inject(Keycloak);
+
+  constructor (private router: Router) {
     this.selectedMenuItemName = 'Home';
   }
 
   ngOnInit(): void {
-    this.authenticationService.getUser().subscribe(user => {
-      var isLoggedIn;
-      if(!user) {
-        isLoggedIn = false;
-      } else {
-        isLoggedIn = true;
-      }
-      var isBrand;
-      isBrand = user?.userType === "BRAND";
 
-      var loggedOutMenuItems = [
-        new RoutingMenuItem('Home', '/homepage', this.router),
-        new RoutingMenuItem('Campagnes', '/campagnes', this.router),
-        new RoutingMenuItem('Login', '/login', this.router),
-        new RoutingMenuItem('Register', '/register', this.router),
-      ];
-      var commonMenuItemsFront = [
-        new RoutingMenuItem('Campagnes', '/campagnes', this.router),
-      ];
-      var commonMenuItemsBack = [
-        new RoutingMenuItem('Profile', '/profile', this.router),
-        new LogoutMenuItem("Logout", "/homepage", this.router, this.authenticationService)
-      ];
-      var influMenuItems = [
-        new RoutingMenuItem('My pitches', '/my-pitches', this.router),
-      ];
-      var brandMenuItems = [
-        new RoutingMenuItem('My campagnes', '/my-campagnes', this.router),
-        new RoutingMenuItem('Create campagne', '/create-campagne', this.router),
-      ];
+    this.menuItems = [
+      new RoutingMenuItem('Home', '/homepage', this.router),
+      new RoutingMenuItem('Campagnes', '/campagnes', this.router),
+      new LoginMenuItem('Login', this.keycloak),
+      new RegisterMenuItem('Register', this.keycloak),
+    ];
 
-      if(isLoggedIn) {
-        this.menuItems = commonMenuItemsFront;
-        if(isBrand) {
-          this.menuItems = this.menuItems.concat(brandMenuItems);
-        } else {
-          this.menuItems = this.menuItems.concat(influMenuItems);
+    if(this.keycloak.authenticated) {
+
+      this.keycloak.loadUserProfile().then(user => {
+
+        if(user && user.attributes) {
+          if(user.attributes['userType'] == 'BRAND') {
+            this.menuItems = [
+              new RoutingMenuItem('Home', '/homepage', this.router),
+              new RoutingMenuItem('Campagnes', '/campagnes', this.router),
+              new RoutingMenuItem('My campagnes', '/my-campagnes', this.router),
+              new RoutingMenuItem('Create campagne', '/create-campagne', this.router),
+              new RoutingMenuItem('Profile', '/profile', this.router),
+              new LogoutMenuItem("Logout", this.keycloak)
+            ];
+          } else if(user.attributes['userType'] == "INFLUENCER"){
+            this.menuItems = [
+              new RoutingMenuItem('Home', '/homepage', this.router),
+              new RoutingMenuItem('Campagnes', '/campagnes', this.router),
+              new RoutingMenuItem('My pitches', '/my-pitches', this.router),
+              new RoutingMenuItem('Profile', '/profile', this.router),
+              new LogoutMenuItem("Logout", this.keycloak)
+            ];
+          }
         }
-        this.menuItems = this.menuItems.concat(commonMenuItemsBack);
-      } else {
-        this.menuItems = loggedOutMenuItems;
-      }
 
-      var currentRoute = window.location.href;
-      for(var menuItem of this.menuItems) {
-        if(menuItem instanceof RoutingMenuItem && currentRoute.includes(menuItem.route)) {
-          this.selectedMenuItemName = menuItem.name;
+        var currentRoute = window.location.href;
+        for(var menuItem of this.menuItems) {
+          if(menuItem instanceof RoutingMenuItem && currentRoute.includes(menuItem.route)) {
+            this.selectedMenuItemName = menuItem.name;
+          }
         }
-      }
-    });
+
+      })
+
+    }
+
   }
 
   toggleMenu() {
