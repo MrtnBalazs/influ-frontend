@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, map, pipe } from 'rxjs';
+import { environment } from '../../../environments/environment'; // import environment
 
 @Injectable({
   providedIn: 'root'
 })
 export class CampagneService {
-  private baseUrl = 'http://localhost:8081';
+  private baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient) {
-    this.baseUrl = 'https://8vklq.wiremockapi.cloud';
-  }
+  constructor(private http: HttpClient) {}
 
   getAllCampagnes(): Observable<{ campaignList: any[] }> {
     return this.http.get<{ campaignList: any[] }>(this.baseUrl + "/api/campaigns");
