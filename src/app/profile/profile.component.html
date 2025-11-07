@@ -2,7 +2,7 @@
     <div class="signup-title">Profile</div>
     <div class="flex-row" style="margin-top: 30px; width: 100%; align-items: stretch;">
         <div @fadeSlideId class="flex-column white-container" style="justify-content: space-between; gap: 16px; height: auto; align-items: flex-start; width: fit-content; padding: 40px 100px 40px 100px;">
-            <div class="signup-field-text">Username: {{user?.username}}</div>
+            <div class="signup-field-text">User Id: {{user?.username}}</div>
             <div class="signup-field-text">Email: {{user?.email}}</div>
             <div class="signup-field-text">User type: {{user?.userType}}</div>
             <div class="title">Settings</div>
@@ -14,6 +14,16 @@
             </div>
         </div>
     </div>
+    @if(!user?.userType) {
+        <div class="flex-row" style="margin-top: 30px; width: 100%; align-items: stretch;">
+            <div @fadeSlideId class="flex-column white-container" style="justify-content: space-between; gap: 16px; height: auto; align-items: flex-start; width: fit-content; padding: 40px 100px 40px 100px;">
+                <div class="signup-field-text">Select user type</div>
+                <div (click)="onBrandSelected()" class="button" style="width: 100%;">Select BRAND</div>
+                <div (click)="onInfluSelected()" class="button" style="width: 100%;">Select Influencer</div>
+            </div>
+        </div>
+    }
+   
     @if(error) {
         <div @shake class="red-container" style="width: fit-content;">
             <div class="signup-field-text error" style="opacity: 0.5;">There might be some connection issue! Please try again later</div>

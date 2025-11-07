@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment'; // import environment
 
 @Injectable({
@@ -7,6 +7,8 @@ import { environment } from '../../../environments/environment'; // import envir
 })
 export class UserService {
   private baseUrl = environment.baseUrl;
+
+  // TODO user = signal<User | null>(null); Refactor to use signal so that the page is not needed to reload after something is updated
 
   constructor(private http: HttpClient) {}
 
@@ -20,5 +22,13 @@ export class UserService {
     } else {
       return this.http.get<{ users: any[] }>(this.baseUrl + "/api/users");
     }
+  }
+
+  createUser() {
+    return this.http.post(this.baseUrl + "/api/users", null);
+  }
+
+  updateUser(userData: {userType: string}) {
+    return this.http.put(this.baseUrl + "/api/users/user", userData);
   }
 }

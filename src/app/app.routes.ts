@@ -8,12 +8,14 @@ import { ProfileComponent } from './profile/profile.component';
 import { MyPitchesComponent } from './pitch/my-pitches/my-pitches.component';
 import { RegisterComponent } from './signup/register/register.component';
 import { canActivateAuthRole } from './service/authentication/keycloak.guard'
+import { RegisterSuccessComponent } from './signup/register-success/register-success.component';
 
 export const routes: Routes = [
     { path: 'homepage', component: HomepageComponent },
     { path: 'campagnes', component: AllCampagnesComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
+    { path: 'register-success', component: RegisterSuccessComponent },
     
     { path: 'profile', component: ProfileComponent, canActivate: [canActivateAuthRole], data: { role: 'user' } },
     { path: 'my-campagnes', component: MyCampagnesComponent, canActivate: [canActivateAuthRole], data: { role: 'user' } },

@@ -1,5 +1,4 @@
 import { effect, inject, Injectable } from "@angular/core";
-import { Router } from "@angular/router";
 import { KEYCLOAK_EVENT_SIGNAL, KeycloakEventType, ReadyArgs, typeEventArgs} from "keycloak-angular";
 import Keycloak from 'keycloak-js';
 

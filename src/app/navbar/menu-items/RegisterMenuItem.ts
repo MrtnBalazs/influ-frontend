@@ -11,6 +11,8 @@ export class RegisterMenuItem extends MenuItem {
     }
 
     override menuClicked(): void {
-        this.keycloak.register();
+        this.keycloak.register({
+            redirectUri: 'http://localhost:4200/register-success'
+        });
     }
 }

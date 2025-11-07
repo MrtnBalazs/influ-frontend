@@ -30,20 +30,13 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ]
 })
 export class ProfileComponent implements OnInit {
-  error: Boolean = false;
+  error: boolean = false;
   user: {email: string, username: string, userType: string, settings: {emailNotification: string}} | null = null;
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.userService.getUser().subscribe({
-      next: (response: {email: string, username: string, userType: string, settings: {emailNotification: string}}) => {
-        this.user = response;
-      },
-      error: () => {
-        this.error = true;
-      }
-    });
+    this.getUserData();
   }
 
   clickToggle() {
@@ -53,5 +46,39 @@ export class ProfileComponent implements OnInit {
       // TODO reload user
       //this.user.settings.emailNotification = "true";
     }
+  }
+
+  onBrandSelected() {
+    this.userService.updateUser({userType: "BRAND"}).subscribe({
+      next: () => {
+        this.getUserData();
+      },
+      error: () => {
+        this.error = true;
+      }
+    });
+  }
+
+  onInfluSelected() {
+    this.userService.updateUser({userType: "INFLUENCER"}).subscribe({
+      next: () => {
+        this.getUserData();
+      },
+      error: () => {
+        this.error = true;
+      }
+    });
+  }
+
+  getUserData() {
+    this.userService.getUser().subscribe({
+      next: (response: {email: string, username: string, userType: string, settings: {emailNotification: string}}) => {
+        this.user = response;
+        console.log(this.user)
+      },
+      error: () => {
+        this.error = true;
+      }
+    });
   }
 }
