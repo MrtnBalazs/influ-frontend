@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { User } from './user';
+import Keycloak from 'keycloak-js';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class UserService {
 
   user = signal<User | null>(null);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private keycloak: Keycloak) {
     this.getUser();
   }
 
@@ -25,7 +26,13 @@ export class UserService {
 
   getUser() {
     console.log("Get user")
-    return this.http.get<User>(this.baseUrl + "/api/users/user").subscribe({
+
+    if(!this.keycloak.authenticated) {
+      console.log("No authenticated user!");
+      return;
+    }
+
+    this.http.get<User>(this.baseUrl + "/api/users/user").subscribe({
       next: (user) => {
         console.log("Get user user, fetched user: ", user)
         this.setUser(user)
@@ -38,7 +45,7 @@ export class UserService {
 
   createUser() {
     console.log("Create user")
-    return this.http.post<User>(this.baseUrl + "/api/users", null).subscribe({
+    this.http.post<User>(this.baseUrl + "/api/users", null).subscribe({
         next: () => {
           console.log("Create user successfull");
           this.getUser();
@@ -50,7 +57,13 @@ export class UserService {
   }
 
   updateUser(userType: string) {
-    console.log("Update user")
+    console.log("Update user");
+
+    if(!this.keycloak.authenticated) {
+      console.log("No authenticated user!");
+      return;
+    }
+    
     this.http.put(this.baseUrl + "/api/users/user", {"userType": userType}).subscribe({
       next: () => {
         console.log("Update user to " + userType + " successfull");
