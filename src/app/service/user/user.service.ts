@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { environment } from '../../../environments/environment'; // import environment
+import { environment } from '../../../environments/environment';
+import { User } from './user';
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +9,32 @@ import { environment } from '../../../environments/environment'; // import envir
 export class UserService {
   private baseUrl = environment.baseUrl;
 
-  // TODO user = signal<User | null>(null); Refactor to use signal so that the page is not needed to reload after something is updated
+  user = signal<User | null>(null);
 
-  constructor(private http: HttpClient) {}
+  setUser(user: User) {
+    this.user.set(user);
+  }
+
+  clearUser() {
+    this.user.set(null);
+  }
+
+  constructor(private http: HttpClient) {
+    this.getUser();
+  }
 
   getUser() {
-      return this.http.get<{email: string, username: string, userType: string, settings: {emailNotification: string}}>(this.baseUrl + "/api/users/user");
+    console.log("Get user")
+    return this.http.get<User>(this.baseUrl + "/api/users/user").subscribe({
+      next: (user) => {
+        console.log("Get user user, fetched user: ", user)
+        this.setUser(user)
+      },
+      error: (error) => {
+        console.log("User not found");
+        console.log(error);
+      }
+    });
   }
 
   getUsers(userType: string) {
@@ -25,10 +46,27 @@ export class UserService {
   }
 
   createUser() {
-    return this.http.post(this.baseUrl + "/api/users", null);
+    console.log("Create user")
+    return this.http.post<User>(this.baseUrl + "/api/users", null).subscribe({
+        next: () => {
+          console.log("Create user successfull");
+          this.getUser();
+        },
+        error: (error) => {
+          console.log(error);
+        }
+    });
   }
 
-  updateUser(userData: {userType: string}) {
-    return this.http.put(this.baseUrl + "/api/users/user", userData);
+  updateUser(userType: string) {
+    this.http.put(this.baseUrl + "/api/users/user", {"userType": userType}).subscribe({
+      next: () => {
+        console.log("Update user to " + userType + " successfull");
+        this.getUser();
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
 }

@@ -29,19 +29,17 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
         ])
     ]
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
   error: boolean = false;
-  user: {email: string, username: string, userType: string, settings: {emailNotification: string}} | null = null;
+  user;
 
-  constructor(private userService: UserService) {}
-
-  ngOnInit(): void {
-    this.getUserData();
+  constructor(private userService: UserService) {
+    this.user = userService.user;
   }
 
   clickToggle() {
     this.error = true;
-    if(this.user) {
+    if(this.user()) {
       // TODO send update with !(this.user.settings.emailNotification === "true")
       // TODO reload user
       //this.user.settings.emailNotification = "true";
@@ -49,36 +47,10 @@ export class ProfileComponent implements OnInit {
   }
 
   onBrandSelected() {
-    this.userService.updateUser({userType: "BRAND"}).subscribe({
-      next: () => {
-        this.getUserData();
-      },
-      error: () => {
-        this.error = true;
-      }
-    });
+    this.userService.updateUser("BRAND");
   }
 
   onInfluSelected() {
-    this.userService.updateUser({userType: "INFLUENCER"}).subscribe({
-      next: () => {
-        this.getUserData();
-      },
-      error: () => {
-        this.error = true;
-      }
-    });
-  }
-
-  getUserData() {
-    this.userService.getUser().subscribe({
-      next: (response: {email: string, username: string, userType: string, settings: {emailNotification: string}}) => {
-        this.user = response;
-        console.log(this.user)
-      },
-      error: () => {
-        this.error = true;
-      }
-    });
+    this.userService.updateUser("INFLUENCER");
   }
 }

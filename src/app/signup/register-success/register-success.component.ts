@@ -12,15 +12,6 @@ export class RegisterSuccessComponent {
   private destroyRef = inject(DestroyRef);
 
   constructor (private userService: UserService) {
-    userService.createUser()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: () => {
-          
-        },
-        error: (error) => {
-          console.log(error);
-        }
-    });
+    userService.createUser();
   }
 }
