@@ -11,16 +11,16 @@ export class UserService {
 
   user = signal<User | null>(null);
 
-  setUser(user: User) {
+  constructor(private http: HttpClient) {
+    this.getUser();
+  }
+
+  private setUser(user: User) {
     this.user.set(user);
   }
 
-  clearUser() {
+  private clearUser() {
     this.user.set(null);
-  }
-
-  constructor(private http: HttpClient) {
-    this.getUser();
   }
 
   getUser() {
@@ -31,18 +31,9 @@ export class UserService {
         this.setUser(user)
       },
       error: (error) => {
-        console.log("User not found");
         console.log(error);
       }
     });
-  }
-
-  getUsers(userType: string) {
-    if(userType) {
-      return this.http.get<{ users: any[] }>(this.baseUrl + "/api/users?user_type" + userType);
-    } else {
-      return this.http.get<{ users: any[] }>(this.baseUrl + "/api/users");
-    }
   }
 
   createUser() {
@@ -59,6 +50,7 @@ export class UserService {
   }
 
   updateUser(userType: string) {
+    console.log("Update user")
     this.http.put(this.baseUrl + "/api/users/user", {"userType": userType}).subscribe({
       next: () => {
         console.log("Update user to " + userType + " successfull");

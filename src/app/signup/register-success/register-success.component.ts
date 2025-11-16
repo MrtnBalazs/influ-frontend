@@ -1,6 +1,5 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, effect} from '@angular/core';
 import { UserService } from '../../service/user/user.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-register-success',
@@ -9,9 +8,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './register-success.component.css',
 })
 export class RegisterSuccessComponent {
-  private destroyRef = inject(DestroyRef);
+  status: string;
 
   constructor (private userService: UserService) {
+    this.status = "in progress";
     userService.createUser();
+
+    effect(() => {
+      if(userService.user()) {
+        this.status = "successfull";
+      }
+    })
   }
 }

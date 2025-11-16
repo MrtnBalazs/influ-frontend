@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../service/user/user.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -37,14 +37,14 @@ export class ProfileComponent {
     this.user = userService.user;
   }
 
-  clickToggle() {
-    this.error = true;
-    if(this.user()) {
-      // TODO send update with !(this.user.settings.emailNotification === "true")
-      // TODO reload user
-      //this.user.settings.emailNotification = "true";
-    }
-  }
+  // clickToggle() {
+  //   this.error = true;
+  //   if(this.user()) {
+  //     TODO send update with !(this.user.settings.emailNotification === "true")
+  //     TODO reload user
+  //     this.user.settings.emailNotification = "true";
+  //   }
+  // }
 
   onBrandSelected() {
     this.userService.updateUser("BRAND");
