@@ -1,0 +1,370 @@
+.validation-fail-text {
+    width: 100%;
+    color: #ff0000;
+    opacity: 0.6;
+    text-align: start;
+    font-family: Koulen;
+    font-size: 13px;
+    line-height: 100%;
+}
+
+.red-container {
+  background-color: var(--light-red); 
+  border-radius: 15px;
+  padding: 16px; 
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.3);
+}
+
+.signup-title {
+    color: var(--dark-green);
+    text-align: center;
+    font-family: Koulen;
+    font-size: 60px;
+    width: 250px;
+    line-height: 130%;
+}
+
+.signup-field-text {
+    color: #000;
+    font-family: Koulen;
+    font-size: 25px;
+    line-height: 100%;
+}
+
+.signup-field-text.error {
+    font-size: 20px;
+}
+
+.green-bg-image {
+  background-size: cover; 
+  background-repeat: repeat;
+  background-image: url('assets/rain-bg2.png');
+  width: 100%;
+  min-height: calc(100vh - 60px);
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.text {
+    color: #000;
+    text-align: start;
+    font-family: Koulen;
+    font-size: 16px;
+    line-height: 130%;
+}
+
+.title {
+    color: #000;
+    text-align: center;
+    font-family: Koulen;
+    font-size: 32px;
+    line-height: 130%;
+    color: var(--dark-green);
+}
+
+app-create-pitch {
+    width: 100%;
+}
+
+.green-container {
+    background: var(--light-green);
+    display: flex;
+    border-radius: 15px;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 0px;
+    width: 100%;
+    padding: 16px;
+    gap: 25px;
+    container-type: inline-size;
+    container-name: campaign;
+}
+
+.button-bar-container {
+    background: var(--white);
+    display: flex;
+    border-radius: 15px;
+    justify-content: center;
+    flex-direction: row;
+    margin: 0px;
+    width: fit-content;
+    padding: 8px;
+    gap: 25px;
+    align-self: center;
+    box-shadow: 3px 3px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+app-button-bar {
+    align-self: center;
+}
+
+.white-container {
+    background: white;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    padding: 16px;
+}
+
+.modal-green-container {
+    background: var(--light-green);
+    display: flex;
+    border-radius: 15px;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 0px;
+    width: 80%;
+    padding: 16px;
+    gap: 25px;
+    container-type: inline-size;
+    container-name: campaign;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.column-contaier {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 16px;
+}
+
+input {
+  border-radius: 6px; /* Adjust as needed (px, %, etc.) */
+  height: 33px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 5px;
+}
+
+textarea {
+  border-radius: 6px; /* Adjust as needed (px, %, etc.) */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 5px;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    font-family: Koulen;
+    height: fit-content;
+    width: fit-content;
+    padding: 2px 16px;
+    font-size: 16px;
+    background-color: var(--green);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    letter-spacing: 1px;
+    gap: 5px;
+}
+
+.button:active {
+    transform: scale(0.90);
+}
+  
+.horizontal-divider {
+    height: 1px;
+    border: 1px solid #000000;
+    align-self: center;
+    width: 100%;
+    background-color: #1c1a1a;
+}
+
+.vertical-divider-wrapper {
+    display: flex;
+    align-items: center;
+}
+  
+.vertical-divider {
+    width: 1px;
+    height: 85%;
+    background-color: #1c1a1a;
+}
+
+.x-icon {
+  width: 16px;
+  height: 16px;
+  position: relative;
+}
+
+.x-icon::before,
+.x-icon::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: var(--dark-green);
+  top: 42%;
+  left: 0;
+}
+
+.x-icon::before {
+  transform: rotate(45deg);
+}
+
+.x-icon::after {
+  transform: rotate(-45deg);
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay-backdrop {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000 !important; /* adjust as needed */
+}
+
+.overlay-pane {
+    position: fixed !important;
+    top: 30%;
+    left: 25%;
+    z-index: 1001 !important;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+.toggle-bar {
+    border: 3px solid var(--dark-green);
+    background-color: #ffffff;
+    z-index: 10;
+    height: 20px;
+    width: 50px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0px;
+    cursor: pointer;
+}
+
+.toggle-ball {
+    border: 1.9px solid var(--dark-green);
+    background-color: var(--green);
+    height: 18px;
+    width: 18px;
+    border-radius: 15px;
+}
+
+.influ-brand-toggle-container {
+    flex-direction: row; 
+    display: flex;
+    gap: 16px; 
+    align-items: center;
+}
+
+.register-title {
+    color: var(--dark-green);
+    text-align: center;
+    font-family: Koulen;
+    font-size: 60px;
+    line-height: 100%;
+}
+
+.register-field-text {
+    color: #000;
+    font-family: Koulen;
+    font-size: 25px;
+    line-height: 100%;
+}
+
+.register-field-text.error {
+    font-size: 20px;
+}
+
+.register-button {
+    text-align: center;
+    font-family: Koulen;
+    height: 33px;
+    font-size: 20px;
+    background-color: var(--green);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    letter-spacing: 1px;
+    width: 250px
+}
+
+.register-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none; /* ⬅️ Important */
+  opacity: 0.6;
+}
+
+.register-button:active {
+    transform: scale(0.90);
+}
+
+input.register {
+    width: 250px;
+    min-width: 250px; 
+    max-width: 250px;
+    border-radius: 6px; /* Adjust as needed (px, %, etc.) */
+    height: 33px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 5px;
+}
+
+.login-button {
+    text-align: center;
+    font-family: Koulen;
+    height: 33px;
+    font-size: 20px;
+    background-color: var(--green);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    letter-spacing: 1px;
+    width: 250px
+}
+
+.login-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none; /* ⬅️ Important */
+  opacity: 0.6;
+}
+
+.login-button:active {
+    transform: scale(0.90);
+}

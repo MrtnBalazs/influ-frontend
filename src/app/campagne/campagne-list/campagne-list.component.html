@@ -1,10 +1,17 @@
-<div class="list-group">
-  @for (campagne of campagnes; track campagne.id) {
-    <a [routerLink]="['/campagnes/', campagne.id]" class="list-group-item list-group-item-action flex-column align-items-start">
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">{{campagne.title}}</h5>
-      </div>
-      <p class="mb-1">{{campagne.description}}</p>
-    </a>
+<div class="list-container" [style.padding-right]="!campaigns[0] ? 0 : 6">
+  @if(withTitle) {
+    <div class="list-title">{{title}}</div>
   }
+  @if (!campaigns[0]) {
+    <div class="campaign-not-selected-container" style="padding: 0px; margin-right: 0px; margin-left: 0px;">
+      <div class="campaign-missing-text">Sorry, No campaigns today</div>
+    </div>
+  }
+  <div class="list-item-container">
+    @for (campaign of campaigns; track campaign.id) {
+        <a [class.selected]="campaign.id === selectedItemId" class="list-item" [class.not-clickable]="!clickable" (click)="selectCampaign(campaign)">
+          {{campaign.title}}
+        </a>
+    }
+  </div>
 </div>

@@ -1,15 +1,28 @@
-<h4>Pitches</h4>
-<div class="list-group">
-    <ul class="list-group">
-    @for (pitch of pitches; track pitch.id) {
-            <li class="list-group-item"
-                    [class.active]="hoveredId === pitch.id"
-                    (mouseover)="hoveredId = pitch.id"
-                    (mouseleave)="hoveredId = null"
-                    (click)="selectPitch(pitch)">
-                <h6 class="mb-1">{{pitch.title}}</h6>
-                <p class="mb-4">{{pitch.creatorId}}</p>
-            </li>
+<div class="list-container" [style.padding-right]="!pitches[0] ? 0 : 6">
+    @if(withTitle) {
+        <div class="list-title">{{title}}</div>
     }
-    </ul>
+    <div class="list-item-container">
+        @if(pitches.length != 0) {
+            @for (pitch of pitches; track pitch.id) {
+                <div 
+                    class="list-item" 
+                    [class.not-clickable]="!(isUserPitchOwner(pitch) || isUserCampaignOwner)"
+                    (click)="selectPitch(pitch)"
+                >
+                    <div
+                            [class.active]="hoveredId === pitch.id"
+                            (mouseover)="hoveredId = pitch.id"
+                            (mouseleave)="hoveredId = null"
+                    >
+                        {{pitch.ownerId}} - {{pitch.title}}
+                    </div>
+                </div>
+            }
+        } @else {
+            <div class="campaign-missing-text">
+                    There are no pitches yet!
+            </div>
+        }
+    </div>
 </div>

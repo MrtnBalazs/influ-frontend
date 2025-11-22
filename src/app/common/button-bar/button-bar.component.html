@@ -1,0 +1,8 @@
+@if(buttons.length != 0) {
+    <div class="button-bar-container"> 
+        @for (button of buttons; track button.text) {
+            <div class="navbar-button" [style.background-color]="button.color" (click)="onClick(button.text)">{{button.text}}</div>
+        }
+    </div>
+}
+

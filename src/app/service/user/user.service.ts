@@ -1,67 +1,77 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { environment } from '../../../environments/environment';
+import { User } from './user';
+import Keycloak from 'keycloak-js';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:8081';
-  private dev = false;
-  private devUserResponse: Observable<any> = of({
-    "user": {
-        "username": "username1",
-        "userType": "INFLUENCER",
-        "settings": {
-            "emailNotifications": false
-        }
-    }
-  });
-  private devUserListResponse: Observable<any> = of({
-    "users": [
-        {
-            "username": "username",
-            "userType": "BRAND",
-            "settings": {
-                "emailNotifications": false
-            }
-        },
-        {
-            "username": "username2",
-            "userType": "INFLUENCER",
-            "settings": {
-                "emailNotifications": false
-            }
-        },
-        {
-            "username": "username3",
-            "userType": "BRAND",
-            "settings": {
-                "emailNotifications": false
-            }
-        }
-    ]
-  });
+  private baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient) {}
+  user = signal<User | null>(null);
 
-  getUser() {
-    if(this.dev) {
-      return this.devUserResponse;
-    } else {
-      return this.http.get<{ user: any[] }>(this.baseUrl + "/api/v1/users/user");
-    }
+  constructor(private http: HttpClient, private keycloak: Keycloak) {
+    this.getUser();
   }
 
-  getUsers(userType: string) {
-    if(this.dev) {
-      return this.devUserListResponse;
-    } else {
-      if(userType) {
-        return this.http.get<{ users: any[] }>(this.baseUrl + "/api/v1/users?user_type" + userType);
-      } else {
-        return this.http.get<{ users: any[] }>(this.baseUrl + "/api/v1/users");
-      }
+  private setUser(user: User) {
+    this.user.set(user);
+  }
+
+  private clearUser() {
+    this.user.set(null);
+  }
+
+  getUser() {
+    console.log("Get user")
+
+    if(!this.keycloak.authenticated) {
+      console.log("No authenticated user!");
+      return;
     }
+
+    this.http.get<User>(this.baseUrl + "/api/users/user").subscribe({
+      next: (user) => {
+        console.log("Get user user, fetched user: ", user)
+        this.setUser(user)
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
+  createUser() {
+    console.log("Create user")
+    this.http.post<User>(this.baseUrl + "/api/users", null).subscribe({
+        next: () => {
+          console.log("Create user successfull");
+          this.getUser();
+        },
+        error: (error) => {
+          console.log(error);
+        }
+    });
+  }
+
+  updateUser(userType: string) {
+    console.log("Update user");
+
+    if(!this.keycloak.authenticated) {
+      console.log("No authenticated user!");
+      return;
+    }
+    
+    this.http.put(this.baseUrl + "/api/users/user", {"userType": userType}).subscribe({
+      next: () => {
+        console.log("Update user to " + userType + " successfull");
+        this.getUser();
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
 }

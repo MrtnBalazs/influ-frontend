@@ -1,2 +1,7 @@
-<h1>My campagnes</h1>
-<app-campagne-list [campagnes]="myCampagnes"></app-campagne-list>
+<div class="split-screen-container">
+    <app-campagne-list style="padding: 16px;" [title]="'My campaignes'" @fadeSlideId (campaignSelected)="onCampaignSelected($event)" [campaigns]="campagnes"></app-campagne-list>
+    <div class="vertical-divider-wrapper">
+        <div class="vertical-divider"></div>
+    </div>
+   <app-campage style="padding: 16px;" [withPitches]="true" [selectedCampaign]="campaignSelected()"></app-campage>
+</div>

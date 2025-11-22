@@ -1,0 +1,25 @@
+<div class="green-container" style="align-items: center;">
+    <div class="signup-title">Create pitch</div>
+    <form style="width: 100%;" @fadeSlideId [formGroup]="createPitchForm" (ngSubmit)="createPitch()">
+        <div style="margin-bottom: 16px;">
+            <div class="signup-field-text">Title</div>
+            @if(createPitchForm.get('title')?.errors?.['required'] && createClicked) {
+                <div class="validation-fail-text">*Title is required</div>
+            }
+            <input style="width: 100%;" formControlName="title" type="text" placeholder="Title">
+        </div>
+        <div style="margin-bottom: 16px;">
+            <div class="signup-field-text">Text</div>
+            @if(createPitchForm.get('text')?.errors?.['required'] && createClicked) {
+                <div class="validation-fail-text">*Text is required</div>
+            }
+            <input style="width: 100%;" formControlName="text" type="text" placeholder="text">
+        </div>
+        <button [disabled]="createPitchForm.invalid && createClicked" class="login-button" style="width: 100%;" type="submit">Create</button>
+        @if(error) {
+            <div @shake class="red-container" style="width: fit-content;">
+                <div class="signup-field-text error" style="opacity: 0.5;">Error happened during pitch creation!</div>
+            </div>
+        }
+    </form>
+</div>

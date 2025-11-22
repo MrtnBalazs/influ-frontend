@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { CampagneService } from './service/campagne/campagne.service';
 import { NavbarComponent } from './navbar/navbar.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, RouterOutlet, NavbarComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    standalone: true,
+    styleUrl: './app.component.css',
+    imports: [RouterOutlet, NavbarComponent]
 })
 export class AppComponent {
   campagneService = inject(CampagneService);

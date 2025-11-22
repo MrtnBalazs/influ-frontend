@@ -1,81 +1,98 @@
-import { Component } from '@angular/core';
-import { IsBrandService } from '../service/is-brand/is-brand.service';
-import { AuthenticationService } from '../service/authentication/authentication.service';
+import { Component, effect, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { LogoutMenuItem } from '../navbar/menu-items/LogoutMenuItem';
+import { RegisterMenuItem } from '../navbar/menu-items/RegisterMenuItem';
+import { LoginMenuItem } from '../navbar/menu-items/LoginMenuItem';
+import { MenuItem } from '../navbar/menu-items/MenuItem';
+import { RoutingMenuItem } from './menu-items/RoutingMenuItem';
+import Keycloak from 'keycloak-js';
+import { UserService } from '../service/user/user.service';
+
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
-  imports: [],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+    selector: 'app-navbar',
+    imports: [CommonModule],
+    standalone: true,
+    templateUrl: './navbar.component.html',
+    styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  isLoggedIn = false;
+  menuItems: MenuItem[] = [];
+  menuOpen = false;
+  selectedMenuItemName: string | null = null;
 
-  constructor(
-    private isBrandService: IsBrandService,
-    private authenticationService: AuthenticationService
-  ) {}
+  private user;
+  private readonly keycloak = inject(Keycloak);
 
-  isBrand() {
-    return this.isBrandService.getIsBrand();
-  }
+  constructor (private router: Router, private userService: UserService) {
+    this.selectedMenuItemName = 'Home'; // TODO ezt besettelni, hogy mindig jót menü item legyen kiemelve
+    this.user = userService.user;
 
-  ngOnInit(): void {
-    this.authenticationService.isAuthenticated().subscribe(authStatus => {
-      //this.isLoggedIn = authStatus;
-      this.isLoggedIn = false; // set to always true for dev puroses
+    effect(() => {
+      console.log("Navbar effect is running")
+      if(this.keycloak.authenticated) {
+        console.log("Keycloak authentication is true")
+
+        this.menuItems = [
+          new RoutingMenuItem('Home', '/homepage', this.router),
+          new LogoutMenuItem("Logout", this.keycloak),
+        ];  
+
+        const user = this.user();
+        console.log("Navbar authenticated user: ", user)
+
+        if(user) {
+          if(user.userType == 'BRAND') {
+            this.menuItems = [
+              new RoutingMenuItem('Home', '/homepage', this.router),
+              new RoutingMenuItem('Campagnes', '/campagnes', this.router),
+              new RoutingMenuItem('My campagnes', '/my-campagnes', this.router),
+              new RoutingMenuItem('Create campagne', '/create-campagne', this.router),
+              new RoutingMenuItem('Profile', '/profile', this.router),
+              new LogoutMenuItem("Logout", this.keycloak)
+            ];
+          } else if(user.userType == "INFLUENCER"){
+            this.menuItems = [
+              new RoutingMenuItem('Home', '/homepage', this.router),
+              new RoutingMenuItem('Campagnes', '/campagnes', this.router),
+              new RoutingMenuItem('My pitches', '/my-pitches', this.router),
+              new RoutingMenuItem('Profile', '/profile', this.router),
+              new LogoutMenuItem("Logout", this.keycloak)
+            ];
+          } else {
+            this.menuItems = [
+              new RoutingMenuItem('Home', '/homepage', this.router),
+              new RoutingMenuItem('Campagnes', '/campagnes', this.router),
+              new RoutingMenuItem('Profile', '/profile', this.router),
+              new LogoutMenuItem("Logout", this.keycloak)
+            ];
+          }
+        } else {
+          this.menuItems = [
+            new LogoutMenuItem("Logout", this.keycloak)
+          ];  
+        }
+      } else {
+          this.menuItems = [
+            new RoutingMenuItem('Home', '/homepage', this.router),
+            new RoutingMenuItem('Campagnes', '/campagnes', this.router),
+            new LoginMenuItem('Login', this.keycloak),
+            new RegisterMenuItem('Register', this.keycloak),
+          ];  
+      }
     });
   }
 
-  loggedOutMenuItems = [
-    { name: 'Home', route: '/homepage' },
-    { name: 'Campagnes', route: '/campagnes' },
-    { name: 'Brands', route: '/brands' },
-    { name: 'Influencers', route: '/influencers' },
-  ]
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
 
-  commonMenuItemsFront = [
-    { name: 'Home', route: '/homepage' },
-  ]
-
-  commonMenuItemsBack = [
-    { name: 'Profile', route: '/profile' },
-    { name: 'Messages', route: '/messages' },
-    { name: 'Settings', route: '/settings' },
-  ]
-
-  influMenuItems = [
-    { name: 'Campagnes', route: '/campagnes' },
-    { name: 'Saved campagnes', route: '/saved-campagnes' },
-    { name: 'My pitches', route: '/my-pitches' },
-    { name: 'Saved Brands', route: '/saved-brands' },
-    { name: 'Brands', route: '/brands' },
-  ];
-
-  brandMenuItems = [
-    { name: 'My campagnes', route: '/my-campagnes' },
-    { name: 'Create campagne', route: '/create-campagne' },
-    { name: 'Saved influencers', route: '/saved-influencers' },
-    { name: 'Influencers', route: '/influencers' },
-  ];
-
-  getRouteList() {
-    if(this.isLoggedIn) {
-      if(this.isBrand())
-        return this.commonMenuItemsFront.concat(this.brandMenuItems).concat(this.commonMenuItemsBack);
-      else
-        return this.commonMenuItemsFront.concat(this.influMenuItems).concat(this.commonMenuItemsBack);
-    } else {
-      return this.loggedOutMenuItems;
+  selectMenuItem(menuItem: MenuItem) {
+    menuItem.menuClicked();
+    this.selectedMenuItemName = menuItem.name;
+    if(this.menuOpen) {
+      this.toggleMenu();
     }
-  }
-
-  switchBrandCampagne() {
-    this.isBrandService.setIsBrand(!this.isBrand());
-  }
-
-  logOut() {
-    this.authenticationService.logout();
   }
 }

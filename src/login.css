@@ -1,0 +1,9 @@
+.login-title {
+    text-align: start;
+    color: #000;
+    font-family: Koulen;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 48px */
+}

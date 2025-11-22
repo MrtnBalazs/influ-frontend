@@ -1,1 +1,46 @@
-<p>Homepage</p>
+<div class="green-bg-image flex-column" style="padding: 30px 50px 50px 50px; gap: 0px">
+    <div class="title">Connect Brands and Influencers.</div>
+    <div class="title">Grow Together.</div>
+    <img src="assets/cashie.png" alt="Cashie" class="cashie-img"/>
+    <div class="text" style="text-align: center;">Cashfluence helps brands launch impactful influencer campaigns,</div>
+    <div class="text" style="text-align: center;">and helps influencers find paid partnerships that match their style.</div>
+    <div class="flex-row" style="margin-top: 30px; width: 100%; align-items: stretch;">
+        <div @fadeSlideId class="flex-column white-container" style="justify-content: space-between; gap: 16px; height: auto">
+            <div class="flex-row" style="justify-content: center; gap: 0px;">
+                <div class="title">Ongoing campains</div>
+                <img src="assets/flame.png" alt="flame" class="flame-img"/>
+            </div>
+            <app-campagne-list [campaigns]="campaigns" [withTitle]="false" [clickable]="false"></app-campagne-list>
+            <div (click)="onCampaignClicked()">
+                <div class="button" style="width: 250px;">Explore all campaigns!</div>
+            </div>
+        </div>
+        <div @fadeSlideId class="flex-column white-container" style="justify-content: space-between; gap: 16px; height: auto;">
+            <div class="flex-column" style="width: 100%;">
+                <div class="title">How it works</div>
+                <div class="flex-row" style="justify-content: space-around; width: 100%;">
+                    <div>
+                        <div class="title">For influencers</div>
+                        <div class="text">
+                            <li>Search campaigns</li>
+                            <li>Collaborate</li>
+                            <li>Get paid</li>    
+                        </div>
+                    </div>
+                    <div>
+                        <div class="title">For brands</div>
+                        <div class="text">
+                            <li>Create a campaign</li>
+                            <li>Get quality pitches</li>
+                            <li>Grow the brand</li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div (click)="onJoinClicked()">
+                <div class="button" style="width: 250px;">Join now!</div>
+            </div>
+        </div>
+    </div>
+</div>
+    
