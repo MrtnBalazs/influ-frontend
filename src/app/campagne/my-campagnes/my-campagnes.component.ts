@@ -20,18 +20,24 @@ import { animate, style, transition, trigger } from '@angular/animations';
     ]
 })
 export class MyCampagnesComponent {
-  campagnes: any[] = [];
-    campaignSelected = signal<any | null>(null);
-  
-    constructor(private campagneService: CampagneService) {}
-  
-    ngOnInit(): void {
-      this.campagneService.getMyCampagnes().subscribe((response: { campaignList: any[] }) => {
-        this.campagnes = response.campaignList;
-      });
-    }
-  
-    onCampaignSelected(campaign: any) {
-      this.campaignSelected.set(campaign.id);
-    }
+  campaigns = signal([]);
+  campaignSelected = signal<any | null>(null);
+
+  constructor(private campagneService: CampagneService) {}
+
+  ngOnInit(): void {
+    this.campagneService.getMyCampagnes().subscribe({
+      next: (response: { campaignList: [] }) => {
+        console.log("Calling get my campaings")
+        this.campaigns.set(response.campaignList);
+      },
+      error: (err) => {
+        console.error('Failed to load user campaigns: ', err);
+      }
+    });
+  }
+
+  onCampaignSelected(campaign: any) {
+    this.campaignSelected.set(campaign.id);
+  }
 }

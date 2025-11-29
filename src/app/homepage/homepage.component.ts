@@ -1,6 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CampagneService } from '../service/campagne/campagne.service';
-import { MultipleSelectorPopupComponent } from "../common/multiple-selector-popup/multiple-selector-popup.component";
 import { CampagneListComponent } from "../campagne/campagne-list/campagne-list.component";
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -8,7 +7,7 @@ import Keycloak from 'keycloak-js';
 
 @Component({
     selector: 'app-homepage',
-    imports: [MultipleSelectorPopupComponent, CampagneListComponent],
+    imports: [CampagneListComponent],
     templateUrl: './homepage.component.html',
     standalone: true,
     styleUrl: './homepage.component.css',
@@ -22,13 +21,13 @@ import Keycloak from 'keycloak-js';
     ]
 })
 export class HomepageComponent implements OnInit{
-  campaigns: any[] = [];
+  campaigns = signal([]);
   private readonly keycloak = inject(Keycloak);
   constructor(private campaignservice: CampagneService, private router: Router) {}
 
   ngOnInit(): void {
     this.campaignservice.getAllCampagnes().subscribe((response: { campaignList: any[] }) => {
-      this.campaigns = response.campaignList.slice(0, 3);
+      //this.campaigns = response.campaignList.slice(0, 3);
     });
   }
 

@@ -10,7 +10,7 @@
                 <div class="title">Ongoing campains</div>
                 <img src="assets/flame.png" alt="flame" class="flame-img"/>
             </div>
-            <app-campagne-list [campaigns]="campaigns" [withTitle]="false" [clickable]="false"></app-campagne-list>
+            <app-campagne-list [campaigns]="campaigns()" [withTitle]="false" [clickable]="false"></app-campagne-list>
             <div (click)="onCampaignClicked()">
                 <div class="button" style="width: 250px;">Explore all campaigns!</div>
             </div>
