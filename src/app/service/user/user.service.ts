@@ -44,6 +44,7 @@ export class UserService {
   }
 
   createUser() {
+    // TODO ha loginról mész át registerre regisztrál de utána nem redirectel a user registrationoldalra!
     console.log("Create user")
     this.http.post<User>(this.baseUrl + "/api/users", null).subscribe({
         next: () => {

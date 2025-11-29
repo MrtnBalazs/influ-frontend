@@ -3,11 +3,14 @@
         <div class="title">
             {{campaign?.title}}
         </div>
-        <div class="text">
-            {{campaign?.description}}
+        <div class="text" style="font-size: 20px;">
+            Brand: {{campaign?.ownerId}}
         </div>
         <div class="text">
-            {{campaign?.contentGuideline}}
+            Description: {{campaign?.description}}
+        </div>
+        <div class="text">
+            Content guideline: {{campaign?.contentGuideline}}
         </div>
         <div class="campaign-data-container">
             <div class="text" style="font-size: 20px;">Type: {{campaign?.campaignType}}</div>
