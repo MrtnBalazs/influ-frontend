@@ -24,7 +24,7 @@ export class ModalService {
     });
   }
 
-  openPitchModal(pitchId: any) {
+  openPitchModal(pitchId: any, afterClose?: () => void, onError?: () => void) {
     const overlayRef = this.createOverlay();
 
     // Attach the PitchModalComponent inside the overlay
@@ -35,13 +35,20 @@ export class ModalService {
     componentRef.instance.pitchId = pitchId;
     componentRef.instance.isModal = true;
     componentRef.instance.selectedPitch = pitchId;
-    componentRef.instance.onClose = () => overlayRef.dispose(); // TODO még nincs használva valami x gomb kellene modalok sarkára
+    componentRef.instance.onError = () => {
+      overlayRef.dispose();
+      if(onError) onError();
+    }
+    componentRef.instance.onClose = () => {
+      overlayRef.dispose(); // TODO még nincs használva valami x gomb kellene modalok sarkára
+      if(afterClose) afterClose();
+    }
 
     // Close on backdrop click
     overlayRef.backdropClick().subscribe(() => overlayRef.dispose());
   }
 
-  openCreatePitchModal(campaignId: string) {
+  openCreatePitchModal(campaignId: string, afterClose?: () => void) {
     const overlayRef = this.createOverlay();
 
     // Attach the PitchModalComponent inside the overlay
@@ -50,7 +57,10 @@ export class ModalService {
 
     // Pass data into the modal
     componentRef.instance.campaignId = campaignId;
-    componentRef.instance.onClose = () => overlayRef.dispose(); // TODO még nincs használva valami x gomb kellene modalok sarkára
+    componentRef.instance.onClose = () => {
+      overlayRef.dispose(); // TODO még nincs használva valami x gomb kellene modalok sarkára
+      if(afterClose) afterClose();
+    }
 
     // Close on backdrop click
     overlayRef.backdropClick().subscribe(() => overlayRef.dispose());

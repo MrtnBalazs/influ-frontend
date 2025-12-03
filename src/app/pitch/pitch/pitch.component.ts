@@ -1,10 +1,11 @@
-import { Component, Input, signal, inject } from '@angular/core';
+import { Component, Input, signal, inject, output } from '@angular/core';
 import { CampagneService } from '../../service/campagne/campagne.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ButtonBarComponent } from "../../common/button-bar/button-bar.component";
 import { Button } from '../../common/button-bar/button';
 import { combineLatest, map, switchMap} from 'rxjs';
 import Keycloak from 'keycloak-js';
+import { UserService } from '../../service/user/user.service';
 
 @Component({
     selector: 'app-pitch',
@@ -22,13 +23,15 @@ import Keycloak from 'keycloak-js';
     ]
 })
 export class PitchComponent{
-  pitchId = signal<any | null>(null);
+  pitchDeleted = output<void>();  // signal-based Output
   pitch: any;
   animationState = 'show';
   pitchButtons: Button[] = [];
   isModal = false;
   onClose!: () => void;  // callback passed from service
-  private readonly keycloak = inject(Keycloak);
+  onError!: () => void;  // callback passed from service
+  
+  constructor(private campagneService:CampagneService, private userService: UserService){}
 
   @Input() 
   set selectedPitch(value: string | null) {
@@ -38,33 +41,34 @@ export class PitchComponent{
         switchMap(pitchResponse => {
           const pitch = pitchResponse.pitch;
           return combineLatest({
-            user: this.keycloak.loadUserProfile(),
             campaign: this.campagneService.getCampagneById(pitch.campaignId)
           }).pipe(
-            map(({ user, campaign }) => {
-              return { user, pitch, campaign };
+            map(({ campaign }) => {
+              return { pitch, campaign };
             })
           );
         }),
       ).subscribe({
-        next: ({ user, pitch, campaign }) => {
+        next: ({ pitch, campaign }) => {
             this.pitch = pitch;
-            this.pitchButtons = this.buildButtons(user, pitch, campaign);
+            this.pitchButtons = this.buildButtons(this.userService.user(), pitch, campaign);
           },
           error: (error) => {
           console.error(error);
+          this.onError();
+          this.onClose();
         }});
     }
   }
 
   private buildButtons(user: any, pitch: any, campaignRp: any): Button[] {
     if (!user) return [];
-    if (user.email === pitch.ownerId) {
+    if (user.userId === pitch.ownerId) {
       return [new Button("Delete pitch", "red", () => {this.deletePitch(pitch.id)})];
-    } else if (user.attributes['userType'] == 'BRAND' && campaignRp.campaign.ownerId === user.email) {
+    } else if (user.userType == 'BRAND' && campaignRp.campaign.ownerId === user.userId) {
       return [
-        new Button("Accept pitch", "green", () => {/* TODO */}),
-        new Button("Delete pitch", "red", () => {this.deletePitch(pitch.id)})
+        new Button("Select pitch", "green", () => {/* TODO */}),
+        new Button("Reject pitch", "red", () => {this.deletePitch(pitch.id)})
       ];
     }
     return [];
@@ -78,6 +82,7 @@ export class PitchComponent{
         }
         this.pitch = null;
         this.selectedPitch = null;
+        this.pitchDeleted.emit();
         // TODO feedback
       },
       error: (error) => {
@@ -87,11 +92,9 @@ export class PitchComponent{
     });
   }
 
-  
   rerunAnimation() {
     this.animationState = 'hide';
     setTimeout(() => this.animationState = 'show', 150); // quickly reset to rerun
   }
 
-  constructor(private campagneService:CampagneService){}
 }

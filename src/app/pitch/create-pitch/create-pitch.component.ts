@@ -28,6 +28,7 @@ import { Router } from '@angular/router';
 })
 export class CreatePitchComponent {
   @Input() campaignId = "";
+  @Input() onClose!: () => void;
   error = false;
   createClicked = false;
   createPitchForm: any;
@@ -50,11 +51,18 @@ export class CreatePitchComponent {
       this.campagneService.savePitch({title, text, campaignId})
       .subscribe({
         next: () => {
+          this.onClose()
         },
         error: (error) => {
           this.error = true;
-          console.log(error);
+          console.error(error);
         }
       });
-  }
+    }
+
+    closeModal() {
+      if (this.onClose) {
+        this.onClose();   // <-- close modal
+      }
+    }
 }

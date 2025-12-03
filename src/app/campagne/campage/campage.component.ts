@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { CampagneService } from '../../service/campagne/campagne.service';
 import { Input } from '@angular/core';
 import { signal } from '@angular/core';
@@ -7,9 +7,10 @@ import { CommonModule } from '@angular/common';
 import { PitchListComponent } from '../../pitch/pitch-list/pitch-list.component';
 import { ButtonBarComponent } from "../../common/button-bar/button-bar.component";
 import { Button } from '../../common/button-bar/button';
-import { INFLUENCER } from '../../consts';
+import { BRAND, INFLUENCER } from '../../consts';
 import { ModalService } from '../../service/modal/modal.service';
 import Keycloak from 'keycloak-js';
+import { UserService } from '../../service/user/user.service';
 
 @Component({
     selector: 'app-campage',
@@ -33,6 +34,7 @@ import Keycloak from 'keycloak-js';
 export class CampageComponent {
   @Input() id: any = null;
   campaignId = signal<any | null>(null);
+  campaignDeleted = output<void>();  // signal-based Output
   campaign: any = null;
   selectedPitchId = signal<any | null>(null);
   animationState = 'show';
@@ -41,9 +43,8 @@ export class CampageComponent {
   userType: any = "";
   userEmail: any = "";
   campaignButtons: Button[] = []
-  private readonly keycloak = inject(Keycloak);
 
-  constructor(private modalService: ModalService, private campagneService: CampagneService) {
+  constructor(private modalService: ModalService, private campagneService: CampagneService, private userService: UserService) {
   }
 
   @Input({ transform: (c: any) => c }) 
@@ -51,39 +52,41 @@ export class CampageComponent {
     this.rerunAnimation();
     if (value) {
       this.campaignId.set(value);
-      this.campagneService.getCampagneById(this.campaignId())
+      this.refreshCampaign();
+    }
+  }
+
+  refreshCampaign() {
+    this.campagneService.getCampagneById(this.campaignId())
       .subscribe({
         next: (response: { campaign: any }) => {
           this.campaign = response.campaign;
-          this.keycloak.loadUserProfile().then(user => {
-              if(!user || !user.attributes) {
-                this.isUserCampaignOwner = false;
-              } else {
-                this.userType = user.attributes['userType'];
-                this.userEmail = user.email;
-                if(user.email == this.campaign.ownerId){
-                  this.isUserCampaignOwner = true;
-                } else {
-                  this.isUserCampaignOwner = false;
-                }
-              }
-              if(this.isUserCampaignOwner) {
-                this.campaignButtons = [
+          const user = this.userService.user();
+
+          if(user?.userId && this.campaign.ownerId == user?.userId) {
+            this.isUserCampaignOwner = true;
+            this.campaignButtons = [
                   new Button("Delete campaign", "red", () => {
-                    this.campagneService.deleteCampaignById(this.campaignId());
-                    this.campaign = null;
+                    this.campagneService.deleteCampaignById(this.campaignId()).subscribe({
+                      next: () => {
+                        this.campaign = null;
                     this.campaignId.set(null);
                     this.selectedPitchId.set(null);
+                    this.campaignDeleted.emit();
+                      },
+                      error: (error) => {
+                        console.error(error);
+                      }
+                    });
                   }),
                 ]
-              } else if (this.userType === INFLUENCER && !this.hasPitchForCampaign(this.userEmail)) {
+          } else if(user?.userType == INFLUENCER && !this.hasPitchForCampaign(user.userId)) {
                 this.campaignButtons = [
-                  new Button("Create pitch", "green", () => {this.modalService.openCreatePitchModal(this.campaignId())}),
+                  new Button("Create pitch", "green", () => {this.modalService.openCreatePitchModal(this.campaignId(), () => this.refreshCampaign())}),
                 ]
-              } else {
-                this.campaignButtons = []
-              }
-          })
+          } else {
+            this.campaignButtons = []
+          }
         },
         error: (error) => {
           console.error(error);
@@ -91,12 +94,11 @@ export class CampageComponent {
           this.campaign = null;
         }
       });
-    }
   }
 
-  hasPitchForCampaign(userEmail: string): boolean {
+  hasPitchForCampaign(userId: string): boolean {
     for(const pitch of this.campaign.pitchList) {
-      if(pitch.ownerId === userEmail){
+      if(pitch.ownerId === userId){
         return true;
       }
     }
@@ -105,7 +107,7 @@ export class CampageComponent {
 
   onPitchSelected(pitch: any) {
     this.selectedPitchId.set(pitch.id);
-    this.modalService.openPitchModal(pitch.id);
+    this.modalService.openPitchModal(pitch.id, () => this.refreshCampaign(), () => console.error("Pitch error"));
   }
 
 

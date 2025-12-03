@@ -40,4 +40,16 @@ export class MyCampagnesComponent {
   onCampaignSelected(campaign: any) {
     this.campaignSelected.set(campaign.id);
   }
+
+  onCampaignDeleted() {
+    this.campagneService.getMyCampagnes().subscribe({
+      next: (response: { campaignList: [] }) => {
+        console.log("Calling get my campaings")
+        this.campaigns.set(response.campaignList);
+      },
+      error: (err) => {
+        console.error('Failed to load user campaigns: ', err);
+      }
+    });
+  }
 }

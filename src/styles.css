@@ -59,6 +59,7 @@ button {
     text-align: center;
     font-family: Koulen;
     height: 30px;
+    white-space: nowrap;
     padding: 2px 16px;
     font-size: 16px;
     background-color: var(--green);

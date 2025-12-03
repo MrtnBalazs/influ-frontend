@@ -21,13 +21,13 @@ import Keycloak from 'keycloak-js';
     ]
 })
 export class HomepageComponent implements OnInit{
-  campaigns = signal([]);
+  campaigns = signal<any[]>([]);
   private readonly keycloak = inject(Keycloak);
   constructor(private campaignservice: CampagneService, private router: Router) {}
 
   ngOnInit(): void {
     this.campaignservice.getAllCampagnes().subscribe((response: { campaignList: any[] }) => {
-      //this.campaigns = response.campaignList.slice(0, 3);
+      this.campaigns.set(response.campaignList.slice(0, 3));
     });
   }
 

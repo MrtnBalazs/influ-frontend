@@ -21,7 +21,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 })
 export class MyPitchesComponent {
   @Input() title = "";
-  myPitches: any[] = [];
+  myPitches = signal<any[]>([]);
   pitchSelected = signal<any | null>(null);
 
   onPitchSelected(pitch: any) {
@@ -32,7 +32,13 @@ export class MyPitchesComponent {
 
   ngOnInit(): void {
     this.campagneService.getMyPitches().subscribe((response: { pitchList: any[] }) => {
-      this.myPitches = response.pitchList;
+      this.myPitches.set(response.pitchList);
+    });
+  }
+
+  onPitchDeleted() {
+    this.campagneService.getMyPitches().subscribe((response: { pitchList: any[] }) => {
+      this.myPitches.set(response.pitchList);
     });
   }
 }

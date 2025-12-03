@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import Keycloak from 'keycloak-js';
+import { UserService } from '../../service/user/user.service';
 
 @Component({
     selector: 'app-pitch-list',
@@ -15,17 +16,17 @@ export class PitchListComponent implements OnInit{
   @Input() isUserCampaignOwner = false;
   @Output() pitchSelected = new EventEmitter<any>();
   userEmail = "";
+  user;
 
   hoveredId: number | null = null; // Store hovered campagne ID
 
   private readonly keycloak = inject(Keycloak);
 
+  constructor(private userService: UserService) {
+    this.user = userService.user;
+  }
+
   ngOnInit(): void {
-    this.keycloak.loadUserProfile().then(user => {
-      if(user && user.email) {
-        this.userEmail = user.email
-      }
-    })
   }
 
   selectPitch(pitch: any) {
@@ -35,7 +36,7 @@ export class PitchListComponent implements OnInit{
   }
 
   isUserPitchOwner(pitch: any): boolean {
-    if(pitch.ownerId == this.userEmail) {
+    if(pitch.ownerId == this.user()?.userId) {
       return true;
     } else {
       return false;
