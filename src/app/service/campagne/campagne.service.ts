@@ -46,4 +46,8 @@ export class CampagneService {
   saveCampaign(body: any) {
     return this.http.post(`${this.baseUrl}/api/campaigns`, body);
   }
+
+  updatePitchState(pitchId: string, state: string) {
+    return this.http.put<{ state: string }>(`${this.baseUrl}/api/campaigns/pitches/${pitchId}/state`, {pitchState: state});
+  }
 }

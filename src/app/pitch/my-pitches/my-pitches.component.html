@@ -1,7 +1,7 @@
 <div class="split-screen-container">
-    <app-pitch-list style="padding: 16px;" [title]="'My pitches'" @fadeSlideId (pitchSelected)="onPitchSelected($event)" [pitches]="myPitches()"></app-pitch-list>
+    <app-pitch-list style="padding: 16px;" [title]="'My pitches'" [withRejected]="true" @fadeSlideId (pitchSelected)="onPitchSelected($event)" [pitches]="myPitches()"></app-pitch-list>
     <div class="vertical-divider-wrapper">
         <div class="vertical-divider"></div>
     </div>
-    <app-pitch style="padding: 16px;" (pitchDeleted)="onPitchDeleted()" [selectedPitch]="pitchSelected()"></app-pitch>
+    <app-pitch style="padding: 16px;" (pitchUpdated)="onPitchUpdated()" [selectedPitch]="pitchSelected()"></app-pitch>
 </div>

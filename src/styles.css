@@ -6,6 +6,9 @@
   --dark-green: #02542D;
   --red: #ff0000;
   --light-red: #ff8686;
+  --orange: #F7C844;
+  --light-blue: #BEE7F7;
+  --blue: #0fbbff;
 }
 
 *, *::before, *::after {

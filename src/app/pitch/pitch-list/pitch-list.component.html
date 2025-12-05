@@ -4,17 +4,14 @@
     }
     <div class="list-item-container">
         @if(pitches.length != 0) {
-            @for (pitch of pitches; track pitch.id) {
+            @for (pitch of pitchesWithColor; track pitch.id) {
                 <div 
                     class="list-item" 
-                    [class.not-clickable]="!(isUserPitchOwner(pitch) || isUserCampaignOwner)"
                     (click)="selectPitch(pitch)"
+                    [style.background]="'var(--' + pitch.color + ')'"
+                    [class.not-clickable]="pitch.notClickable"
                 >
-                    <div
-                            [class.active]="hoveredId === pitch.id"
-                            (mouseover)="hoveredId = pitch.id"
-                            (mouseleave)="hoveredId = null"
-                    >
+                    <div>
                         {{pitch.ownerId}} - {{pitch.title}}
                     </div>
                 </div>

@@ -36,7 +36,7 @@ export class MyPitchesComponent {
     });
   }
 
-  onPitchDeleted() {
+  onPitchUpdated() {
     this.campagneService.getMyPitches().subscribe((response: { pitchList: any[] }) => {
       this.myPitches.set(response.pitchList);
     });

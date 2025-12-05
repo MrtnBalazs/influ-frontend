@@ -23,7 +23,7 @@ import { UserService } from '../../service/user/user.service';
     ]
 })
 export class PitchComponent{
-  pitchDeleted = output<void>();  // signal-based Output
+  pitchUpdated = output<void>();  // signal-based Output
   pitch: any;
   animationState = 'show';
   pitchButtons: Button[] = [];
@@ -61,15 +61,30 @@ export class PitchComponent{
     }
   }
 
-  private buildButtons(user: any, pitch: any, campaignRp: any): Button[] {
+  private buildButtons(user: any, pitch: any, campaign: any): Button[] {
+    console.log(pitch)
     if (!user) return [];
     if (user.userId === pitch.ownerId) {
       return [new Button("Delete pitch", "red", () => {this.deletePitch(pitch.id)})];
-    } else if (user.userType == 'BRAND' && campaignRp.campaign.ownerId === user.userId) {
-      return [
-        new Button("Select pitch", "green", () => {/* TODO */}),
-        new Button("Reject pitch", "red", () => {this.deletePitch(pitch.id)})
-      ];
+    } else if (user.userType == 'BRAND' && campaign.campaign.ownerId === user.userId) {
+      if(pitch.pitchState === "PENDING") {
+        return [
+          new Button("Select pitch", "orange", () => {this.updatePitchState(pitch.id, "SELECTED")}),
+          new Button("Reject pitch", "red", () => {this.updatePitchState(pitch.id, "REJECTED")}),
+        ];
+      }
+      if(pitch.pitchState === "SELECTED") {
+        return [
+          new Button("Accept pitch", "blue", () => {this.updatePitchState(pitch.id, "ACCEPTED")}),
+          new Button("Unselect pitch", "green", () => {this.updatePitchState(pitch.id, "PENDING")}),
+          new Button("Reject pitch", "red", () => {this.updatePitchState(pitch.id, "REJECTED")}),
+        ];
+      }
+      if(pitch.pitchState === "ACCEPTED") {
+        return [
+          new Button("Pitch finished", "green", () => {this.updatePitchState(pitch.id, "DONE")})
+        ];
+      }
     }
     return [];
   }
@@ -82,12 +97,24 @@ export class PitchComponent{
         }
         this.pitch = null;
         this.selectedPitch = null;
-        this.pitchDeleted.emit();
-        // TODO feedback
+        this.pitchUpdated.emit();
       },
       error: (error) => {
         console.error(error);
-        // TODO feedback
+      }
+    });
+  }
+
+  private updatePitchState(pitchId: string, state: string) {
+    this.campagneService.updatePitchState(pitchId, state).subscribe({
+      next: () => {
+        this.pitchUpdated.emit();
+        if(this.isModal) {
+          this.onClose();
+        }
+      },
+      error: (error) => {
+        console.error(error);
       }
     });
   }
