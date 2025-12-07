@@ -3,5 +3,12 @@
     <div class="vertical-divider-wrapper">
         <div class="vertical-divider"></div>
     </div>
-    <app-pitch style="padding: 16px;" (pitchUpdated)="onPitchUpdated()" [selectedPitch]="pitchSelected()"></app-pitch>
+    <!-- <app-pitch style="padding: 16px" (pitchUpdated)="onPitchUpdated()" [selectedPitch]="pitchSelected()" @fadeSlideId></app-pitch> -->
+    <div style="flex-direction: row; width: 100%; overflow: auto; padding: 16px;">
+        @if(campaignId() != null) {
+            <app-campage [selectedCampaign]="campaignId()" @fadeSlideId></app-campage>
+            <div style="margin-top: 16px;"></div>
+        }
+        <app-pitch (pitchUpdated)="onPitchUpdated()" [selectedPitch]="pitchSelected()" @fadeSlideId></app-pitch>
+    </div>
 </div>
