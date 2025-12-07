@@ -43,9 +43,15 @@ export class CampageComponent {
   userType: any = "";
   userEmail: any = "";
   campaignButtons: Button[] = []
+  // TODO CampaignListComponent nél is ez van használva, kód duplikáció -> kiemelni valamiközösbe
+  campaignStateIcon: Record<string, string> = {
+    "PENDING": "⏳",
+    "PITCH-SELECTED": "⭐",
+    "PITCH-ACCEPTED": "✅",
+    "DONE": "🏁"
+  };
 
-  constructor(private modalService: ModalService, private campagneService: CampagneService, private userService: UserService) {
-  }
+  constructor(private modalService: ModalService, private campagneService: CampagneService, private userService: UserService) {}
 
   @Input({ transform: (c: any) => c }) 
   set selectedCampaign(value: any) {
@@ -61,6 +67,7 @@ export class CampageComponent {
       .subscribe({
         next: (response: { campaign: any }) => {
           this.campaign = response.campaign;
+          console.log(this.campaign)
           const user = this.userService.user();
 
           if(user?.userId && this.campaign.ownerId == user?.userId) {
@@ -109,7 +116,6 @@ export class CampageComponent {
     this.selectedPitchId.set(pitch.id);
     this.modalService.openPitchModal(pitch.id, () => this.refreshCampaign(), () => console.error("Pitch error"));
   }
-
 
   rerunAnimation() {
     this.animationState = 'hide';

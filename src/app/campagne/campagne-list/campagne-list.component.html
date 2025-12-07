@@ -11,6 +11,7 @@
     @for (campaign of campaigns; track campaign.id) {
         <a [class.selected]="campaign.id === selectedItemId" class="list-item" [class.not-clickable]="!clickable" (click)="selectCampaign(campaign)">
           {{campaign.title}}
+          <span style="font-size: 18px;">{{ campaignStateIcon[campaign.campaignState] }}</span>
         </a>
     }
   </div>

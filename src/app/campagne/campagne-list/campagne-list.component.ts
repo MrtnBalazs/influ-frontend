@@ -14,6 +14,13 @@ export class CampagneListComponent {
   @Input() clickable: boolean = true;
   @Output() campaignSelected = new EventEmitter<any>();
   selectedItemId: string | null = null;
+  campaignStateIcon: Record<string, string> = {
+    "PENDING": "⏳",
+    "PITCH-SELECTED": "⭐",
+    "PITCH-ACCEPTED": "✅",
+    "DONE": "🏁"
+  };
+
   constructor(){}
   
   selectCampaign(campaign: any) {

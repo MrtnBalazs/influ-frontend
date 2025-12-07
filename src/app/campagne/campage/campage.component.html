@@ -2,6 +2,7 @@
     <div [@fadeSlide]="animationState" class="green-container">
         <div class="title">
             {{campaign?.title}}
+            <span style="font-size: 28px;">{{ campaignStateIcon[campaign.campaignState] }}</span>
         </div>
         <div class="text" style="font-size: 20px;">
             Brand: {{campaign?.ownerId}}
