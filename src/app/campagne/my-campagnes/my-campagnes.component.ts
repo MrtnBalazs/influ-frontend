@@ -26,22 +26,14 @@ export class MyCampagnesComponent {
   constructor(private campagneService: CampagneService) {}
 
   ngOnInit(): void {
-    this.campagneService.getMyCampagnes().subscribe({
-      next: (response: { campaignList: [] }) => {
-        console.log("Calling get my campaings")
-        this.campaigns.set(response.campaignList);
-      },
-      error: (err) => {
-        console.error('Failed to load user campaigns: ', err);
-      }
-    });
+    this.refreshCampaigns();
   }
 
   onCampaignSelected(campaign: any) {
     this.campaignSelected.set(campaign.id);
   }
 
-  onCampaignDeleted() {
+  refreshCampaigns() {
     this.campagneService.getMyCampagnes().subscribe({
       next: (response: { campaignList: [] }) => {
         console.log("Calling get my campaings")

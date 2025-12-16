@@ -35,7 +35,7 @@ import { PitchComponent } from '../../pitch/pitch/pitch.component';
 export class CampageComponent {
   @Input() id: any = null;
   campaignId = signal<any | null>(null);
-  campaignDeleted = output<void>();  // signal-based Output
+  campaignChanged = output<void>();  // signal-based Output
   campaign: any = null;
   selectedPitchId = signal<any | null>(null);
   animationState = 'show';
@@ -85,9 +85,9 @@ export class CampageComponent {
                     this.campagneService.deleteCampaignById(this.campaignId()).subscribe({
                       next: () => {
                         this.campaign = null;
-                    this.campaignId.set(null);
-                    this.selectedPitchId.set(null);
-                    this.campaignDeleted.emit();
+                        this.campaignId.set(null);
+                        this.selectedPitchId.set(null);
+                        this.campaignChanged.emit();
                       },
                       error: (error) => {
                         console.error(error);
@@ -102,8 +102,9 @@ export class CampageComponent {
           } else {
             this.campaignButtons = []
           }
+          // TODO lehet az egész nem kell
           // TODO csúnya, azért kell hogy frissüljön a pitch -> szebben!
-          this.atLeastSelectedPitchStatePitchId.set(null);
+          // this.atLeastSelectedPitchStatePitchId.set(null);
           this.atLeastSelectedPitchStatePitchId.set(this.getPitchWithSelectedOrFurtherState(this.campaign));
         },
         error: (error) => {
@@ -135,18 +136,26 @@ export class CampageComponent {
 
   onPitchSelected(pitch: any) {
     this.selectedPitchId.set(pitch.id);
-    this.modalService.openPitchModal(pitch.id, () => this.refreshCampaign(), () => console.error("Pitch error"));
+    this.modalService.openPitchModal(pitch.id, 
+      () => {
+        this.refreshCampaign();
+        // Refresh campaign list to update icon based on state
+        this.campaignChanged.emit();
+      }, 
+      () => console.error("Pitch error"));
   }
 
   rerunAnimation() {
     this.animationState = 'hide';
-    setTimeout(() => this.animationState = 'show', 150); // quickly reset to rerun
+    setTimeout(() => this.animationState = 'show', 150);
   }
 
   onPitchUpdated() {
-    console.log("pitch updated")
+    console.log("Pitch updated")
     this.pitchRefresh.update(v => v + 1);
     this.refreshCampaign();
     this.rerunAnimation();
+    // Refresh campaign list to update icon based on state
+    this.campaignChanged.emit();
   }
 }
