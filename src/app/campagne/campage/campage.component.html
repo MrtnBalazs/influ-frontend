@@ -20,17 +20,32 @@
         <app-button-bar [buttons]="campaignButtons"></app-button-bar>
     
         @if(withPitches) {
-            <div [@fadeSlide]="animationState" style="margin-top: 16px;">
-                <app-pitch-list
-                    [pitches]="campaign?.pitchList"
-                    [isUserCampaignOwner]="isUserCampaignOwner"
-                    [title]="'Pitches'"
-                    (pitchSelected)="onPitchSelected($event)"
-                >
-                </app-pitch-list>
-            </div>
+            @if(atLeastSelectedPitchStatePitchId() == null) {
+                <div [@fadeSlide]="animationState" style="margin-top: 16px;">
+                    <app-pitch-list
+                        [pitches]="campaign?.pitchList"
+                        [isUserCampaignOwner]="isUserCampaignOwner"
+                        [title]="'Pitches'"
+                        (pitchSelected)="onPitchSelected($event)"
+                    >
+                    </app-pitch-list>
+               </div>
+            }
         }
     </div>
+    @if(withPitches) {
+        @if(atLeastSelectedPitchStatePitchId() != null) {
+            <div [@fadeSlide]="animationState" class="green-container" style="margin-top: 16px;">
+                <div [@fadeSlide]="animationState" style="margin-top: 16px;">
+                    <app-pitch 
+                        (pitchUpdated)="onPitchUpdated()" 
+                        [selectedPitch]="atLeastSelectedPitchStatePitchId()"
+                        [refresh]="pitchRefresh()">
+                    </app-pitch>
+               </div>
+            </div>
+        }
+    }
 } @else {
     <div [@fadeSlide]="animationState" class="campaign-not-selected-container">
         <div class="campaign-missing-text">

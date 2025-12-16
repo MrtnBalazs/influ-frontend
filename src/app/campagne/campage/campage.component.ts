@@ -11,10 +11,11 @@ import { BRAND, INFLUENCER } from '../../consts';
 import { ModalService } from '../../service/modal/modal.service';
 import Keycloak from 'keycloak-js';
 import { UserService } from '../../service/user/user.service';
+import { PitchComponent } from '../../pitch/pitch/pitch.component';
 
 @Component({
     selector: 'app-campage',
-    imports: [CommonModule, PitchListComponent, ButtonBarComponent],
+    imports: [CommonModule, PitchListComponent, ButtonBarComponent, PitchComponent],
     standalone: true,
     templateUrl: './campage.component.html',
     styleUrl: './campage.component.css',
@@ -38,11 +39,13 @@ export class CampageComponent {
   campaign: any = null;
   selectedPitchId = signal<any | null>(null);
   animationState = 'show';
+  atLeastSelectedPitchStatePitchId = signal<any | null>(null);
   @Input() withPitches = false;
   isUserCampaignOwner = false;
   userType: any = "";
   userEmail: any = "";
   campaignButtons: Button[] = []
+  pitchRefresh = signal(0);
   // TODO CampaignListComponent nél is ez van használva, kód duplikáció -> kiemelni valamiközösbe
   campaignStateIcon: Record<string, string> = {
     "PENDING": "⏳",
@@ -50,6 +53,11 @@ export class CampageComponent {
     "PITCH-ACCEPTED": "✅",
     "DONE": "🏁"
   };
+  dealOngoingPitchStates = [
+    "SELECTED",
+    "ACCEPTED",
+    "DONE",
+  ]
 
   constructor(private modalService: ModalService, private campagneService: CampagneService, private userService: UserService) {}
 
@@ -94,6 +102,9 @@ export class CampageComponent {
           } else {
             this.campaignButtons = []
           }
+          // TODO csúnya, azért kell hogy frissüljön a pitch -> szebben!
+          this.atLeastSelectedPitchStatePitchId.set(null);
+          this.atLeastSelectedPitchStatePitchId.set(this.getPitchWithSelectedOrFurtherState(this.campaign));
         },
         error: (error) => {
           console.error(error);
@@ -101,6 +112,16 @@ export class CampageComponent {
           this.campaign = null;
         }
       });
+  }
+
+  getPitchWithSelectedOrFurtherState(campaign: any): string | null {
+    var filteredPitchList = campaign.pitchList.filter((pitch: any) => this.dealOngoingPitchStates.includes(pitch.pitchState));
+    console.log(filteredPitchList)
+    if(filteredPitchList.length == 1) {
+      console.log(filteredPitchList[0])
+      return filteredPitchList[0].id; 
+    }
+    return null;
   }
 
   hasPitchForCampaign(userId: string): boolean {
@@ -120,5 +141,12 @@ export class CampageComponent {
   rerunAnimation() {
     this.animationState = 'hide';
     setTimeout(() => this.animationState = 'show', 150); // quickly reset to rerun
+  }
+
+  onPitchUpdated() {
+    console.log("pitch updated")
+    this.pitchRefresh.update(v => v + 1);
+    this.refreshCampaign();
+    this.rerunAnimation();
   }
 }
