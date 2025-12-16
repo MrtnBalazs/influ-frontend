@@ -118,7 +118,9 @@ export class CampageComponent {
     console.log(filteredPitchList)
     if(filteredPitchList.length == 1) {
       console.log(filteredPitchList[0])
-      return filteredPitchList[0].id; 
+      const user = this.userService.user();
+      if(user?.userId === filteredPitchList[0].ownerId || user?.userId === campaign.ownerId)
+        return filteredPitchList[0].id;
     }
     return null;
   }
