@@ -102,9 +102,7 @@ export class CampageComponent {
           } else {
             this.campaignButtons = []
           }
-          // TODO lehet az egész nem kell
-          // TODO csúnya, azért kell hogy frissüljön a pitch -> szebben!
-          // this.atLeastSelectedPitchStatePitchId.set(null);
+          // TODO nem kell h signal legyen szerintem
           this.atLeastSelectedPitchStatePitchId.set(this.getPitchWithSelectedOrFurtherState(this.campaign));
         },
         error: (error) => {
