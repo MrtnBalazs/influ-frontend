@@ -1,10 +1,13 @@
     @if(pitch) {
-    <div class="green-container">
+    <div class="green-container" [@fadeSlide]="animationState">
         <div class="title">
             {{pitch?.title}}
         </div>
         <div class="text">
             {{pitch?.text}}
+        </div>
+        <div class="text">
+            State: {{pitch?.pitchState}}
         </div>
         <app-button-bar [buttons]="pitchButtons"></app-button-bar>
     </div>

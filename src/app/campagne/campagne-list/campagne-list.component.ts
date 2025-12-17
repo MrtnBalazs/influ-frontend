@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 
 @Component({
     selector: 'app-campagne-list',
@@ -14,6 +14,14 @@ export class CampagneListComponent {
   @Input() clickable: boolean = true;
   @Output() campaignSelected = new EventEmitter<any>();
   selectedItemId: string | null = null;
+  campaignStateIcon: Record<string, string> = {
+    "PENDING": "⏳",
+    "PITCH-SELECTED": "⭐",
+    "PITCH-ACCEPTED": "✅",
+    "DONE": "🏁",
+    "ABORTED": "🛑"
+  };
+
   constructor(){}
   
   selectCampaign(campaign: any) {

@@ -1,14 +1,13 @@
 import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { REGISTER_BRAND, REGISTER_INFLUENCER } from '../../consts';
-import { MultipleSelectorPopupComponent } from "../../common/multiple-selector-popup/multiple-selector-popup.component";
-import { Component, ResourceStreamingLoader } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { KeycloakAuthenticationService } from '../../service/authentication/keycloak.authentication.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
     selector: 'app-register',
-    imports: [FormsModule, ReactiveFormsModule, MultipleSelectorPopupComponent],
+    imports: [FormsModule, ReactiveFormsModule],
     standalone: true,
     templateUrl: './register.component.html',
     styleUrl: './register.component.css',

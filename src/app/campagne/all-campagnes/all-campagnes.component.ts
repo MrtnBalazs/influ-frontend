@@ -20,14 +20,19 @@ import { animate, style, transition, trigger } from '@angular/animations';
     ]
 })
 export class AllCampagnesComponent {
-  campagnes: any[] = [];
+  campaigns = signal([]);
   campaignSelected = signal<any | null>(null);
 
   constructor(private campagneService: CampagneService) {}
 
   ngOnInit(): void {
-    this.campagneService.getAllCampagnes().subscribe((response: { campaignList: any[] }) => {
-      this.campagnes = response.campaignList;
+    this.campagneService.getAllCampagnes().subscribe({
+      next: (response: { campaignList: [] }) => {
+        this.campaigns.set(response.campaignList.filter((campaign: any) => campaign.campaignState !== "ABORTED"));
+      },
+      error: (err) => {
+        console.error('Failed to load campaigns: ', err);
+      }
     });
   }
 

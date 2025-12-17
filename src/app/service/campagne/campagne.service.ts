@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, map, pipe } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment'; // import environment
 
 @Injectable({
@@ -11,16 +11,16 @@ export class CampagneService {
 
   constructor(private http: HttpClient) {}
 
-  getAllCampagnes(): Observable<{ campaignList: any[] }> {
-    return this.http.get<{ campaignList: any[] }>(this.baseUrl + "/api/campaigns");
+  getAllCampagnes(): Observable<{ campaignList: [] }> {
+    return this.http.get<{ campaignList: [] }>(this.baseUrl + "/api/campaigns");
   }
 
   getCampagneById(id: string): Observable<{ campaign: any }> {
     return this.http.get<{ campaign: any }>(`${this.baseUrl}/api/campaigns/${id}`);
   }
 
-  getMyCampagnes(): Observable<{ campaignList: any[] }> {
-    return this.http.get<{ campaignList: any[] }>(`${this.baseUrl}/api/campaigns/user`);
+  getMyCampagnes(): Observable<{ campaignList: [] }> {
+    return this.http.get<{ campaignList: [] }>(`${this.baseUrl}/api/campaigns/user`);
   }
 
   getPitchById(id: string) {
@@ -45,5 +45,9 @@ export class CampagneService {
 
   saveCampaign(body: any) {
     return this.http.post(`${this.baseUrl}/api/campaigns`, body);
+  }
+
+  updatePitchState(pitchId: string, state: string) {
+    return this.http.put<{ state: string }>(`${this.baseUrl}/api/campaigns/pitches/${pitchId}/state`, {pitchState: state});
   }
 }

@@ -6,6 +6,9 @@
   --dark-green: #02542D;
   --red: #ff0000;
   --light-red: #ff8686;
+  --orange: #F7C844;
+  --light-blue: #BEE7F7;
+  --blue: #0fbbff;
 }
 
 *, *::before, *::after {
@@ -59,6 +62,7 @@ button {
     text-align: center;
     font-family: Koulen;
     height: 30px;
+    white-space: nowrap;
     padding: 2px 16px;
     font-size: 16px;
     background-color: var(--green);

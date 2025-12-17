@@ -1,7 +1,7 @@
 <div class="split-screen-container">
-    <app-campagne-list style="padding: 16px;" [title]="'My campaignes'" @fadeSlideId (campaignSelected)="onCampaignSelected($event)" [campaigns]="campagnes"></app-campagne-list>
+    <app-campagne-list style="padding: 16px;" [title]="'My campaignes'" @fadeSlideId (campaignSelected)="onCampaignSelected($event)" [campaigns]="campaigns()"></app-campagne-list>
     <div class="vertical-divider-wrapper">
         <div class="vertical-divider"></div>
     </div>
-   <app-campage style="padding: 16px;" [withPitches]="true" [selectedCampaign]="campaignSelected()"></app-campage>
+   <app-campage style="padding: 16px;" (campaignChanged)="refreshCampaigns()"  [withPitches]="true" [selectedCampaign]="campaignSelected()"></app-campage>
 </div>

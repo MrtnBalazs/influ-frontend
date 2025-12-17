@@ -49,7 +49,7 @@ export class CreateCampagneComponent {
 
   onCampaignTypeSelected(campaignType: string[]) {
     this.createCampaignForm.patchValue({
-      campaignType: campaignType
+      campaignType: campaignType[0]
     });
   }
 
@@ -60,7 +60,7 @@ export class CreateCampagneComponent {
       this.campagneService.saveCampaign(this.createCampaignForm.value)
       .subscribe({
         next: () => {
-          this.router.navigate(['/homepage'])
+          this.router.navigate(['/my-campagnes'])
         },
         error: (error) => {
           this.error = true;
