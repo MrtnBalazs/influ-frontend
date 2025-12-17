@@ -1,4 +1,4 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, inject, OnInit, output, effect } from '@angular/core';
 import { CampagneService } from '../../service/campagne/campagne.service';
 import { Input } from '@angular/core';
 import { signal } from '@angular/core';
@@ -33,14 +33,12 @@ import { PitchComponent } from '../../pitch/pitch/pitch.component';
     ]
 })
 export class CampageComponent {
-  @Input() id: any = null;
-  campaignId = signal<any | null>(null);
+  @Input() withPitches = false;
   campaignChanged = output<void>();  // signal-based Output
   campaign: any = null;
   selectedPitchId = signal<any | null>(null);
   animationState = 'show';
   atLeastSelectedPitchStatePitchId = signal<any | null>(null);
-  @Input() withPitches = false;
   isUserCampaignOwner = false;
   userType: any = "";
   userEmail: any = "";
@@ -65,27 +63,30 @@ export class CampageComponent {
   set selectedCampaign(value: any) {
     this.rerunAnimation();
     if (value) {
-      this.campaignId.set(value);
-      this.refreshCampaign();
+      this.refreshCampaign(value);
     }
   }
 
-  refreshCampaign() {
-    this.campagneService.getCampagneById(this.campaignId())
+  refreshCampaign(campaignId: any) {
+    if(campaignId) {
+      this.rerunAnimation();
+      this.campagneService.getCampagneById(campaignId)
       .subscribe({
         next: (response: { campaign: any }) => {
-          this.campaign = response.campaign;
-          console.log(this.campaign)
           const user = this.userService.user();
+          this.campaign = response.campaign;
+          this.isUserCampaignOwner = this.campaign.ownerId == user?.userId;
+          console.log("Refresh campaign: ", this.campaign)
+          console.log("Refresh campaign user: ", user)
 
-          if(user?.userId && this.campaign.ownerId == user?.userId) {
-            this.isUserCampaignOwner = true;
+          if(this.isUserCampaignOwner &&
+            !this.hasCampaignAtLeastAcceptedPitch()
+          ) {
             this.campaignButtons = [
                   new Button("Delete campaign", "red", () => {
-                    this.campagneService.deleteCampaignById(this.campaignId()).subscribe({
+                    this.campagneService.deleteCampaignById(this.campaign.id).subscribe({
                       next: () => {
                         this.campaign = null;
-                        this.campaignId.set(null);
                         this.selectedPitchId.set(null);
                         this.campaignChanged.emit();
                       },
@@ -95,9 +96,11 @@ export class CampageComponent {
                     });
                   }),
                 ]
-          } else if(user?.userType == INFLUENCER && !this.hasPitchForCampaign(user.userId)) {
+          } else if (user?.userType == INFLUENCER &&
+            !this.hasPitchForCampaign(user.userId) &&
+            !this.hasCampaignAtLeastAcceptedPitch()) {
                 this.campaignButtons = [
-                  new Button("Create pitch", "green", () => {this.modalService.openCreatePitchModal(this.campaignId(), () => this.refreshCampaign())}),
+                  new Button("Create pitch", "green", () => {this.modalService.openCreatePitchModal(this.campaign.id, () => this.refreshCampaign(this.campaign?.id))}),
                 ]
           } else {
             this.campaignButtons = []
@@ -107,10 +110,10 @@ export class CampageComponent {
         },
         error: (error) => {
           console.error(error);
-          this.campaignId = signal<any | null>(null);
           this.campaign = null;
         }
       });
+    }
   }
 
   getPitchWithSelectedOrFurtherState(campaign: any): string | null {
@@ -134,11 +137,20 @@ export class CampageComponent {
     return false;
   }
 
+  hasCampaignAtLeastAcceptedPitch() {
+    for(const pitch of this.campaign.pitchList) {
+      if(pitch.pitchState !== "PENDING" && pitch.pitchState !== "SELECTED"){
+        return true;
+      }
+    }
+    return false;
+  }
+
   onPitchSelected(pitch: any) {
     this.selectedPitchId.set(pitch.id);
     this.modalService.openPitchModal(pitch.id, 
       () => {
-        this.refreshCampaign();
+        this.refreshCampaign(this.campaign?.id);
         // Refresh campaign list to update icon based on state
         this.campaignChanged.emit();
       }, 
@@ -153,7 +165,7 @@ export class CampageComponent {
   onPitchUpdated() {
     console.log("Pitch updated")
     this.pitchRefresh.update(v => v + 1);
-    this.refreshCampaign();
+    this.refreshCampaign(this.campaign?.id);
     this.rerunAnimation();
     // Refresh campaign list to update icon based on state
     this.campaignChanged.emit();

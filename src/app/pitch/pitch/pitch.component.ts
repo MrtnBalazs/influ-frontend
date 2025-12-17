@@ -32,6 +32,16 @@ export class PitchComponent{
   onClose!: () => void;  // callback passed from service
   onError!: () => void;  // callback passed from service
   
+  @Input() 
+  set selectedPitch(value: string | null) {
+    console.log("Selected pitch: ", value)
+    this.selectedPitchId = value;
+    this.rerunAnimation();
+    if (value) {
+      this.getPitchData(value);
+    }
+  }
+  
   constructor(private campagneService:CampagneService, private userService: UserService){
     effect(() => {
       console.log("Refreshing pitch")
@@ -68,20 +78,12 @@ export class PitchComponent{
     });
   }
 
-  @Input() 
-  set selectedPitch(value: string | null) {
-    console.log("Selected pitch: ", value)
-    this.selectedPitchId = value;
-    this.rerunAnimation();
-    if (value) {
-      this.getPitchData(value);
-    }
-  }
-
   private buildButtons(user: any, pitch: any, campaign: any): Button[] {
     console.log(pitch)
     if (!user) return [];
-    if (user.userId === pitch.ownerId) {
+    if (user.userId === pitch.ownerId &&
+      (pitch.pitchState === "PENDING" || pitch.pitchState === "SELECTED" || pitch.pitchState === "REJECTED" || pitch.pitchState === "ABORTED")
+    ) {
       return [new Button("Delete pitch", "red", () => {this.deletePitch(pitch.id)})];
     } else if (user.userType == 'BRAND' && campaign.campaign.ownerId === user.userId) {
       if(pitch.pitchState === "PENDING") {
