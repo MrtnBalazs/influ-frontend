@@ -101,7 +101,8 @@ export class PitchComponent{
       }
       if(pitch.pitchState === "ACCEPTED") {
         return [
-          new Button("Pitch finished", "green", () => {this.updatePitchState(pitch.id, "DONE")})
+          new Button("Pitch finished", "green", () => {this.updatePitchState(pitch.id, "DONE")}),
+          new Button("Abort pitch", "red", () => {this.updatePitchState(pitch.id, "ABORTED")})
         ];
       }
     }

@@ -46,6 +46,8 @@ export class PitchListComponent{
       return "blue"
     if(state === "REJECTED")
       return "red"
+    if(state === "ABORTED")
+      return "red"
     if(state === "DONE")
       return "light-blue"
     return "green";

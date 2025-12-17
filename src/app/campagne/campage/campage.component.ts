@@ -55,6 +55,7 @@ export class CampageComponent {
     "SELECTED",
     "ACCEPTED",
     "DONE",
+    "ABORTED"
   ]
 
   constructor(private modalService: ModalService, private campagneService: CampagneService, private userService: UserService) {}

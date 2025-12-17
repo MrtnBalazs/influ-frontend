@@ -18,7 +18,8 @@ export class CampagneListComponent {
     "PENDING": "⏳",
     "PITCH-SELECTED": "⭐",
     "PITCH-ACCEPTED": "✅",
-    "DONE": "🏁"
+    "DONE": "🏁",
+    "ABORTED": "🛑"
   };
 
   constructor(){}

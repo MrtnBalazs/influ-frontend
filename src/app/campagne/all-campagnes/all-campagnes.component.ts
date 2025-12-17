@@ -28,7 +28,7 @@ export class AllCampagnesComponent {
   ngOnInit(): void {
     this.campagneService.getAllCampagnes().subscribe({
       next: (response: { campaignList: [] }) => {
-        this.campaigns.set(response.campaignList);
+        this.campaigns.set(response.campaignList.filter((campaign: any) => campaign.campaignState !== "ABORTED"));
       },
       error: (err) => {
         console.error('Failed to load campaigns: ', err);

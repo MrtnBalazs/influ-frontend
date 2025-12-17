@@ -27,7 +27,7 @@ export class HomepageComponent implements OnInit{
 
   ngOnInit(): void {
     this.campaignservice.getAllCampagnes().subscribe((response: { campaignList: any[] }) => {
-      this.campaigns.set(response.campaignList.slice(0, 3));
+      this.campaigns.set(response.campaignList.filter((campaign: any) => campaign.campaignState === "PENDING" || campaign.campaignState === "SELECTED").slice(0, 3));
     });
   }
 
