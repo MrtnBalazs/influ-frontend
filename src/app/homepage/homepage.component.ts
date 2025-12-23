@@ -36,7 +36,7 @@ export class HomepageComponent implements OnInit{
     this.client = new Client({
       brokerURL: 'ws://localhost:8085/ws/chat?userId=Bob',
       connectHeaders: {
-        Authorization: token,
+        Authorization: "Bearer " + token,
       },
       debug: function (str) {
         console.log(str);
@@ -48,26 +48,11 @@ export class HomepageComponent implements OnInit{
 
     this.client.onConnect = (frame: any) => {
       console.log("On connect")
-      // Do something; all subscriptions must be done in this callback.
-      // This is needed because it runs after a (re)connect.
     };
 
     this.client.onStompError = function (frame: any) {
-      // Invoked when the broker reports an error.
-      // Bad login/passcode typically causes an error.
-      // Compliant brokers set the `message` header with a brief message; the body may contain details.
-      // Compliant brokers terminate the connection after any error.
       console.log('Broker reported error: ' + frame.headers['message']);
       console.log('Additional details: ' + frame.body);
-    };
-
-    const onMessage = (message: any) => {
-      // Called when the client receives a STOMP message from the server
-      if (message.body) {
-        alert('Got message with body ' + message.body);
-      } else {
-        alert('Got empty message');
-      }
     };
 
     this.client.activate();
@@ -75,7 +60,7 @@ export class HomepageComponent implements OnInit{
     this.client2 = new Client({
       brokerURL: 'ws://localhost:8085/ws/chat?userId=Joe',
       connectHeaders: {
-        Authorization: token,
+        Authorization: "Bearer " + token,
       },
       debug: function (str) {
         console.log(str);
@@ -114,12 +99,10 @@ export class HomepageComponent implements OnInit{
     this.client.publish({
       destination: '/app/chat.private',
       body: JSON.stringify({
-        "from": "Bob",
         "to": "Joe",
-        "text": "Hello world"
+        "message": "Hello world"
       }),
     });
-
 
     //this.router.navigate(['/campagnes']);
   }
