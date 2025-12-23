@@ -3,6 +3,7 @@ import { CampagneService } from '../service/campagne/campagne.service';
 import { CampagneListComponent } from "../campagne/campagne-list/campagne-list.component";
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
+import {Client, Message} from '@stomp/stompjs';
 import Keycloak from 'keycloak-js';
 
 @Component({
@@ -23,7 +24,80 @@ import Keycloak from 'keycloak-js';
 export class HomepageComponent implements OnInit{
   campaigns = signal<any[]>([]);
   private readonly keycloak = inject(Keycloak);
-  constructor(private campaignservice: CampagneService, private router: Router) {}
+  client: any;
+  client2: any;
+
+  constructor(private campaignservice: CampagneService, private router: Router) {
+    var token = "token";
+    if(this.keycloak.token) {
+      token = "Bearer " + this.keycloak.token;
+    }
+
+    this.client = new Client({
+      brokerURL: 'ws://localhost:8085/ws/chat?userId=Bob',
+      connectHeaders: {
+        Authorization: token,
+      },
+      debug: function (str) {
+        console.log(str);
+      },
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
+    });
+
+    this.client.onConnect = (frame: any) => {
+      console.log("On connect")
+      // Do something; all subscriptions must be done in this callback.
+      // This is needed because it runs after a (re)connect.
+    };
+
+    this.client.onStompError = function (frame: any) {
+      // Invoked when the broker reports an error.
+      // Bad login/passcode typically causes an error.
+      // Compliant brokers set the `message` header with a brief message; the body may contain details.
+      // Compliant brokers terminate the connection after any error.
+      console.log('Broker reported error: ' + frame.headers['message']);
+      console.log('Additional details: ' + frame.body);
+    };
+
+    const onMessage = (message: any) => {
+      // Called when the client receives a STOMP message from the server
+      if (message.body) {
+        alert('Got message with body ' + message.body);
+      } else {
+        alert('Got empty message');
+      }
+    };
+
+    this.client.activate();
+
+    this.client2 = new Client({
+      brokerURL: 'ws://localhost:8085/ws/chat?userId=Joe',
+      connectHeaders: {
+        Authorization: token,
+      },
+      debug: function (str) {
+        console.log(str);
+      },
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
+    });
+
+    this.client2.onConnect = (frame: any) => {
+      console.log("On connect")
+    };
+
+    this.client2.onStompError = function (frame: any) {
+      console.log('Broker reported error: ' + frame.headers['message']);
+      console.log('Additional details: ' + frame.body);
+    };
+
+    this.client2.activate();
+    
+    //this.client.subscribe('/user/queue/messages', onMessage);
+  }
 
   ngOnInit(): void {
     this.campaignservice.getAllCampagnes().subscribe((response: { campaignList: any[] }) => {
@@ -31,26 +105,38 @@ export class HomepageComponent implements OnInit{
     });
   }
 
+  ngOnDestroy() {
+    this.client.deactivate();
+  }
+
   onCampaignClicked() {
-    if(this.keycloak.token) {
-      //const ws = new WebSocket("ws://localhost:8081/ws/chat", ["Bearer", this.keycloak.token]);
-      console.log(this.keycloak.token)
-      //const token = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI3US1zSjQ0THhtRlV4VXpSV2VwZlJCVVRaVEhjSzlVNWh2NFhOLS1neVZZIn0.eyJleHAiOjE3NjYxNTI5ODEsImlhdCI6MTc2NjE1MjY4MSwiYXV0aF90aW1lIjoxNzY2MTUyNDU0LCJqdGkiOiJvbnJ0YWM6YzJlZGMxNGEtOTY0ZC00ODMyLWZiOTEtNWNmMDBhODIwMjJmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MTAwL2F1dGgvcmVhbG1zL2luZmx1LXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6Ijk3ZjE3NDc4LTI0NmItNDcwZi1iMTIyLWVkZmVjNzNmODI5ZCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImluZmx1LWZyb250ZW5kIiwic2lkIjoiMjM4OWI4ZjQtMzg1Ny1iY2Y1LThiMGEtZTZiMDRlODAwNzgxIiwiYWNyIjoiMCIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjQyMDAiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtaW5mbHUtcmVhbG0iLCJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiaW5mbHUtZnJvbnRlbmQiOnsicm9sZXMiOlsidXNlciJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicHJlZmVycmVkX3VzZXJuYW1lIjoiMzMxIiwiZW1haWwiOiIxMTFAMTMzIn0.bVkY0ie-srwQsrvxXB7fcmTLIsfgxkC_HpqlNQuxke-28dOmILZe9ktO-sJnga9gSAkXyLaABkGc1XN0bWJy7jBye6s_BRfMzR0dYN64GZaABOCpypIDI-A-tSk0rcSQPdDEh3trPL9-FF6tIZqpG4k5jp4aS-90ln_LEIDuBpKfF57PeaI2kdqgl-bU0cfHWRkmnMnH0HAuVfl3B4xjAeDk0X2jD616AvHwU5LNy_z3NRjKnXoobEH8kZb1j0S5TEoktxOFWT1jr5QMWBWn4BcRgN6snC4_aIq5aNTyxH7K2wvFjyFq-05bPxd9KrrvWldAYN0LhBDLhDcxcE84wQ"
-      const ws = new WebSocket("ws://localhost:8081/ws/chat?token=Bearer " + this.keycloak.token);
+    // There is an option to skip the Content-length header
+    this.client.publish({
+      destination: '/app/chat.private',
+      body: JSON.stringify({
+        "from": "Bob",
+        "to": "Joe",
+        "text": "Hello world"
+      }),
+    });
 
-      ws.onopen = () => ws.send("Hello server!");
-      ws.onmessage = e => console.log(e.data);
-    } else {
-      const ws = new WebSocket("ws://localhost:8081/ws/chat?token=Bearer dwadawdwahidwadoj");
 
-      ws.onopen = () => ws.send("Hello server!");
-      ws.onmessage = e => console.log(e.data);
-    }
     //this.router.navigate(['/campagnes']);
   }
 
   onJoinClicked() {
-    this.keycloak.register();
+    const onMessage = (message: any) => {
+      // Called when the client receives a STOMP message from the server
+      if (message.body) {
+        alert('Got message with body ' + message.body);
+      } else {
+        alert('Got empty message');
+      }
+    };
+
+    this.client2.subscribe('/user/queue/messages', onMessage);
+
+    //this.keycloak.register();
   }
 
 }
