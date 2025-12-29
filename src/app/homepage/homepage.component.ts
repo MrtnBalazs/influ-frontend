@@ -32,12 +32,9 @@ export class HomepageComponent implements OnInit{
     if(this.keycloak.token) {
       token = "Bearer " + this.keycloak.token;
     }
-
+    
     this.client = new Client({
-      brokerURL: 'ws://localhost:8085/ws/chat?userId=Bob',
-      connectHeaders: {
-        Authorization: "Bearer " + token,
-      },
+      brokerURL: 'ws://localhost:8081/ws/chat?token=' + token,
       debug: function (str) {
         console.log(str);
       },
@@ -56,32 +53,6 @@ export class HomepageComponent implements OnInit{
     };
 
     this.client.activate();
-
-    this.client2 = new Client({
-      brokerURL: 'ws://localhost:8085/ws/chat?userId=Joe',
-      connectHeaders: {
-        Authorization: "Bearer " + token,
-      },
-      debug: function (str) {
-        console.log(str);
-      },
-      reconnectDelay: 5000,
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
-    });
-
-    this.client2.onConnect = (frame: any) => {
-      console.log("On connect")
-    };
-
-    this.client2.onStompError = function (frame: any) {
-      console.log('Broker reported error: ' + frame.headers['message']);
-      console.log('Additional details: ' + frame.body);
-    };
-
-    this.client2.activate();
-    
-    //this.client.subscribe('/user/queue/messages', onMessage);
   }
 
   ngOnInit(): void {
@@ -99,7 +70,7 @@ export class HomepageComponent implements OnInit{
     this.client.publish({
       destination: '/app/chat.private',
       body: JSON.stringify({
-        "to": "Joe",
+        "to": "111",
         "message": "Hello world"
       }),
     });
@@ -117,7 +88,7 @@ export class HomepageComponent implements OnInit{
       }
     };
 
-    this.client2.subscribe('/user/queue/messages', onMessage);
+    this.client.subscribe('/user/queue/messages', onMessage);
 
     //this.keycloak.register();
   }
