@@ -25,14 +25,13 @@ export class HomepageComponent implements OnInit{
   campaigns = signal<any[]>([]);
   private readonly keycloak = inject(Keycloak);
   client: any;
-  client2: any;
 
   constructor(private campaignservice: CampagneService, private router: Router) {
     var token = "token";
     if(this.keycloak.token) {
       token = "Bearer " + this.keycloak.token;
     }
-    
+
     this.client = new Client({
       brokerURL: 'ws://localhost:8081/ws/chat?token=' + token,
       debug: function (str) {
