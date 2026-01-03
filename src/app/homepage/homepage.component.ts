@@ -87,7 +87,7 @@ export class HomepageComponent implements OnInit{
       }
     };
 
-    this.client.subscribe('/user/queue/messages', onMessage);
+    this.client.subscribe('/topic/private.111.222', onMessage);
 
     //this.keycloak.register();
   }
