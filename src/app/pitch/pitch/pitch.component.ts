@@ -5,10 +5,11 @@ import { ButtonBarComponent } from "../../common/button-bar/button-bar.component
 import { Button } from '../../common/button-bar/button';
 import { combineLatest, map, switchMap} from 'rxjs';
 import { UserService } from '../../service/user/user.service';
+import { ChatComponent } from "../../chat/chat.component";
 
 @Component({
     selector: 'app-pitch',
-    imports: [ButtonBarComponent],
+    imports: [ButtonBarComponent, ChatComponent],
     standalone: true,
     templateUrl: './pitch.component.html',
     styleUrl: './pitch.component.css',
@@ -31,6 +32,8 @@ export class PitchComponent{
   refresh = input<number>();
   onClose!: () => void;  // callback passed from service
   onError!: () => void;  // callback passed from service
+  chatSource: any;
+  chatDestination: any;
   
   @Input() 
   set selectedPitch(value: string | null) {
@@ -69,6 +72,13 @@ export class PitchComponent{
       next: ({ pitch, campaign }) => {
           this.pitch = pitch;
           this.pitchButtons = this.buildButtons(this.userService.user(), pitch, campaign);
+          var userId = this.userService.user()?.userId;
+          this.chatSource = userId;
+          if(userId === pitch.ownerId) {
+            this.chatDestination = campaign.campaign.ownerId;
+          } else {
+            this.chatDestination = pitch.ownerId;
+          }
         },
         error: (error) => {
           console.error(error);

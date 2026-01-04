@@ -1,0 +1,13 @@
+@for (message of messages; track message.id) {
+    <div>
+        {{message.message}}
+    </div>
+}
+
+<input type="text" #messageInput placeholder="Type something" />
+<div>
+    <button (click)="onSendMessage(messageInput.value)" class="button">Send</button>
+</div>
+<div>
+    <button (click)="onSubscribe()" class="button">Sub</button>
+</div>

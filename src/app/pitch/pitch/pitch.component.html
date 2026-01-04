@@ -10,6 +10,9 @@
             State: {{pitch?.pitchState}}
         </div>
         <app-button-bar [buttons]="pitchButtons"></app-button-bar>
+        @if(chatSource && chatDestination) {
+            <app-chat [source]="this.chatSource" [destination]="this.chatDestination"></app-chat>
+        }
     </div>
     } @else {
         <div [@fadeSlide]="animationState" class="campaign-not-selected-container">

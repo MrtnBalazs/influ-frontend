@@ -3,7 +3,6 @@ import { CampagneService } from '../service/campagne/campagne.service';
 import { CampagneListComponent } from "../campagne/campagne-list/campagne-list.component";
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
-import {Client, Message} from '@stomp/stompjs';
 import Keycloak from 'keycloak-js';
 
 @Component({
@@ -24,35 +23,8 @@ import Keycloak from 'keycloak-js';
 export class HomepageComponent implements OnInit{
   campaigns = signal<any[]>([]);
   private readonly keycloak = inject(Keycloak);
-  client: any;
 
-  constructor(private campaignservice: CampagneService, private router: Router) {
-    var token = "token";
-    if(this.keycloak.token) {
-      token = "Bearer " + this.keycloak.token;
-    }
-
-    this.client = new Client({
-      brokerURL: 'ws://localhost:8081/ws/chat?token=' + token,
-      debug: function (str) {
-        console.log(str);
-      },
-      reconnectDelay: 5000,
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
-    });
-
-    this.client.onConnect = (frame: any) => {
-      console.log("On connect")
-    };
-
-    this.client.onStompError = function (frame: any) {
-      console.log('Broker reported error: ' + frame.headers['message']);
-      console.log('Additional details: ' + frame.body);
-    };
-
-    this.client.activate();
-  }
+  constructor(private campaignservice: CampagneService, private router: Router) {}
 
   ngOnInit(): void {
     this.campaignservice.getAllCampagnes().subscribe((response: { campaignList: any[] }) => {
@@ -60,36 +32,12 @@ export class HomepageComponent implements OnInit{
     });
   }
 
-  ngOnDestroy() {
-    this.client.deactivate();
-  }
-
   onCampaignClicked() {
-    // There is an option to skip the Content-length header
-    this.client.publish({
-      destination: '/app/chat.private',
-      body: JSON.stringify({
-        "to": "111",
-        "message": "Hello world"
-      }),
-    });
-
-    //this.router.navigate(['/campagnes']);
+    this.router.navigate(['/campagnes']);
   }
 
   onJoinClicked() {
-    const onMessage = (message: any) => {
-      // Called when the client receives a STOMP message from the server
-      if (message.body) {
-        alert('Got message with body ' + message.body);
-      } else {
-        alert('Got empty message');
-      }
-    };
-
-    this.client.subscribe('/topic/private.111.222', onMessage);
-
-    //this.keycloak.register();
+    this.keycloak.register();
   }
 
 }
